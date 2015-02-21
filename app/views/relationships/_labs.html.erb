@@ -1,0 +1,16 @@
+<table>
+    <tr>
+      <th>Student</th>
+      <th>
+        <%= bootstrap_form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
+            <%= f.hidden_field :relationship_id %>
+            <%= f.submit 'Add', class: 'btn btn-success' %>
+        <% end %>
+      </th>
+    </tr>
+    <% @relationship.group.users.each do |student| %>
+    <tr>
+      <td><%= student.name %></td>
+    </tr>
+    <% end %>
+</table>

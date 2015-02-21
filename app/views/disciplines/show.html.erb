@@ -1,0 +1,36 @@
+<h1><%= @discipline.title %></h1>
+
+<p>
+  <strong>Teacher:</strong>
+  <%= gravatar_for @discipline.user %>
+  <%= @discipline.user.name %>
+</p>
+<div class="row">
+  <div class="col-md-3 col-md-offset-1">
+    <%= render 'semester_form', discipline: @discipline, semester: @semester %>
+  </div>
+  <div class="col-md-7">
+    <h3>Groups</h3>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Labs</th>
+        <th>Lectures</th>
+        <th>Modules</th>
+        <th>Exam</th>
+      </tr>
+      <% @semester.allowed_relationships(current_user).each do |relationship| %>
+          <tr>
+            <td><%= link_to relationship.group.title, relationship %></td>
+            <td><%= link_to 'Labs', relationship_path(relationship, tab: 'labs') %></td>
+            <td><%= link_to 'Lectures', relationship_path(relationship, tab: 'lectures') %></td>
+            <td><%= link_to 'Modules', relationship_path(relationship, tab: 'modules') %></td>
+            <td><%= link_to 'Exams', relationship_path(relationship, tab: 'exams') %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_discipline_path(@discipline) %> |
+<%= link_to 'Back', disciplines_path %>

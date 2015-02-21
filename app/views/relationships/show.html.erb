@@ -1,0 +1,23 @@
+<h1><%= @relationship.discipline.title %> [<%= @relationship.group.title %>]</h1>
+<h3><%= @relationship.semester.name %></h3>
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#labs" aria-controls="home" role="tab" data-toggle="tab">Labs</a></li>
+    <li role="presentation"><a href="#lectures" aria-controls="profile" role="tab" data-toggle="tab">Lectures</a></li>
+    <li role="presentation"><a href="#modules" aria-controls="messages" role="tab" data-toggle="tab">Modules</a></li>
+    <li role="presentation"><a href="#exams" aria-controls="settings" role="tab" data-toggle="tab">Exam</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="labs">
+        <%= render 'labs', relationship: @relationship %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="lectures">...2</div>
+    <div role="tabpanel" class="tab-pane" id="modules">...3</div>
+    <div role="tabpanel" class="tab-pane" id="exams">...4</div>
+  </div>
+
+</div>

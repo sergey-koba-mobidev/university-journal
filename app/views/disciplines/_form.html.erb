@@ -1,0 +1,19 @@
+<div class="row">
+<%= bootstrap_form_for(@discipline, html: {class: 'form-horizontal col-md-3 col-md-offset-1'}) do |f| %>
+  <% if @discipline.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@discipline.errors.count, "error") %> prohibited this discipline from being saved:</h2>
+
+      <ul>
+      <% @discipline.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <%= f.text_field :title %>
+    <%= f.collection_select(:user_id, User.teacher, :id, :name) if current_user.admin? %>
+
+    <%= f.submit %>
+<% end %>
+</div>

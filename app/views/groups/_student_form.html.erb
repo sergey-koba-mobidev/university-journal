@@ -1,0 +1,31 @@
+<h3>Add student to group</h3>
+<%= form_tag(add_user_group_path, class: 'form-inline') do |f| %>
+    <%= select_tag 'user_id', {}, {id: 'add_user_id'} %>
+    <%= submit_tag 'Add', class: 'btn btn-success' %>
+<% end %>
+<script type="text/javascript">
+    $('#add_user_id').selectize({
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        options: [],
+        create: false,
+        load: function(query, callback) {
+            if (query.length < 3) return callback();
+            $.ajax({
+                url: '<%= search_user_group_path %>',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    q: query,
+                },
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    callback(res);
+                }
+            });
+        }
+    });
+</script>

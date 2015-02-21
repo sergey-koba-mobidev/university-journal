@@ -1,0 +1,4 @@
+<%= form_tag(discipline_path(discipline), class: 'form-inline', method: :get) do %>
+    Semester: <%= select_tag 'semester_id', options_from_collection_for_select(Semester.all, 'id', 'name', semester.id), {class: 'form-control'} %>
+    <%= submit_tag 'Show', class: 'btn btn-primary' %>
+<% end %>
