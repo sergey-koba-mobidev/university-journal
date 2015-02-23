@@ -33,8 +33,4 @@ class RelationshipsController < ApplicationController
   def relationship_params
     params.require(:relationship).permit(:semester_id, :discipline_id, :group_id)
   end
-
-  def owner_or_admin(discipline)
-    current_user.admin? || current_user.id == discipline.user_id
-  end
 end

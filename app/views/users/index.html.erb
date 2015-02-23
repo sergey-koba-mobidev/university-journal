@@ -2,6 +2,14 @@
   <div class="row">
     <h3>Users</h3>
     <div class="column">
+
+      <%= bootstrap_form_tag(url: users_path, method: :get) do %>
+          <p>
+            <%= text_field_tag :search, params[:search] %>
+            <%= submit_tag "Search", :name => nil %>
+          </p>
+      <% end %>
+
       <table class="table">
         <tbody>
           <% @users.each do |user| %>
@@ -11,6 +19,8 @@
           <% end %>
         </tbody>
       </table>
+
+      <%= will_paginate @users %>
     </div>
   </div>
 </div>

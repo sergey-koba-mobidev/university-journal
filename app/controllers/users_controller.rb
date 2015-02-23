@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action AdminOnlyActionCallback, :except => :show
 
   def index
-    @users = User.all
+    @users = User.search(params[:search]).paginate(:per_page => PER_PAGE, :page => params[:page])
   end
 
   def show

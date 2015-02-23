@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :disciplines, dependent: :destroy
+  has_many :attends, dependent: :destroy
 
   enum role: [:student, :teacher, :admin]
   after_initialize :set_default_role, :if => :new_record?
@@ -18,6 +19,14 @@ class User < ActiveRecord::Base
       Discipline.all
     else
       disciplines
+    end
+  end
+
+  def self.search(search)
+    if search
+      where('name LIKE ?', "%#{search}%")
+    else
+      where(nil)
     end
   end
 end

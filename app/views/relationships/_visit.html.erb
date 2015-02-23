@@ -1,0 +1,15 @@
+<% attend = Attend.where('visit_id = ? and user_id = ?', visit.id, student.id).first %>
+<td id="attend-presence-<%= student.id %>-<%= visit.id %>" class="presence">
+<% if attend.nil? %>
+  <%= render 'attend_form', visit: visit, student: student %>
+<% else %>
+  <%= render 'attend_toggle', attend: attend %>
+<% end %>
+</td>
+<td id="attend-mark-<%= student.id %>-<%= visit.id %>" class="delimiter mark">
+  <% if attend.nil? %>
+      -
+  <% else %>
+    <%= render 'mark_form', attend: attend  %>
+  <% end %>
+</td>

@@ -1,4 +1,9 @@
 class VisitsController < ApplicationController
+  before_action :set_visit, only: [:destroy, :update]
+  before_action AdminOrTeacherActionCallback
+
+  respond_to :js
+
   def create
     @visit = Visit.new(visit_params)
     if owner_or_admin(@visit.relationship.discipline) && @visit.save
@@ -8,8 +13,22 @@ class VisitsController < ApplicationController
     end
   end
 
-  def destroy
+  def update
+    @visit.title = params[:visit][:title]
+    if owner_or_admin(@visit.relationship.discipline) && @visit.save
+      respond_with @visit
+    else
+      redirect_to :back, alert: 'Access denied!'
+    end
+  end
 
+  def destroy
+    if owner_or_admin(@visit.relationship.discipline)
+      @visit.destroy
+      redirect_to :back, notice: 'Deleted!'
+    else
+      redirect_to :back, alert: 'Access denied!'
+    end
   end
 
   private
@@ -19,7 +38,7 @@ class VisitsController < ApplicationController
   end
 
   def visit_params
-    params.require(:visit).permit(:relationship_id, :title, :type)
+    params.require(:visit).permit(:relationship_id, :title, :kind)
   end
 
   def owner_or_admin(discipline)

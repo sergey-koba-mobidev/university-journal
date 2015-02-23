@@ -3,7 +3,7 @@ class CreateVisits < ActiveRecord::Migration
     create_table :visits do |t|
       t.string :title
       t.references :relationship, index: true
-      t.integer :type
+      t.integer :kind
 
       t.timestamps null: false
     end

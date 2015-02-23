@@ -1,0 +1,2 @@
+$("#attend-presence-<%= @attend.user_id %>-<%= @attend.visit_id %>").html("<%= escape_javascript(render('relationships/attend_toggle', attend: @attend)) %>");
+$("#attend-mark-<%= @attend.user_id %>-<%= @attend.visit_id %>").html("<%= escape_javascript(render('relationships/mark_form', attend: @attend)) %>");

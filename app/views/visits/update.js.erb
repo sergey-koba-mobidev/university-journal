@@ -1,0 +1,2 @@
+$("#visit-<%= @visit.id %>").html("<%= escape_javascript(render('relationships/visit_form', visit: @visit)) %>");
+$("#visit-<%= @visit.id %>").fadeOut().fadeIn().fadeOut().fadeIn();

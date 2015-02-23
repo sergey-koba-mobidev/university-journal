@@ -1,5 +1,6 @@
 class Visit < ActiveRecord::Base
   belongs_to :relationship
+  has_many :attends, dependent: :destroy
 
-  enum type: [:lab, :lecture, :module, :exam]
+  enum kind: [:lab, :lecture, :module, :homework, :exam]
 end

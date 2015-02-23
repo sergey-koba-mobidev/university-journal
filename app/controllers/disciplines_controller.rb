@@ -88,7 +88,6 @@ class DisciplinesController < ApplicationController
   end
 
   def owner_or_admin
-
     unless current_user.admin? || current_user.id == @discipline.user_id
       redirect_to :root, :alert => 'Access denied.'
     end

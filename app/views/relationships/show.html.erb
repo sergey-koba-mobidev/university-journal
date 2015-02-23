@@ -4,20 +4,17 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#labs" aria-controls="home" role="tab" data-toggle="tab">Labs</a></li>
-    <li role="presentation"><a href="#lectures" aria-controls="profile" role="tab" data-toggle="tab">Lectures</a></li>
-    <li role="presentation"><a href="#modules" aria-controls="messages" role="tab" data-toggle="tab">Modules</a></li>
-    <li role="presentation"><a href="#exams" aria-controls="settings" role="tab" data-toggle="tab">Exam</a></li>
+    <% Visit.kinds.each do |kind, index| %>
+        <li role="presentation" <%= 'class=active' if index == 0 %>><a href="#<%= kind.to_s.pluralize %>" aria-controls="home" role="tab" data-toggle="tab"><%= kind.to_s.pluralize.capitalize %></a></li>
+    <% end %>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="labs">
-        <%= render 'labs', relationship: @relationship %>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="lectures">...2</div>
-    <div role="tabpanel" class="tab-pane" id="modules">...3</div>
-    <div role="tabpanel" class="tab-pane" id="exams">...4</div>
+    <% Visit.kinds.each do |kind, index| %>
+        <div role="tabpanel" class="tab-pane <%= 'active' if index == 0 %>" id="<%= kind.to_s.pluralize %>">
+          <%= render 'visits', relationship: @relationship, kind: kind %>
+        </div>
+    <% end %>
   </div>
-
 </div>

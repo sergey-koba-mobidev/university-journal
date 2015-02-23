@@ -1,0 +1,3 @@
+<%= form_for(visit, remote: true, method: :patch) do |f| %>
+    <%= f.text_field :title, :onblur => '$(this).parent().submit(); return false;' %>
+<% end %>

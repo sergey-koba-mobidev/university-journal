@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-1">
+    <%= bootstrap_form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
+        <%= f.text_field :title %>
+        <%= f.hidden_field :relationship_id %>
+        <%= f.hidden_field :kind, {value: kind} %>
+        <%= f.submit 'Add', class: 'btn btn-success' %>
+    <% end %>
+  </div>
+  <div class="col-md-11">
+    <table class="visits">
+        <tr>
+          <th class="delimiter">Student</th>
+          <% @relationship.visits.send(kind).each do |visit| %>
+          <th colspan="2" class="delimiter" id="visit-<%= visit.id %>">
+              <%= render 'visit_form', visit: visit %>
+          </th>
+          <% end %>
+        </tr>
+        <% @relationship.group.users.each do |student| %>
+        <tr>
+          <td class="delimiter"><%= student.name %></td>
+          <% @relationship.visits.send(kind).each do |visit| %>
+                <%= render 'visit', visit: visit, student: student %>
+          <% end %>
+        </tr>
+        <% end %>
+        <tr>
+        <td class="delimiter"><b>Date:</b></td>
+          <% @relationship.visits.send(kind).each do |visit| %>
+            <td colspan="2" class="delimiter"><%= visit.created_at.strftime('%m.%d') %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td class="delimiter"><b>Remove:</b></td>
+            <% @relationship.visits.send(kind).each do |visit| %>
+                <td colspan="2" class="delimiter">
+                  <%= link_to 'x', visit, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
+                </td>
+            <% end %>
+        </tr>
+    </table>
+  </div>
+</div>
