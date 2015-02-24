@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_user, only: [:edit, :update]
   before_action AdminOnlyActionCallback, :except => :show
 
   def index
@@ -15,13 +16,41 @@ class UsersController < ApplicationController
     end
   end
 
+  def create_manual
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to users_path, :notice => "User created."
+    else
+      render :new
+    end
+  end
+
   def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(secure_params)
+    if user_params[:password].blank?
+      user_params.delete(:password)
+      user_params.delete(:password_confirmation)
+    end
+
+    successfully_updated = if needs_password?(@user, user_params)
+                             @user.update_column(:email, user_params.delete(:email))
+                             @user.update(user_params)
+                           else
+                             @user.update_column(:email, user_params.delete(:email))
+                             @user.update_without_password(user_params)
+                           end
+
+    if successfully_updated
       redirect_to users_path, :notice => "User updated."
     else
-      redirect_to users_path, :alert => "Unable to update user."
+      render :edit
     end
+  end
+
+  def new
+    @user = User.new
+  end
+
+  def edit
   end
 
   def destroy
@@ -32,8 +61,15 @@ class UsersController < ApplicationController
 
   private
 
-  def secure_params
-    params.require(:user).permit(:role)
+  def set_user
+    @user = User.find(params[:id])
   end
 
+  def needs_password?(user, params)
+    params[:password].present?
+  end
+
+  def user_params
+    params.require(:user).permit(:role, :name, :email, :password, :password_confirmation)
+  end
 end
