@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   get 'attends/update'
 
-  resources :relationships, only: [:create, :destroy, :show]
+  resources :relationships, only: [:create, :destroy, :show] do
+    member do
+      post 'update_proportions'
+    end
+  end
   resources :visits, only: [:create, :destroy, :show, :update]
   resources :attends, only: [:create, :update] do
     member do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223083634) do
+ActiveRecord::Schema.define(version: 20150224180341) do
 
   create_table "attends", force: :cascade do |t|
     t.integer  "visit_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150223083634) do
     t.integer  "group_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "proportions"
   end
 
   add_index "relationships", ["discipline_id"], name: "index_relationships_on_discipline_id"

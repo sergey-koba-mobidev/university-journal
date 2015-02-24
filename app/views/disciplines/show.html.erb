@@ -19,7 +19,7 @@
         <th>Modules</th>
         <th>Exam</th>
       </tr>
-      <% @semester.allowed_relationships(current_user).each do |relationship| %>
+      <% @semester.relationships.filter_discipline(@discipline).each do |relationship| %>
           <tr>
             <td><%= link_to relationship.group.title, relationship %></td>
             <td><%= link_to 'Labs', relationship_path(relationship, tab: 'labs') %></td>

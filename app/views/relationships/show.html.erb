@@ -7,6 +7,7 @@
     <% Visit.kinds.each do |kind, index| %>
         <li role="presentation" <%= 'class=active' if index == 0 %>><a href="#<%= kind.to_s.pluralize %>" aria-controls="home" role="tab" data-toggle="tab"><%= kind.to_s.pluralize.capitalize %></a></li>
     <% end %>
+    <li role="presentation"><a href="#total" aria-controls="total" role="tab" data-toggle="tab">Total</a></li>
   </ul>
 
   <!-- Tab panes -->
@@ -16,5 +17,8 @@
           <%= render 'visits', relationship: @relationship, kind: kind %>
         </div>
     <% end %>
+    <div role="tabpanel" class="tab-pane" id="total">
+      <%= render 'total', relationship: @relationship %>
+    </div>
   </div>
 </div>
