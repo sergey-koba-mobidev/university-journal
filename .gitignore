@@ -20,6 +20,7 @@ db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*
 /tmp/*
+/.vagrant/*
 
 # various artifacts
 **.war
@@ -28,7 +29,7 @@ db/*.sqlite3
 .redcar/
 .sass-cache
 /config/config.yml
-/config/database.yml
+
 /coverage.data
 /coverage/
 /db/*.javadb/

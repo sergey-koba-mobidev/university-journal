@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150224180341) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "attends", force: :cascade do |t|
     t.integer  "visit_id"
     t.integer  "user_id"
@@ -23,8 +26,8 @@ ActiveRecord::Schema.define(version: 20150224180341) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "attends", ["user_id"], name: "index_attends_on_user_id"
-  add_index "attends", ["visit_id"], name: "index_attends_on_visit_id"
+  add_index "attends", ["user_id"], name: "index_attends_on_user_id", using: :btree
+  add_index "attends", ["visit_id"], name: "index_attends_on_visit_id", using: :btree
 
   create_table "disciplines", force: :cascade do |t|
     t.string   "title"
@@ -33,7 +36,7 @@ ActiveRecord::Schema.define(version: 20150224180341) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "disciplines", ["user_id"], name: "index_disciplines_on_user_id"
+  add_index "disciplines", ["user_id"], name: "index_disciplines_on_user_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "title"
@@ -42,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150224180341) do
     t.integer  "status"
   end
 
-  add_index "groups", ["status"], name: "index_groups_on_status"
+  add_index "groups", ["status"], name: "index_groups_on_status", using: :btree
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "semester_id"
@@ -53,9 +56,9 @@ ActiveRecord::Schema.define(version: 20150224180341) do
     t.string   "proportions"
   end
 
-  add_index "relationships", ["discipline_id"], name: "index_relationships_on_discipline_id"
-  add_index "relationships", ["group_id"], name: "index_relationships_on_group_id"
-  add_index "relationships", ["semester_id"], name: "index_relationships_on_semester_id"
+  add_index "relationships", ["discipline_id"], name: "index_relationships_on_discipline_id", using: :btree
+  add_index "relationships", ["group_id"], name: "index_relationships_on_group_id", using: :btree
+  add_index "relationships", ["semester_id"], name: "index_relationships_on_semester_id", using: :btree
 
   create_table "semesters", force: :cascade do |t|
     t.integer  "year"
@@ -94,11 +97,11 @@ ActiveRecord::Schema.define(version: 20150224180341) do
     t.integer  "group_id",               default: 0,  null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true
-  add_index "users", ["invitations_count"], name: "index_users_on_invitations_count"
-  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
+  add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
+  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "visits", force: :cascade do |t|
     t.string   "title"
@@ -108,6 +111,13 @@ ActiveRecord::Schema.define(version: 20150224180341) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "visits", ["relationship_id"], name: "index_visits_on_relationship_id"
+  add_index "visits", ["relationship_id"], name: "index_visits_on_relationship_id", using: :btree
 
+  add_foreign_key "attends", "users"
+  add_foreign_key "attends", "visits"
+  add_foreign_key "disciplines", "users"
+  add_foreign_key "relationships", "disciplines"
+  add_foreign_key "relationships", "groups"
+  add_foreign_key "relationships", "semesters"
+  add_foreign_key "visits", "relationships"
 end
