@@ -10,6 +10,8 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
+.vagrant/
+
 # bundler state
 /.bundle
 /vendor/bundle/
@@ -20,7 +22,6 @@ db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*
 /tmp/*
-/.vagrant/*
 
 # various artifacts
 **.war
