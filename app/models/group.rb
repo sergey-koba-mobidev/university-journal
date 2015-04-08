@@ -3,6 +3,9 @@ class Group < ActiveRecord::Base
   has_many :users, dependent: :nullify
   default_scope { order 'title'}
 
+  validates :year, presence: true, numericality: true
+  validates :title, presence: true
+
   enum status: [:learning, :graduated]
   after_initialize :set_default_status, :if => :new_record?
 

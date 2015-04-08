@@ -4,6 +4,9 @@ class Semester < ActiveRecord::Base
   enum pos: [:spring, :autumn]
   default_scope { order 'semesters.year, semesters.pos DESC'}
 
+  validates :year, presence: true
+  validates :pos, presence: true
+
   def name
     pos.to_s.capitalize+' '+year.to_s
   end
