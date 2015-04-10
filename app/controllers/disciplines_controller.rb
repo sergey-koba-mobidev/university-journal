@@ -15,7 +15,7 @@ class DisciplinesController < ApplicationController
     unless params[:semester_id].nil?
       @semester = Semester.find(params[:semester_id])
     else
-      @semester = current_semester
+      @semester = Semester.current
     end
   end
 

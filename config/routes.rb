@@ -1,20 +1,19 @@
 Rails.application.routes.draw do
-  get 'attends/create'
+  root to: 'visitors#index'
 
-  get 'attends/update'
-
+  resources :disciplines
+  resources :semesters
+  resources :visits, only: [:create, :destroy, :show, :update]
   resources :relationships, only: [:create, :destroy, :show] do
     member do
       post 'update_proportions'
     end
   end
-  resources :visits, only: [:create, :destroy, :show, :update]
   resources :attends, only: [:create, :update] do
     member do
       post 'update_mark'
     end
   end
-
   resources :groups do
     member do
       delete 'remove_user'
@@ -23,11 +22,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :disciplines
-
-  resources :semesters
-
-  root to: 'visitors#index'
   devise_for :users
   resources :users do
     collection do

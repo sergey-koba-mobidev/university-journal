@@ -1,3 +1,29 @@
-<h3>Welcome</h3>
+<% if(user_signed_in?) %>
+    <h3>Welcome</h3>
 
-<%= link_to 'Current Semester: '+current_semester.name, semester_path(current_semester), class: 'btn btn-primary' unless current_semester.nil? %>
+    <% if (!current_semester.nil?) %>
+        <div class="panel panel-primary">
+          <div class="panel-heading">Current semester</div>
+          <div class="panel-body">
+            <%= link_to current_semester.name, semester_path(current_semester) -%>
+          </div>
+        </div>
+    <% else %>
+        No Semester created for current year.
+        <%= link_to 'Create semester', new_semester_path, class: 'btn btn-success' -%>
+    <% end %>
+    <% if (!@relationships.empty?) %>
+        <div class="panel panel-primary">
+          <div class="panel-heading">Disciplines</div>
+          <div class="panel-body">
+            <% @relationships.each do |r| %>
+                <%= link_to r.discipline.title << ' (' << r.group.title << ')' , relationship_path(r) %> <br />
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+<% else %>
+    <h3>Welcome</h3>
+    Please <%= link_to 'Sign in', new_user_session_path %> to view your Journal.
+<% end %>

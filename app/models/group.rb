@@ -1,7 +1,7 @@
 class Group < ActiveRecord::Base
   has_many :relationships, dependent: :destroy
   has_many :users, dependent: :nullify
-  default_scope { order 'title'}
+  default_scope { where(year: Time.zone.now.year).order 'title'}
 
   validates :year, presence: true, numericality: true
   validates :title, presence: true

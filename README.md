@@ -1,4 +1,4 @@
-# university-journal
+# University-journal
 A Ruby on Rails based university classes manager.
 
 Main features:
@@ -9,4 +9,5 @@ Main features:
 - Managing Labs, Lectures, Modules, Exams
 
 TODO:
-- statistics
+- statistics (results of discipline, weights for labs, lectures etc...)
+- Archive for previous semesters.

@@ -10,7 +10,12 @@
     <%= render 'semester_form', discipline: @discipline, semester: @semester %>
   </div>
   <div class="col-md-7">
-    <h3>Groups</h3>
+    <h3>
+      Groups
+      <small>
+        <%= link_to raw('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new group to discipline'), semester_path(current_semester) unless current_semester.nil? %>
+      </small>
+    </h3>
     <table class="table">
       <tr>
         <th>Name</th>

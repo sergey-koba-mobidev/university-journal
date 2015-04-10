@@ -18,4 +18,10 @@ class Semester < ActiveRecord::Base
       relationships.joins(:discipline).where('disciplines.user_id = ?', user.id)
     end
   end
+
+  class << self
+    def current
+      Semester.find_by!(year: Time.zone.now.year, pos: (Time.zone.now.month<9) ? Semester.pos['spring'] : Semester.pos['autumn'])
+    end
+  end
 end
