@@ -10,4 +10,4 @@ Main features:
 
 TODO:
 - statistics (results of discipline, weights for labs, lectures etc...)
-- Archive for previous semesters.
+- Students can have only 1 group. But they should be a part of a lot of groups.

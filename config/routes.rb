@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'visitors#index'
 
+  get 'archive/index'
+
   resources :disciplines
   resources :semesters
   resources :visits, only: [:create, :destroy, :show, :update]

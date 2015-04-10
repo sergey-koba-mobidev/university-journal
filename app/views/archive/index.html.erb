@@ -1,0 +1,19 @@
+<h1>Archive</h1>
+<%= grid(@relationships_grid, upper_pagination_panel: true) do |g|
+
+  g.column name:  'Semester', attribute: 'year',  model: 'Semester' do |rel|
+    rel.semester.name
+  end
+
+  g.column name:  'Discipline', attribute: 'title',  model: 'Discipline' do |rel|
+    rel.discipline.title
+  end
+
+  g.column name:  'Group', attribute: 'title',  model: 'Group' do |rel|
+    rel.group.title + ' (' + rel.group.year.to_s + ')'
+  end
+
+  g.column do |rel|
+    link_to('View', relationship_path(rel, tab: 'labs'))
+  end
+end -%>

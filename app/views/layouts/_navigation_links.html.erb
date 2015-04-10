@@ -7,6 +7,7 @@
   <% end %>
   <% if current_user.admin? || current_user.teacher?%>
     <li><%= link_to 'Disciplines', disciplines_path %></li>
+    <li><%= link_to 'Archive', archive_index_path %></li>
   <% end %>
 <% end %>
 

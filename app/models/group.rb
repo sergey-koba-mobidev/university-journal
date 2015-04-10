@@ -1,7 +1,7 @@
 class Group < ActiveRecord::Base
   has_many :relationships, dependent: :destroy
   has_many :users, dependent: :nullify
-  default_scope { where(year: Time.zone.now.year).order 'title'}
+  default_scope { order 'title'}
 
   validates :year, presence: true, numericality: true
   validates :title, presence: true
@@ -11,5 +11,11 @@ class Group < ActiveRecord::Base
 
   def set_default_status
     self.status ||= :learning
+  end
+
+  class << self
+    def current_year
+      where(year: Time.zone.now.year)
+    end
   end
 end
