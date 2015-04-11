@@ -3,7 +3,7 @@ class RelationshipsController < ApplicationController
   before_action AdminOrTeacherActionCallback
 
   def show
-
+    @attends = Attend.where(visit_id: @relationship.visits.all).where(user_id: @relationship.group.users.all).all
   end
 
   def create

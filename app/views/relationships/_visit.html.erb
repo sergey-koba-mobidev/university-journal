@@ -1,4 +1,4 @@
-<% attend = Attend.where('visit_id = ? and user_id = ?', visit.id, student.id).first %>
+<% attend = @attends.select { |attend| attend.visit_id == visit.id and attend.user_id == student.id }[0] %>
 <td id="attend-presence-<%= student.id %>-<%= visit.id %>" class="presence">
 <% if attend.nil? %>
   <%= render 'attend_form', visit: visit, student: student %>
