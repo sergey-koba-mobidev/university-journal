@@ -12,6 +12,5 @@ TODO:
 - Statistics (results of discipline, weights for labs, lectures etc...)
 - Disciplines can change teachers
 - A student view.
-- Add a teacher an ability to create groups and students.
-- Validation failed for user in group
+- Add teacher an ability to create groups and students.
 - Clone group button
