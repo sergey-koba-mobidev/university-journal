@@ -1,5 +1,5 @@
 class RelationshipsController < ApplicationController
-  before_action :set_relationship, only: [:show, :destroy]
+  before_action :set_relationship, only: [:show, :destroy, :update_proportions]
   before_action AdminOrTeacherActionCallback
 
   def show
@@ -25,6 +25,15 @@ class RelationshipsController < ApplicationController
       redirect_to :back, notice: 'Group was deleted from semester!'
     else
       redirect_to :back, alert: 'Access denied!'
+    end
+  end
+
+  def update_proportions
+    @relationship.proportions = params[:total]
+    if @relationship.save
+      redirect_to :back, notice: 'Total is saved!'
+    else
+      redirect_to :back, alert: 'Total is NOT saved!'
     end
   end
 

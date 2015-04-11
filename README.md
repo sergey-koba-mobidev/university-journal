@@ -14,3 +14,5 @@ TODO:
 - A student view.
 - Add teacher an ability to create groups and students.
 - Clone group button
+- Slow query in show relationship (many attends)
+- backup data

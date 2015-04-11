@@ -36,3 +36,16 @@
 .error {
   background-color: red;
 }
+
+.total-form {
+  .form-group {
+    width: 100px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-right: 5px;
+    label {
+      font-size: 10px;
+      text-align: left;
+    }
+  }
+}

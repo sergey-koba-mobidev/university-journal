@@ -1,5 +1,14 @@
 source 'https://rubygems.org'
+
 ruby '2.2.0'
+
+gem 'bootstrap-sass'
+gem 'bootstrap_form'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+gem 'devise'
+gem 'devise_invitable'
+gem 'selectize-rails'
 gem 'rails', '4.2.0'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -16,26 +25,18 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'rspec-rails'
 end
-gem 'bootstrap-sass'
-gem 'bootstrap_form'
-gem 'will_paginate'
-gem 'bootstrap-will_paginate'
-gem 'devise'
-gem 'devise_invitable'
-gem 'selectize-rails'
 
 group :development do
+  gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
   gem 'quiet_assets'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
-end
-group :development, :test do
-  gem 'factory_girl_rails'
-  gem 'faker'
-  gem 'rspec-rails'
 end
 group :test do
   gem 'capybara'
