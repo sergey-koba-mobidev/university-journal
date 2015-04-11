@@ -4,6 +4,7 @@
   sudo: true
   roles:
     - common
+    - zsh
     - role: ANXS.postgresql
       postgresql_ext_install_contrib: yes
       postgresql_users:

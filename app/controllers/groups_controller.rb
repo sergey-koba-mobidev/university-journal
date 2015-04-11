@@ -64,31 +64,27 @@ class GroupsController < ApplicationController
 
   def remove_user
     @user = User.find(params[:user_id])
-    @user.group_id = 0
-    if @user.save
-      respond_to do |format|
-        format.html { redirect_to @group, notice: 'Student was successfully removed.' }
-        format.js
-      end
+    @group.users.delete(@user)
+    respond_to do |format|
+      format.html { redirect_to @group, notice: 'Student was successfully removed.' }
+      format.js
     end
   end
 
   def add_user
     @user = User.find(params[:user_id])
     if @user.student?
-      @user.group_id = @group.id
-      if @user.save
-        respond_to do |format|
-          format.html { redirect_to @group, notice: 'Student was successfully added.' }
-          format.js
-        end
+      @group.users << @user
+      respond_to do |format|
+        format.html { redirect_to @group, notice: 'Student was successfully added.' }
+        format.js
       end
     end
   end
 
   def search_user
     query = params[:q]
-    @users = User.student.where('name LIKE ?', "%#{query}%").where('group_id = 0')
+    @users = User.student.where('name LIKE ?', "%#{query}%")
     respond_to do |format|
       format.html { redirect_to @group }
       format.json { render json: @users, only: [:id, :name] }

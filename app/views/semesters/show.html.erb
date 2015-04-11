@@ -19,7 +19,7 @@
         <% @semester.relationships.all.each do |relationship|%>
         <tr>
           <td><%= link_to relationship.discipline.title, relationship.discipline %></td>
-          <td><%= link_to relationship.group.title, relationship.group %></td>
+          <td><%= link_to relationship.group.title_year, relationship.group %></td>
           <td><%= relationship.discipline.user.name %></td>
           <td><%= link_to 'Remove', relationship, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %></td>
         </tr>

@@ -10,7 +10,7 @@
   end
 
   g.column name:  'Group', attribute: 'title',  model: 'Group' do |rel|
-    rel.group.title + ' (' + rel.group.year.to_s + ')'
+    rel.group.title_year
   end
 
   g.column do |rel|

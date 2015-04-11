@@ -11,7 +11,11 @@ class RelationshipsController < ApplicationController
     if owner_or_admin(@relationship.discipline) && @relationship.save
       redirect_to :back, notice: 'Group was added to semester!'
     else
-      redirect_to :back, alert: 'Access denied!'
+      if (!owner_or_admin(@relationship.discipline))
+        redirect_to :back, alert: 'Access denied!'
+      else
+        redirect_to :back, alert: @relationship.errors.full_messages.join(". ")
+      end
     end
   end
 

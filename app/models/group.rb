@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
   has_many :relationships, dependent: :destroy
-  has_many :users, dependent: :nullify
+  has_many :groupings, :dependent => :destroy
+  has_many :users, :through => :groupings
   default_scope { order 'title'}
 
   validates :year, presence: true, numericality: true
@@ -13,9 +14,13 @@ class Group < ActiveRecord::Base
     self.status ||= :learning
   end
 
+  def title_year
+    title + ' (' + year.to_s + ')'
+  end
+
   class << self
-    def current_year
-      where(year: Time.zone.now.year)
+    def by_semester(semester)
+      where(year: semester.year)
     end
   end
 end

@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   has_many :disciplines, dependent: :destroy
   has_many :attends, dependent: :destroy
+  has_many :groupings, :dependent => :destroy
+  has_many :groups, :through => :groupings
 
   enum role: [:student, :teacher, :admin]
   after_initialize :set_default_role, :if => :new_record?

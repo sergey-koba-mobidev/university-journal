@@ -10,6 +10,8 @@ Main features:
 
 TODO:
 - Statistics (results of discipline, weights for labs, lectures etc...)
-- Students can have only 1 group. But they should be a part of a lot of groups. (create many to many and refactor)
+- Disciplines can change teachers
 - A student view.
 - Add a teacher an ability to create groups and students.
+- Validation failed for user in group
+- Clone group button

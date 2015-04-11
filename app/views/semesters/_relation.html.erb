@@ -1,6 +1,6 @@
 <%= bootstrap_form_for(semester.relationships.build, html: {class: 'form-horizontal'}) do |f| %>
     <%= f.hidden_field :semester_id %>
-    <%= f.collection_select(:group_id, Group.current_year, :id, :title) %>
+    <%= f.collection_select(:group_id, Group.by_semester(semester), :id, :title) %>
     <%= f.collection_select(:discipline_id, current_user.allowed_disciplines, :id, :title) %>
     <%= f.submit "Add", class: "btn btn-primary" %>
 <% end %>
