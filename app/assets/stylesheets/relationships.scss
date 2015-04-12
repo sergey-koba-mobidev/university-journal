@@ -37,15 +37,34 @@
   background-color: red;
 }
 
-.total-form {
-  .form-group {
-    width: 100px;
-    display: inline-block;
-    margin-left: 0px;
-    margin-right: 5px;
-    label {
-      font-size: 10px;
-      text-align: left;
+#total-cont {
+  .visits {
+    .mark5{
+      background-color: #b3f445;
+    }
+    .mark4{
+      background-color: #d99400;
+    }
+    .mark3{
+      background-color: #d92d00;
+    }
+    td {
+      text-align: center;
+    }
+    th {
+      padding: 0px 5px;
+    }
+  }
+  .total-form {
+    .form-group {
+      width: 100px;
+      display: inline-block;
+      margin-left: 0px;
+      margin-right: 5px;
+      label {
+        font-size: 10px;
+        text-align: left;
+      }
     }
   }
 }

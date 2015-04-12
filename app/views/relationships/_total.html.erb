@@ -1,19 +1,51 @@
-<div class="row">
+<div class="row" id="total-cont">
   <div class="col-md-2">
     <%= bootstrap_form_tag(url: update_proportions_relationship_path(relationship), method: :post, html: {class: 'form-horizontal total-form'}) do |f| %>
         <p>
         <% Visit.kinds.each do |kind, index| %>
-            <%= f.number_field 'total['+kind.to_s+'_per_each]', label: 'Per '+kind.to_s, value: relationship.proportions["#{kind.to_s}_per_each".to_sym] %>
+            <%= f.number_field 'total['+kind.to_s+'_per_each]', label: 'Per '+kind.to_s, value: relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i %>
         <% end %>
         </p>
         <p>
           <% Visit.kinds.each do |kind, index| %>
-              <%= f.number_field 'total['+kind.to_s+'_total]', label: 'Total '+kind.to_s, value: relationship.proportions["#{kind.to_s}_total".to_sym] %>
+              <%= f.number_field 'total['+kind.to_s+'_total]', label: 'Total '+kind.to_s, value: relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i %>
           <% end %>
         </p>
         <%= f.submit 'Update', :name => nil %>
     <% end %>
   </div>
   <div class="col-md-10">
+    <table class="visits">
+      <tr>
+        <th class="delimiter">Student</th>
+        <% Visit.kinds.each do |kind, index| %>
+            <th class="delimiter"><%= kind.to_s.pluralize.capitalize %></th>
+        <% end %>
+        <th class="delimiter">Total</th>
+        <th class="delimiter">Mark</th>
+        <th class="delimiter">ECTS</th>
+      </tr>
+      <% relationship.group.users.each do |student| %>
+          <% student_total = 0 %>
+          <tr>
+            <td class="delimiter"><%= student.name %></td>
+            <% Visit.kinds.each do |kind, index| %>
+                <%
+                   attends = @attends.select { |attend| attend.user_id == student.id and attend.relationship_id == relationship.id and attend.kind == index }
+                   sum = attends.map(&:mark).inject(0, &:+)
+                   num = relationship.visits.send(kind).size
+                   total = relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i
+                   per_each = relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i
+                   kind_total = (total.to_f*sum.to_f).to_f / (per_each.to_f * num.to_f).to_f
+                   student_total += kind_total
+                %>
+                <td class="delimiter"> <%= kind_total %> </td>
+            <% end %>
+            <td class="delimiter mark<%= mark_by_total(student_total) %>"> <%= student_total %> </td>
+            <td class="delimiter mark<%= mark_by_total(student_total) %>"> <%= mark_by_total(student_total) %> </td>
+            <td class="delimiter mark<%= mark_by_total(student_total) %>"> <%= ects_by_total(student_total) %> </td>
+          </tr>
+      <% end %>
+    </table>
   </div>
 </div>

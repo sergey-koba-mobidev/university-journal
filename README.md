@@ -9,10 +9,10 @@ Main features:
 - Managing Labs, Lectures, Modules, Exams
 
 TODO:
-- Statistics (results of discipline, weights for labs, lectures etc...)
 - Disciplines can change teachers
 - A student view.
 - Add teacher an ability to create groups and students.
 - Clone group button
 - Slow query in show relationship
 - backup data
+- reload total table on changes

@@ -6,6 +6,11 @@ class AttendsController < ApplicationController
 
   def create
     @attend = Attend.new(attend_params)
+    @attend.kind = Visit.kinds[@attend.visit.kind]
+    @attend.relationship_id = @attend.visit.relationship_id
+    @attend.group_id = @attend.visit.relationship.group_id
+    @attend.discipline_id = @attend.visit.relationship.discipline_id
+    @attend.semester_id = @attend.visit.relationship.semester_id
     if owner_or_admin(@attend.visit.relationship.discipline) && @attend.save
       respond_with @attend
     else
