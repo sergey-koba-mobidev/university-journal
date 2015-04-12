@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy, :add_user, :remove_user, :search_user]
-  before_action AdminOnlyActionCallback
+  before_action AdminOrTeacherActionCallback
 
   # GET /groups
   # GET /groups.json

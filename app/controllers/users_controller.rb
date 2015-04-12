@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:edit, :update]
-  before_action AdminOnlyActionCallback, :except => :show
+  before_action AdminOrTeacherActionCallback, :except => :show
 
   def index
     @users = User.search(params[:search]).paginate(:per_page => PER_PAGE, :page => params[:page])
+    @users = @users.student if current_user.teacher?
   end
 
   def show
     @user = User.find(params[:id])
-    unless current_user.admin?
+    unless current_user.admin? || current_user.teacher?
       unless @user == current_user
         redirect_to :back, :alert => "Access denied."
       end
@@ -18,14 +19,22 @@ class UsersController < ApplicationController
 
   def create_manual
     @user = User.new(user_params)
-    if @user.save
-      redirect_to users_path, :notice => "User created."
+    if (!@user.student? and !current_user.admin?)
+      redirect_to users_path, alert: "Access denied!"
     else
-      render :new
+      if @user.save
+        redirect_to users_path, notice: "User created."
+      else
+        render :new
+      end
     end
   end
 
   def update
+    if (user_params[:role]!='student' and !current_user.admin?)
+      redirect_to users_path, alert: "Access denied!" and return
+    end
+
     if user_params[:password].blank?
       user_params.delete(:password)
       user_params.delete(:password_confirmation)
@@ -55,6 +64,9 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id])
+    if (!user.student? and !current_user.admin?)
+      redirect_to users_path, alert: "Access denied!" and return
+    end
     user.destroy
     redirect_to users_path, :notice => "User deleted."
   end
