@@ -3,12 +3,18 @@
     <%= bootstrap_form_tag(url: update_proportions_relationship_path(relationship), method: :post, html: {class: 'form-horizontal total-form'}) do |f| %>
         <p>
         <% Visit.kinds.each do |kind, index| %>
-            <%= f.number_field 'total['+kind.to_s+'_per_each]', label: 'Per '+kind.to_s, value: relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i %>
+              <%
+                 value = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i
+              %>
+            <%= f.number_field 'total['+kind.to_s+'_per_each]', label: 'Per '+kind.to_s, value: value %>
         <% end %>
         </p>
         <p>
           <% Visit.kinds.each do |kind, index| %>
-              <%= f.number_field 'total['+kind.to_s+'_total]', label: 'Total '+kind.to_s, value: relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i %>
+              <%
+                 value = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i
+              %>
+              <%= f.number_field 'total['+kind.to_s+'_total]', label: 'Total '+kind.to_s, value: value %>
           <% end %>
         </p>
         <%= f.submit 'Update', :name => nil %>
@@ -34,9 +40,9 @@
                    attends = @attends.select { |attend| attend.user_id == student.id and attend.relationship_id == relationship.id and attend.kind == index }
                    sum = attends.map(&:mark).inject(0, &:+)
                    num = relationship.visits.send(kind).size
-                   total = relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i
-                   per_each = relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i
-                   kind_total = (total.to_f*sum.to_f).to_f / (per_each.to_f * num.to_f).to_f
+                   total = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i
+                   per_each = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i
+                   kind_total = (relationship.proportions.nil?) ? 0 : (total.to_f*sum.to_f).to_f / (per_each.to_f * num.to_f).to_f
                    student_total += kind_total
                 %>
                 <td class="delimiter"> <%= kind_total %> </td>
