@@ -1,4 +1,5 @@
 <div class="row" id="total-cont">
+  <% if !current_user.student? %>
   <div class="col-md-2">
     <%= bootstrap_form_tag(url: update_proportions_relationship_path(relationship), method: :post, html: {class: 'form-horizontal total-form'}) do |f| %>
         <p>
@@ -20,6 +21,7 @@
         <%= f.submit 'Update', :name => nil %>
     <% end %>
   </div>
+  <% end %>
   <div class="col-md-10">
     <table class="visits">
       <tr>

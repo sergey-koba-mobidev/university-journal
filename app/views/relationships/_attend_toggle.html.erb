@@ -1,12 +1,24 @@
 <%= form_for(attend, remote: true) do |f| %>
     <% if attend.present? %>
         <%= f.hidden_field :presence, value: 'absent' %>
-        <%= link_to '*', '#', :onclick=>'$(this).parent().submit()' %>
+        <% if !current_user.student? %>
+            <%= link_to '*', '#', :onclick=>'$(this).parent().submit()' %>
+        <% else %>
+            *
+        <% end %>
     <% elsif attend.absent? %>
         <%= f.hidden_field :presence, value: 'late' %>
-        <%= link_to 'H', '#', :onclick=>'$(this).parent().submit()' %>
+        <% if !current_user.student? %>
+            <%= link_to 'H', '#', :onclick=>'$(this).parent().submit()' %>
+        <% else %>
+            H
+        <% end %>
     <% elsif attend.late? %>
         <%= f.hidden_field :presence, value: 'present' %>
-        <%= link_to 'оп', '#', :onclick=>'$(this).parent().submit()' %>
+        <% if !current_user.student? %>
+            <%= link_to 'оп', '#', :onclick=>'$(this).parent().submit()' %>
+        <% else %>
+            оп
+        <% end %>
     <% end %>
 <% end %>

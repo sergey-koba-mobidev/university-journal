@@ -1,3 +1,7 @@
-<%= form_for(visit, remote: true, method: :patch) do |f| %>
-    <%= f.text_field :title, :onblur => '$(this).parent().submit(); return false;' %>
+<% if !current_user.student? %>
+    <%= form_for(visit, remote: true, method: :patch) do |f| %>
+        <%= f.text_field :title, :onblur => '$(this).parent().submit(); return false;' %>
+    <% end %>
+<% else %>
+    <%= visit.title %>
 <% end %>

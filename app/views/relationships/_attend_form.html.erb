@@ -1,6 +1,10 @@
-<%= form_for(visit.attends.build(user_id: student.id), remote: true) do |f| %>
-    <%= f.hidden_field :user_id %>
-    <%= f.hidden_field :visit_id %>
-    <%= f.hidden_field :presence, value: 'present' %>
-    <%= link_to '-', '#', :onclick=>'$(this).parent().submit(); return false;' %>
+<% if !current_user.student? %>
+    <%= form_for(visit.attends.build(user_id: student.id), remote: true) do |f| %>
+        <%= f.hidden_field :user_id %>
+        <%= f.hidden_field :visit_id %>
+        <%= f.hidden_field :presence, value: 'present' %>
+        <%= link_to '-', '#', :onclick=>'$(this).parent().submit(); return false;' %>
+    <% end %>
+<% else %>
+    -
 <% end %>

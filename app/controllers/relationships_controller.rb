@@ -1,6 +1,7 @@
 class RelationshipsController < ApplicationController
   before_action :set_relationship, only: [:show, :destroy, :update_proportions]
-  before_action AdminOrTeacherActionCallback
+  before_action AdminOrTeacherActionCallback, except: [:show]
+  before_action
 
   def show
     @attends = Attend.where(visit_id: @relationship.visits.all).where(user_id: @relationship.group.users.all).all

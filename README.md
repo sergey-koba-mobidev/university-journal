@@ -10,7 +10,6 @@ Main features:
 
 TODO:
 - Disciplines can change teachers
-- A student view.
 - Slow query in show relationship
 - backup data
 - reload total table on changes

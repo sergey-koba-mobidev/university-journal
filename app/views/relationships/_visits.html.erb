@@ -1,4 +1,5 @@
 <div class="row">
+  <% if !current_user.student? %>
   <div class="col-md-1">
     <%= bootstrap_form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
         <%= f.text_field :title %>
@@ -7,6 +8,7 @@
         <%= f.submit 'Add', class: 'btn btn-success' %>
     <% end %>
   </div>
+  <% end %>
   <div class="col-md-11">
     <table class="visits">
         <tr>
@@ -31,6 +33,7 @@
             <td colspan="2" class="delimiter"><%= visit.created_at.strftime('%m.%d') %></td>
           <% end %>
         </tr>
+        <% if !current_user.student? %>
         <tr>
           <td class="delimiter"><b>Remove:</b></td>
             <% @relationship.visits.send(kind).each do |visit| %>
@@ -39,6 +42,7 @@
                 </td>
             <% end %>
         </tr>
+        <% end %>
     </table>
   </div>
 </div>
