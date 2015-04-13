@@ -15,5 +15,4 @@ TODO:
 - Slow query in show relationship
 - backup data
 - reload total table on changes
-- forbid to delete student if he is in groups
-- forbid to delete groups if they have disciplines
+- translate

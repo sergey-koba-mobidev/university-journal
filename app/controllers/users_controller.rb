@@ -65,10 +65,13 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     if (!user.student? and !current_user.admin?)
-      redirect_to users_path, alert: "Access denied!" and return
+      redirect_to users_path, alert: 'Access denied!' and return
     end
-    user.destroy
-    redirect_to users_path, :notice => "User deleted."
+    if user.destroy
+      redirect_to users_path, :notice => 'User deleted.'
+    else
+      redirect_to users_path, alert: user.errors.full_messages.join('. ')
+    end
   end
 
   private

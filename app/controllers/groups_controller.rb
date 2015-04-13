@@ -55,16 +55,22 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
-    @group.destroy
-    respond_to do |format|
-      format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
-      format.json { head :no_content }
+    if @group.destroy
+      respond_to do |format|
+        format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to groups_url, alert: @group.errors.full_messages.join('. ')}
+        format.json { render @group.errors }
+      end
     end
   end
 
   def remove_user
     @user = User.find(params[:user_id])
-    @group.users.delete(@user)
+    @group.users.destroy(@user)
     respond_to do |format|
       format.html { redirect_to @group, notice: 'Student was successfully removed.' }
       format.js
