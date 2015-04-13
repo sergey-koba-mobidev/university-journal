@@ -29,6 +29,12 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
+        if !params[:clone_group_id].nil?
+          clone_from = Group.find(params[:clone_group_id])
+          clone_from.users.each do |user|
+            @group.users << user
+          end
+        end
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -113,6 +119,6 @@ class GroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:title)
+    params.require(:group).permit(:title, :year)
   end
 end

@@ -3,6 +3,17 @@
     <%= select_tag 'user_id', {}, {id: 'add_user_id'} %>
     <%= submit_tag 'Add', class: 'btn btn-success' %>
 <% end %>
+<div class="dropdown">
+    <h3 data-toggle="dropdown" class="clone-trigger">Clone group <span class="glyphicon glyphicon-plus"  aria-hidden="true"></span></h3>
+    <div class="dropdown-menu" id="clone-form">
+    <%= bootstrap_form_for(Group.new(title: (@group.title.gsub(/\D/, '').to_i+10).to_s, year: @group.year+1)) do |f| %>
+        <%= f.text_field :title %>
+        <%= f.number_field :year %>
+        <%= hidden_field_tag 'clone_group_id', @group.id %>
+        <%= f.submit %>
+    <% end %>
+    </div>
+</div>
 <script type="text/javascript">
     $('#add_user_id').selectize({
         valueField: 'id',

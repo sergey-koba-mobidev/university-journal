@@ -23,6 +23,7 @@ class UsersController < ApplicationController
       redirect_to users_path, alert: "Access denied!"
     else
       if @user.save
+        @user.confirm!
         redirect_to users_path, notice: "User created."
       else
         render :new
