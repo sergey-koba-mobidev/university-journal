@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [:create, :destroy, :show] do
     member do
       post 'update_proportions'
+      get 'total'
     end
   end
   resources :attends, only: [:create, :update] do

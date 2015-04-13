@@ -12,5 +12,4 @@ TODO:
 - Disciplines can change teachers
 - Slow query in show relationship
 - backup data
-- reload total table on changes
 - translate

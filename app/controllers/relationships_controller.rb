@@ -1,10 +1,15 @@
 class RelationshipsController < ApplicationController
-  before_action :set_relationship, only: [:show, :destroy, :update_proportions]
-  before_action AdminOrTeacherActionCallback, except: [:show]
+  before_action :set_relationship, only: [:show, :destroy, :update_proportions, :total]
+  before_action AdminOrTeacherActionCallback, except: [:show, :total]
   before_action
 
   def show
     @attends = Attend.where(visit_id: @relationship.visits.all).where(user_id: @relationship.group.users.all).all
+  end
+
+  def total
+    @attends = Attend.where(visit_id: @relationship.visits.all).where(user_id: @relationship.group.users.all).all
+    render partial: 'total', locals: { relationship: @relationship }
   end
 
   def create

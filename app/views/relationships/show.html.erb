@@ -7,7 +7,7 @@
     <% Visit.kinds.each do |kind, index| %>
         <li role="presentation" <%= 'class=active' if index == 0 %>><a href="#<%= kind.to_s.pluralize %>" aria-controls="home" role="tab" data-toggle="tab"><%= kind.to_s.pluralize.capitalize %></a></li>
     <% end %>
-    <li role="presentation"><a href="#total" aria-controls="total" role="tab" data-toggle="tab">Total</a></li>
+    <li role="presentation"><a href="#total" aria-controls="total" role="tab" data-toggle="tab" id="total-tab-header">Total</a></li>
   </ul>
 
   <!-- Tab panes -->
@@ -22,3 +22,22 @@
     </div>
   </div>
 </div>
+<script>
+    var reload_total_table = false;
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        if ($(e.target).attr('id') == 'total-tab-header' && reload_total_table){
+            $('#total-cont .visits').css('opacity',0.3);
+            $.ajax({
+                url: '<%= total_relationship_path(@relationship) %>',
+                type: 'GET',
+                error: function() {
+                },
+                success: function(res) {
+                    $('#total').html(res);
+                    $('#total-cont .visits').css('opacity',1);
+                    reload_total_table = false;
+                }
+            });
+        }
+    })
+</script>
