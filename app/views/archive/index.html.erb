@@ -1,4 +1,4 @@
-<h1>Archive</h1>
+<h1><%=t :archive %></h1>
 <%= grid(@relationships_grid, upper_pagination_panel: true) do |g|
 
   g.column name:  'Semester', attribute: 'year',  model: 'Semester' do |rel|

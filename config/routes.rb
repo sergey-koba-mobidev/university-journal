@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
 
   get 'archive/index'
+  get 'locales/change', as: 'change_locale'
 
   resources :disciplines
   resources :semesters

@@ -13,3 +13,4 @@ TODO:
 - Slow query in show relationship
 - backup data
 - translate
+- mobile design
