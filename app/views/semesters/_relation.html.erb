@@ -2,5 +2,5 @@
     <%= f.hidden_field :semester_id %>
     <%= f.collection_select(:group_id, Group.by_semester(semester), :id, :title) %>
     <%= f.collection_select(:discipline_id, current_user.allowed_disciplines, :id, :title) %>
-    <%= f.submit "Add", class: "btn btn-primary" %>
+    <%= f.submit t(:add), class: "btn btn-primary" %>
 <% end %>

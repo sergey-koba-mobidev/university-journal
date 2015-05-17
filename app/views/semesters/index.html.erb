@@ -1,6 +1,6 @@
-<h1>Semesters</h1>
+<h1><%= t(:semesters) %></h1>
 
-<%= link_to 'New Semester', new_semester_path, class: 'btn btn-success' %>
+<%= link_to t(:new) + ' ' + t(:semester), new_semester_path, class: 'btn btn-success' %>
 
 <table class="table">
   <thead>
@@ -16,9 +16,9 @@
       <tr>
         <td><%= semester.year %></td>
         <td><%= semester.pos %></td>
-        <td><%= link_to 'Show', semester %></td>
-        <td><%= link_to 'Edit', edit_semester_path(semester) %></td>
-        <td><%= link_to 'Destroy', semester, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= link_to t(:show), semester %></td>
+        <td><%= link_to t(:edit), edit_semester_path(semester) %></td>
+        <td><%= link_to t(:delete), semester, method: :delete, data: {confirm: t(:are_you_sure)} %></td>
       </tr>
   <% end %>
   </tbody>

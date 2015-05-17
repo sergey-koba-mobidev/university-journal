@@ -1,12 +1,12 @@
 <div class="container">
-  <h3>Users</h3>
-  <%= link_to 'New User', new_user_path, class: 'btn btn-success' %>
+  <h3><%= t :users %></h3>
+  <%= link_to t(:new) + ' ' + t(:user), new_user_path, class: 'btn btn-success' %>
   <div class="row">
     <div class="column">
       <%= bootstrap_form_tag(url: users_path, method: :get) do %>
           <p>
             <%= text_field_tag :search, params[:search] %>
-            <%= submit_tag "Search", :name => nil %>
+            <%= submit_tag t(:search), :name => nil %>
           </p>
       <% end %>
 

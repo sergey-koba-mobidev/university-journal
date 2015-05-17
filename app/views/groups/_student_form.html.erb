@@ -1,4 +1,4 @@
-<h3>Add student to group</h3>
+<h3><%= t(:add_student_to_group) %></h3>
 <%= form_tag(add_user_group_path, class: 'form-inline') do |f| %>
     <%= select_tag 'user_id', {}, {id: 'add_user_id'} %>
     <%= submit_tag 'Add', class: 'btn btn-success' %>

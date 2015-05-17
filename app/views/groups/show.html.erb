@@ -1,23 +1,23 @@
 <h1><%= @group.title_year %></h1>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<%= link_to t(:edit), edit_group_path(@group) %> |
+<%= link_to t(:back), groups_path %>
 
 <div class="row">
   <div class="col-md-3 col-md-offset-1">
     <%= render 'student_form'%>
   </div>
   <div class="col-md-7">
-    <h3>Students</h3>
+    <h3><%= t(:students) %></h3>
     <table class="table">
       <tr>
-        <th>Name</th>
+        <th><%= t(:name) %></th>
         <th></th>
       </tr>
       <% @group.users.all.each do |student|%>
           <tr>
             <td><%= student.name %></td>
-            <td><%= link_to 'Remove', remove_user_group_path(user_id: student.id), method: :delete, data: {confirm: 'Are you sure? All student marks will be lost!'}, class: 'btn btn-danger' %></td>
+            <td><%= link_to t(:delete), remove_user_group_path(user_id: student.id), method: :delete, data: {confirm: t(:are_you_sure) + ' ' + t(:all_marks_will_be_lost)}, class: 'btn btn-danger' %></td>
           </tr>
       <% end %>
     </table>

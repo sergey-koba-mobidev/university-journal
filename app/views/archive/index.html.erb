@@ -1,19 +1,19 @@
 <h1><%=t :archive %></h1>
 <%= grid(@relationships_grid, upper_pagination_panel: true) do |g|
 
-  g.column name:  'Semester', attribute: 'year',  model: 'Semester' do |rel|
+  g.column name:  t(:semester), attribute: 'year',  model: 'Semester' do |rel|
     rel.semester.name
   end
 
-  g.column name:  'Discipline', attribute: 'title',  model: 'Discipline' do |rel|
+  g.column name:  t(:discipline), attribute: 'title',  model: 'Discipline' do |rel|
     rel.discipline.title
   end
 
-  g.column name:  'Group', attribute: 'title',  model: 'Group' do |rel|
+  g.column name:  t(:group), attribute: 'title',  model: 'Group' do |rel|
     rel.group.title_year
   end
 
   g.column do |rel|
-    link_to('View', relationship_path(rel, tab: 'labs'))
+    link_to(t(:view), relationship_path(rel, tab: 'labs'))
   end
 end -%>

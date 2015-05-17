@@ -8,13 +8,13 @@
 <td>
   <%= form_for(user) do |f| %>
     <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-    <%= f.submit 'Change Role', :class => 'button-xs' %>
+    <%= f.submit t(:change) + ' ' + t(:role), :class => 'button-xs' %>
   <% end %>
 </td>
 <% end %>
 <td>
-  <%= link_to("Edit", edit_user_path(user), :class => 'button-xs') %>
+  <%= link_to(t(:edit), edit_user_path(user), :class => 'button-xs') %>
 </td>
 <td>
-  <%= link_to("Delete", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>
+  <%= link_to(t(:delete), user_path(user), :data => { :confirm => t(:are_you_sure) }, :method => :delete, :class => 'button-xs') unless user == current_user %>
 </td>

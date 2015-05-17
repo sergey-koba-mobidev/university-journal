@@ -2,7 +2,7 @@
 <%= bootstrap_form_for(@semester, html: {class: 'form-horizontal col-md-3 col-md-offset-1'}) do |f| %>
   <% if @semester.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@semester.errors.count, "error") %> prohibited this semester from being saved:</h2>
+      <h2><%= pluralize(@semester.errors.count, "error") %> <%= t(:semester_errors) %>:</h2>
 
       <ul>
       <% @semester.errors.full_messages.each do |message| %>

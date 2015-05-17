@@ -14,3 +14,4 @@ TODO:
 - backup data
 - translate
 - mobile design
+- friendly url

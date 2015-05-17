@@ -1,19 +1,19 @@
 <h1><%= @semester.name %></h1>
 
-<%= link_to 'Edit', edit_semester_path(@semester) %> |
-<%= link_to 'Back', semesters_path %>
+<%= link_to t(:edit), edit_semester_path(@semester) %> |
+<%= link_to t(:back), semesters_path %>
 
 <div class="row">
   <div class="col-md-3 col-md-offset-1">
     <%= render 'relation', semester: @semester %>
   </div>
   <div class="col-md-7">
-    <h3>Disciplines</h3>
+    <h3><%= t :disciplines %></h3>
       <table class="table">
         <tr>
-          <th>Discipline</th>
-          <th>Group</th>
-          <th>Teacher</th>
+          <th><%= t :discipline %></th>
+          <th><%= t :group %></th>
+          <th><%= t :teacher %></th>
           <th></th>
         </tr>
         <% @semester.relationships.all.each do |relationship|%>
@@ -21,7 +21,7 @@
           <td><%= link_to relationship.discipline.title, relationship.discipline %></td>
           <td><%= link_to relationship.group.title_year, relationship.group %></td>
           <td><%= relationship.discipline.user.name %></td>
-          <td><%= link_to 'Remove', relationship, method: :delete, data: {confirm: 'Are you sure? All marks for students will be lost!'}, class: 'btn btn-danger' %></td>
+          <td><%= link_to t(:delete), relationship, method: :delete, data: {confirm: t(:are_you_sure) + ' ' + t(:all_marks_will_be_lost)}, class: 'btn btn-danger' %></td>
         </tr>
         <% end %>
       </table>
