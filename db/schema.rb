@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412083510) do
+ActiveRecord::Schema.define(version: 20150630204354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 20150412083510) do
   end
 
   add_index "groups", ["status"], name: "index_groups_on_status", using: :btree
+
+  create_table "homeworks", force: :cascade do |t|
+    t.integer  "attend_id"
+    t.string   "document"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "homeworks", ["attend_id"], name: "index_homeworks_on_attend_id", using: :btree
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "semester_id"
@@ -134,6 +143,7 @@ ActiveRecord::Schema.define(version: 20150412083510) do
   add_foreign_key "disciplines", "users"
   add_foreign_key "groupings", "groups"
   add_foreign_key "groupings", "users"
+  add_foreign_key "homeworks", "attends"
   add_foreign_key "relationships", "disciplines"
   add_foreign_key "relationships", "groups"
   add_foreign_key "relationships", "semesters"
