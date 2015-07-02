@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630204354) do
+ActiveRecord::Schema.define(version: 20150702204433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 20150630204354) do
 
   add_index "attends", ["user_id"], name: "index_attends_on_user_id", using: :btree
   add_index "attends", ["visit_id"], name: "index_attends_on_visit_id", using: :btree
+
+  create_table "corrections", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "homework_id"
+    t.text     "body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "corrections", ["homework_id"], name: "index_corrections_on_homework_id", using: :btree
+  add_index "corrections", ["user_id"], name: "index_corrections_on_user_id", using: :btree
 
   create_table "disciplines", force: :cascade do |t|
     t.string   "title"
@@ -65,9 +76,13 @@ ActiveRecord::Schema.define(version: 20150630204354) do
 
   create_table "homeworks", force: :cascade do |t|
     t.integer  "attend_id"
-    t.string   "document"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "comment_text"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   add_index "homeworks", ["attend_id"], name: "index_homeworks_on_attend_id", using: :btree
@@ -140,6 +155,8 @@ ActiveRecord::Schema.define(version: 20150630204354) do
 
   add_foreign_key "attends", "users"
   add_foreign_key "attends", "visits"
+  add_foreign_key "corrections", "homeworks"
+  add_foreign_key "corrections", "users"
   add_foreign_key "disciplines", "users"
   add_foreign_key "groupings", "groups"
   add_foreign_key "groupings", "users"
