@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :disciplines
   resources :semesters
   resources :visits, only: [:create, :destroy, :show, :update]
+  resources :homeworks, only: [:create, :destroy, :show, :update]
   resources :relationships, only: [:create, :destroy, :show] do
     member do
       post 'update_proportions'
