@@ -1,0 +1,4 @@
+<h1><%=t(:homework)%>: <%= @visit.title %> (<small><%= @user.name %></small>)</h1>
+<h2><%= @visit.relationship.discipline.title %> (<%= @visit.relationship.semester.year %>)</h2>
+
+<%= link_to t(:new) + ' ' + t(:homework), new_visit_homework_path(visit_id: @visit.id, user_id: @user.id) if current_user.student? %>

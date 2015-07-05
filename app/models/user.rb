@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :attends, dependent: :destroy
   has_many :groupings, :dependent => :destroy
   has_many :groups, :through => :groupings
+  has_many :homeworks, dependent: :destroy
 
   enum role: [:student, :teacher, :admin]
 

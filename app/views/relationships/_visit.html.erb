@@ -12,4 +12,7 @@
   <% else %>
     <%= render 'mark_form', attend: attend  %>
   <% end %>
+  <% if visit.kind.to_s == 'homework' && (current_user.id == student.id || current_user.teacher?) %>
+      <%= link_to fa_icon('eye'), visit_homeworks_path(visit_id: visit.id, user_id: student.id), class: 'view-attend' %>
+  <% end %>
 </td>

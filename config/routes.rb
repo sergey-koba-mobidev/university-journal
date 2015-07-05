@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   resources :disciplines
   resources :semesters
-  resources :visits, only: [:create, :destroy, :show, :update]
+  resources :visits, only: [:create, :destroy, :show, :update] do
+    resources :homeworks
+  end
   resources :homeworks, only: [:create, :destroy, :show, :update]
   resources :relationships, only: [:create, :destroy, :show] do
     member do

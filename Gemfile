@@ -21,6 +21,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'colorize'
 gem 'wice_grid'
 gem 'paperclip', '~> 4.3'
+gem 'font-awesome-rails'
 
 group :development, :test do
   gem 'byebug'

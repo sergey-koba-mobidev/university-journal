@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702204433) do
+ActiveRecord::Schema.define(version: 20150705114737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(version: 20150702204433) do
   add_index "groups", ["status"], name: "index_groups_on_status", using: :btree
 
   create_table "homeworks", force: :cascade do |t|
-    t.integer  "attend_id"
     t.text     "comment_text"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
@@ -83,9 +82,12 @@ ActiveRecord::Schema.define(version: 20150702204433) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.integer  "visit_id"
+    t.integer  "user_id"
   end
 
-  add_index "homeworks", ["attend_id"], name: "index_homeworks_on_attend_id", using: :btree
+  add_index "homeworks", ["user_id"], name: "index_homeworks_on_user_id", using: :btree
+  add_index "homeworks", ["visit_id"], name: "index_homeworks_on_visit_id", using: :btree
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "semester_id"
@@ -160,7 +162,7 @@ ActiveRecord::Schema.define(version: 20150702204433) do
   add_foreign_key "disciplines", "users"
   add_foreign_key "groupings", "groups"
   add_foreign_key "groupings", "users"
-  add_foreign_key "homeworks", "attends"
+  add_foreign_key "homeworks", "visits"
   add_foreign_key "relationships", "disciplines"
   add_foreign_key "relationships", "groups"
   add_foreign_key "relationships", "semesters"
