@@ -34,17 +34,6 @@ ActiveRecord::Schema.define(version: 20150705114737) do
   add_index "attends", ["user_id"], name: "index_attends_on_user_id", using: :btree
   add_index "attends", ["visit_id"], name: "index_attends_on_visit_id", using: :btree
 
-  create_table "corrections", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "homework_id"
-    t.text     "body"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "corrections", ["homework_id"], name: "index_corrections_on_homework_id", using: :btree
-  add_index "corrections", ["user_id"], name: "index_corrections_on_user_id", using: :btree
-
   create_table "disciplines", force: :cascade do |t|
     t.string   "title"
     t.integer  "user_id"
@@ -84,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150705114737) do
     t.datetime "document_updated_at"
     t.integer  "visit_id"
     t.integer  "user_id"
+    t.text     "body"
   end
 
   add_index "homeworks", ["user_id"], name: "index_homeworks_on_user_id", using: :btree
@@ -157,8 +147,6 @@ ActiveRecord::Schema.define(version: 20150705114737) do
 
   add_foreign_key "attends", "users"
   add_foreign_key "attends", "visits"
-  add_foreign_key "corrections", "homeworks"
-  add_foreign_key "corrections", "users"
   add_foreign_key "disciplines", "users"
   add_foreign_key "groupings", "groups"
   add_foreign_key "groupings", "users"

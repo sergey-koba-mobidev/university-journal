@@ -1,7 +1,6 @@
 class Homework < ActiveRecord::Base
   belongs_to :visit
   belongs_to :user
-  has_one :correction
 
   validates :document, :attachment_presence => true
   validates_with AttachmentPresenceValidator, :attributes => :document

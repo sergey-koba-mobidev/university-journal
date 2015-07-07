@@ -32,7 +32,15 @@
     background-color: white;
   }
 }
-
+.homework{
+  .mark {
+    width: 50px;
+    form {
+      float: left;
+      width: 20px;
+    }
+  }
+}
 .error {
   background-color: red;
 }

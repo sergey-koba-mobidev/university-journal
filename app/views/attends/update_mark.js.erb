@@ -1,4 +1,4 @@
-$("#attend-mark-<%= @attend.user_id %>-<%= @attend.visit_id %>").html("<%= escape_javascript(render('relationships/mark_form', attend: @attend)) %>");
+$("#attend-mark-<%= @attend.user_id %>-<%= @attend.visit_id %> form").replaceWith("<%= escape_javascript(render('relationships/mark_form', attend: @attend)) %>");
 $("#attend-mark-<%= @attend.user_id %>-<%= @attend.visit_id %>").removeClass('error');
 $("#attend-mark-<%= @attend.user_id %>-<%= @attend.visit_id %>").fadeOut().fadeIn().fadeOut().fadeIn();
 reload_total_table = true;

@@ -17,6 +17,17 @@ class HomeworksController < ApplicationController
     @homework = Homework.new
   end
 
+  def update
+    @homework = Homework.find(params[:id])
+    @homework.body = params[:homework][:body]
+    if @homework.save
+      redirect_to visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), notice: 'Correction were updated.'
+    else
+      redirect_to visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), alert: 'Can\'t update correction.'
+    end
+
+  end
+
   def create
     hm_count = @user.homeworks.where(visit_id: @visit.id).count
     redirect_to :root, :alert => 'Access denied.' if hm_count == MAX_HOMEWORKS
@@ -27,7 +38,7 @@ class HomeworksController < ApplicationController
 
     respond_to do |format|
       if @homework.save
-        format.html { redirect_to visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), notice: 'Discipline was successfully created.' }
+        format.html { redirect_to visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), notice: 'Homework was successfully created.' }
         format.json { render :show, status: :created, location: visit_homeworks_path(visit_id: @visit.id, user_id: @user.id) }
       else
         format.html { render :new }

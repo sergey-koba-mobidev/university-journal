@@ -7,7 +7,7 @@
     <th><%= t(:document) %></th>
     <th><%= t(:created_at) %></th>
     <th><%= t(:corrections) %></th>
-    <th colspan="2"></th>
+    <th></th>
   </tr>
   </thead>
 
@@ -16,9 +16,16 @@
       <tr>
         <td><%= link_to h.document_file_name, h.document.url %></td>
         <td><%= h.created_at %></td>
-        <td></td>
-        <td></td>
-        <td><%= link_to t(:delete), h, method: :delete, data: { confirm: t(:are_you_sure) } %></td>
+        <td>
+          <% if current_user.admin? || current_user.teacher? %>
+            form goes here
+          <% else %>
+            <%= (h.body.present?) ? h.body : '-' %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to fa_icon('minus-circle'), h, method: :delete, data: { confirm: t(:are_you_sure) } if current_user.teacher? || current_user.admin?%>
+        </td>
       </tr>
   <% end %>
   </tbody>
