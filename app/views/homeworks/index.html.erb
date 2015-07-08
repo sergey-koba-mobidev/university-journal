@@ -6,6 +6,7 @@
   <tr>
     <th><%= t(:document) %></th>
     <th><%= t(:created_at) %></th>
+    <th><%= t(:comment) %></th>
     <th><%= t(:corrections) %></th>
     <th></th>
   </tr>
@@ -17,8 +18,26 @@
         <td><%= link_to h.document_file_name, h.document.url %></td>
         <td><%= h.created_at %></td>
         <td>
+          <%= (h.comment_text.present?) ? h.comment_text : '-' %>
+        </td>
+        <td>
           <% if current_user.admin? || current_user.teacher? %>
-            form goes here
+              <%= bootstrap_form_for(h, html: {class: 'form-inline homework-correction-form'}) do |f| %>
+                  <% if h.errors.any? %>
+                      <div id="error_explanation">
+                        <h2><%= pluralize(h.errors.count, "error") %> prohibited this homework from being saved:</h2>
+
+                        <ul>
+                          <% h.errors.full_messages.each do |message| %>
+                              <li><%= message %></li>
+                          <% end %>
+                        </ul>
+                      </div>
+                  <% end %>
+                  <%= f.text_area :body, cols: 50, rows: 10, label: false %>
+
+                  <%= f.submit t(:update_correction) %>
+              <% end %>
           <% else %>
             <%= (h.body.present?) ? h.body : '-' %>
           <% end %>

@@ -1,7 +1,8 @@
 class HomeworksController < ApplicationController
-  before_action :set_visit
-  before_action :set_user
+  before_action :set_visit, except: [:update, :destroy]
+  before_action :set_user, except: [:update, :destroy]
   before_action :check_access
+  before_action AdminOrTeacherActionCallback, only: [:update, :destroy]
 
   MAX_HOMEWORKS = 10
 
@@ -21,11 +22,26 @@ class HomeworksController < ApplicationController
     @homework = Homework.find(params[:id])
     @homework.body = params[:homework][:body]
     if @homework.save
-      redirect_to visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), notice: 'Correction were updated.'
+      redirect_to :back, notice: 'Correction was updated.'
     else
-      redirect_to visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), alert: 'Can\'t update correction.'
+      redirect_to :back, alert: 'Can\'t update correction.'
     end
 
+  end
+
+  def destroy
+    @homework = Homework.find(params[:id])
+    if @homework.destroy
+      respond_to do |format|
+        format.html { redirect_to :back, notice: 'Homework was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to :back, alert: @homework.errors.full_messages.join('. ')}
+        format.json { render @homework.errors }
+      end
+    end
   end
 
   def create

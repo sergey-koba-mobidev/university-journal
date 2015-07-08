@@ -15,3 +15,5 @@ TODO:
 - translate
 - mobile design
 - friendly url
+- student should be notified on new corrections
+- teacher should be notified on new homeworks
