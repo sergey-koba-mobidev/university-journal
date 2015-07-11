@@ -7,7 +7,7 @@ class HomeworksController < ApplicationController
   MAX_HOMEWORKS = 10
 
   def index
-    @homeworks = @user.homeworks.where(visit_id: @visit.id)
+    @homeworks = @user.homeworks.where(visit_id: @visit.id).order('created_at desc')
   end
 
   def show

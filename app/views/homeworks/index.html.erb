@@ -1,5 +1,4 @@
-<h1><%=t(:homework)%>: <%= @visit.title %> (<small><%= @user.name %></small>)</h1>
-<h2><%= @visit.relationship.discipline.title %> (<%= @visit.relationship.semester.year %>)</h2>
+<%= render 'heading' %>
 
 <table class="table">
   <thead>
@@ -39,7 +38,7 @@
                   <%= f.submit t(:update_correction) %>
               <% end %>
           <% else %>
-            <%= (h.body.present?) ? h.body : '-' %>
+            <%= (h.body.present?) ? simple_format(h.body) : '-' %>
           <% end %>
         </td>
         <td>
