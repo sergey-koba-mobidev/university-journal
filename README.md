@@ -7,6 +7,8 @@ Main features:
 - Managing Disciplines
 - Managing Groups of students
 - Managing Labs, Lectures, Modules, Exams
+- Autocalculating the student rank
+- Uploading Homeworks and adding corrections.
 
 TODO:
 - Disciplines can change teachers
@@ -15,5 +17,4 @@ TODO:
 - translate
 - mobile design
 - friendly url
-- student should be notified on new corrections
-- teacher should be notified on new homeworks
+- student and teaher should be notified via sms and email.

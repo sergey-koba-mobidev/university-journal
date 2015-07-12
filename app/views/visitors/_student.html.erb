@@ -37,7 +37,7 @@
             <div id="hcollapse<%= h.id %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="hheading<%= h.id %>">
               <div class="panel-body">
                 <%= simple_format(h.body) %>
-                <%= link_to t(:view), visit_homeworks_path(visit_id: h.visit_id, user_id: current_user.id) %>
+                [<%= h.updated_at %>] <%= link_to t(:view), visit_homeworks_path(visit_id: h.visit_id, user_id: current_user.id) %>
               </div>
             </div>
           </div>
