@@ -3,11 +3,15 @@
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form'}) do |f| %>
     <%= devise_error_messages! %>
     <div class="form-group">
-      <%= f.label :name %>
-      <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+      <%
+         options = Hash.new
+         options[:readonly] = true if current_user.student?
+         options[:class] = 'form-control'
+      %>
+      <%= f.text_field :name, options %>
     </div>
     <div class="form-group">
-      <%= f.label :email %>
+      <%= f.label :email, :autofocus => true %>
       <%= f.email_field :email, class: 'form-control' %>
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
@@ -33,9 +37,4 @@
     </fieldset>
     <%= f.submit 'Update', :class => 'button right' %>
   <% end %>
-</div>
-<div class="authform">
-<h3>Cancel Account</h3>
-<p>Unhappy? We'll be sad to see you go.</p>
-<%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button right' %>
 </div>

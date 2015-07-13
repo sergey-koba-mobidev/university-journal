@@ -12,7 +12,7 @@
   <div class="col-md-8">
     <table class="visits <%= kind %>">
         <tr>
-          <th class="delimiter">Student</th>
+          <th class="delimiter"><%= t(:student) %></th>
           <% @relationship.visits.send(kind).each do |visit| %>
           <th colspan="2" class="delimiter" id="visit-<%= visit.id %>">
               <%= render 'visit_form', visit: visit %>
@@ -28,7 +28,7 @@
         </tr>
         <% end %>
         <tr>
-        <td class="delimiter"><b>Date:</b></td>
+        <td class="delimiter"><b><%= t(:rdate) %>:</b></td>
           <% @relationship.visits.send(kind).each do |visit| %>
             <td colspan="2" class="delimiter"><%= visit.created_at.strftime('%m.%d') %></td>
           <% end %>

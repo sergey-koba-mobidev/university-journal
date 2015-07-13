@@ -11,8 +11,11 @@
             </ul>
           </div>
       <% end %>
-
-      <%= f.text_field :name %>
+      <%
+         options = Hash.new
+         options[:readonly] = true if current_user.student?
+      %>
+      <%= f.text_field :name, options %>
       <%= f.email_field :email %>
       <%
          if current_user.admin?

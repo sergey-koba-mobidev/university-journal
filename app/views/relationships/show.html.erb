@@ -5,9 +5,9 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <% Visit.kinds.each do |kind, index| %>
-        <li role="presentation" <%= 'class=active' if index == 0 %>><a href="#<%= kind.to_s.pluralize %>" aria-controls="home" role="tab" data-toggle="tab"><%= kind.to_s.pluralize.capitalize %></a></li>
+        <li role="presentation" <%= 'class=active' if index == 0 %>><a href="#<%= kind.to_s.pluralize %>" aria-controls="home" role="tab" data-toggle="tab"><%= t(kind.to_s.pluralize.downcase) %></a></li>
     <% end %>
-    <li role="presentation"><a href="#total" aria-controls="total" role="tab" data-toggle="tab" id="total-tab-header">Total</a></li>
+    <li role="presentation"><a href="#total" aria-controls="total" role="tab" data-toggle="tab" id="total-tab-header"><%= t(:total) %></a></li>
   </ul>
 
   <!-- Tab panes -->
