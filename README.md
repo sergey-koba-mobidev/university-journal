@@ -16,5 +16,5 @@ TODO:
 - backup data
 - translate
 - mobile design
-- friendly url
+- friendly urlagra
 - student and teaher should be notified via sms and email.

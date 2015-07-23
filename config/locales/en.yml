@@ -39,7 +39,7 @@ en:
   semester: "Semester"
   semester_errors: "prohibited this semester from being saved"
   teacher: "Teacher"
-  edit_account: "Edit Account"
+  edit_account: "Account"
   sign_in: "Sign in"
   sign_out: "Sign out"
   sign_up: "Sign up"

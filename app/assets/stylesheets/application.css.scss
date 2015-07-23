@@ -13,6 +13,9 @@
  *= require_tree .
  *= require_self
  *= require selectize
- *= require selectize.bootstrap3
  *= require font-awesome
  */
+
+@import "materialize/components/color";
+$primary-color: color("blue", "lighten-1") !default;
+@import "materialize";

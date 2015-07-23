@@ -5,18 +5,18 @@
     <title><%= content_for?(:title) ? yield(:title) : t(:journal) %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : t(:journal) %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
     <%= favicon_link_tag 'favicon-32x32.png', rel: 'apple-touch-icon', type: 'image/png' %>
   </head>
   <body>
-    <header>
-      <%= render 'layouts/navigation' %>
-    </header>
-    <main role="main">
+    <%= render 'layouts/navigation' %>
+
+    <div class="container">
        <%= render 'layouts/messages' %>
        <%= yield %>
-    </main>
+    </div>
   </body>
 </html>

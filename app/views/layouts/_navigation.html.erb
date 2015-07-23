@@ -1,22 +1,50 @@
-<%# navigation styled for Bootstrap 3.0 %>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to raw('<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>'), root_path, class: 'navbar-brand' %>
-    </div>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <%= render 'layouts/navigation_links' %>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <%= render 'layouts/locales_links' %>
-      </ul>
-    </div>
+<ul id="locales_dropdown" class="dropdown-content">
+    <%= render 'layouts/locales_links' %>
+</ul>
+<ul id="user_dropdown" class="dropdown-content">
+    <%= render 'layouts/user_links' if user_signed_in? %>
+</ul>
+<nav>
+  <div class="nav-wrapper container">
+    <%= link_to t(:journal), root_path, class: 'brand-logo' %>
+    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+
+    <!-- Top Menu -->
+    <ul class="right hide-on-med-and-down">
+      <%= render 'layouts/navigation_links' %>
+      <% if user_signed_in? %>
+          <li><a class="dropdown-button" href="#!" data-activates="user_dropdown"><%= current_user.name %><i class="material-icons right">arrow_drop_down</i></a></li>
+      <% else %>
+          <%= render 'layouts/guest_links' %>
+      <% end %>
+      <li><a class="dropdown-button" href="#!" data-activates="locales_dropdown"><%= I18n.locale %><i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+
+    <!-- Mobile Menu -->
+    <ul class="side-nav" id="mobile-menu">
+      <%= render 'layouts/navigation_links' %>
+      <%= render 'layouts/guest_links' unless user_signed_in? %>
+      <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <% if user_signed_in? %>
+                <li class="bold active"><a class="collapsible-header  waves-effect waves-teal active"><%= current_user.name %></a>
+                  <div class="collapsible-body">
+                    <ul>
+                      <%= render 'layouts/user_links' if user_signed_in? %>
+                    </ul>
+                  </div>
+                </li>
+            <% end %>
+            <li class="bold"><a class="collapsible-header  waves-effect waves-teal"><%= I18n.locale %></a>
+              <div class="collapsible-body" style="">
+                <ul>
+                  <%= render 'layouts/locales_links' %>
+                </ul>
+              </div>
+            </li>
+          </ul>
+      </li>
+    </ul>
+
   </div>
 </nav>
