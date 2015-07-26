@@ -1,26 +1,31 @@
 <h1><%= @relationship.discipline.title %> [<%= @relationship.group.title %>]</h1>
 <h3><%= @relationship.semester.name %></h3>
-<div role="tabpanel">
+
+<div class="row">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
+  <div class="col s12">
+    <ul class="tabs">
     <% Visit.kinds.each do |kind, index| %>
-        <li role="presentation" <%= 'class=active' if index == 0 %>><a href="#<%= kind.to_s.pluralize %>" aria-controls="home" role="tab" data-toggle="tab"><%= t(kind.to_s.pluralize.downcase) %></a></li>
+          <li class="tab col">
+            <a href="#<%= kind.to_s.pluralize %>" <%= 'class=active' if index == 0 %>><%= t(kind.to_s.pluralize.downcase) %></a>
+          </li>
     <% end %>
-    <li role="presentation"><a href="#total" aria-controls="total" role="tab" data-toggle="tab" id="total-tab-header"><%= t(:total) %></a></li>
-  </ul>
+      <li class="tab col">
+        <a href="#total"><%= t(:total) %></a>
+      </li>
+    </ul>
+  </div>
 
   <!-- Tab panes -->
-  <div class="tab-content">
     <% Visit.kinds.each do |kind, index| %>
-        <div role="tabpanel" class="tab-pane <%= 'active' if index == 0 %>" id="<%= kind.to_s.pluralize %>">
+      <div class="col s12" id="<%= kind.to_s.pluralize %>">
           <%= render 'visits', relationship: @relationship, kind: kind %>
-        </div>
+      </div>
     <% end %>
-    <div role="tabpanel" class="tab-pane" id="total">
+    <div class="col s12" id="total">
       <%= render 'total', relationship: @relationship %>
     </div>
-  </div>
 </div>
 <script>
     var reload_total_table = false;
