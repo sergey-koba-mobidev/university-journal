@@ -10,7 +10,8 @@
   </div>
   <% end %>
   <div class="col-md-8">
-    <table class="visits <%= kind %>">
+    <table class="visits <%= kind %> hoverable">
+      <thead>
         <tr>
           <th class="delimiter"><%= t(:student) %></th>
           <% @relationship.visits.send(kind).each do |visit| %>
@@ -19,9 +20,10 @@
           </th>
           <% end %>
         </tr>
+      </thead>
         <% @relationship.group.users.each do |student| %>
         <tr>
-          <td class="delimiter"><%= student.name %></td>
+          <th class="delimiter"><%= student.name %></th>
           <% @relationship.visits.send(kind).each do |visit| %>
                 <%= render 'visit', visit: visit, student: student %>
           <% end %>

@@ -24,6 +24,7 @@
   <% end %>
   <div class="col-md-10">
     <table class="visits">
+      <thead>
       <tr>
         <th class="delimiter"><%= t(:student) %></th>
         <% Visit.kinds.each do |kind, index| %>
@@ -33,10 +34,11 @@
         <th class="delimiter"><%= t(:mark) %></th>
         <th class="delimiter">ECTS</th>
       </tr>
+      </thead>
       <% relationship.group.users.each do |student| %>
           <% student_total = 0 %>
           <tr>
-            <td class="delimiter"><%= student.name %></td>
+            <th class="delimiter"><%= student.name %></th>
             <% Visit.kinds.each do |kind, index| %>
                 <%
                    attends = @attends.select { |attend| attend.user_id == student.id and attend.relationship_id == relationship.id and attend.kind == index }
