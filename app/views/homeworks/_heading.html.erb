@@ -1,3 +1,10 @@
-<h1><%=t(:homework)%>: <%= @visit.title %> (<small><%= @user.name %></small>)</h1>
-<h2><%= @visit.relationship.discipline.title %> (<%= @visit.relationship.semester.year %>)</h2>
-<h4><%=t(:teacher)%>: <%= @visit.relationship.discipline.user.name %></h4>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= @visit.relationship.discipline.title %>, <%= @visit.title %> (<%= @visit.relationship.semester.year %>)</span>
+    <p>
+      <%=t(:teacher)%>: <%= @visit.relationship.discipline.user.name %> <br />
+      <%=t(:student)%>: <%= @user.name %> <br /><br />
+      <%= link_to t(:new) + ' ' + t(:homework), new_visit_homework_path(visit_id: @visit.id, user_id: @user.id), class: 'btn waves-effect waves-light' if current_user.student? && action_name != 'new' %>
+    </p>
+  </div>
+</div>

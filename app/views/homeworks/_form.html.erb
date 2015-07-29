@@ -1,4 +1,4 @@
-<%= bootstrap_form_tag(url: visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), html: {multipart: true, class: 'form-horizontal col-md-3 col-md-offset-1'}) do |f| %>
+<%= form_tag(visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), multipart: true) do %>
     <% if @homework.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@homework.errors.count, "error") %> prohibited this homework from being saved:</h2>
@@ -10,8 +10,22 @@
           </ul>
         </div>
     <% end %>
-    <%= f.file_field :document %>
-    <%= f.text_area :comment_text %>
 
-    <%= f.submit %>
+    <div class="row">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span><%= t(:document) %></span>
+          <%= file_field_tag :document %>
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+      <div class="input-field">
+        <%= text_area_tag :comment_text, '', class: 'materialize-textarea' %>
+        <label><%= t(:comment_text) %></label>
+      </div>
+    </div>
+
+    <%= button_tag t(:upload), class: 'btn waves-effect waves-light', type: 'submit' %>
 <% end %>

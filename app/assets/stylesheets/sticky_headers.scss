@@ -7,42 +7,45 @@
   max-width: 1000px;
   overflow: hidden;
 }
+
 .component .filler {
   color: #d3d3d3;
 }
-table {
+
+.relationships table {
   border-collapse: collapse;
   margin-bottom: 3em;
   width: 100%;
   background: #fff;
 }
-td, th {
-  padding: 0.75em 1.5em;
-  text-align: left;
-}
-td.err {
+
+.relationships td.err {
   background-color: #e992b9;
   color: #fff;
   font-size: 0.75em;
   text-align: center;
   line-height: 1;
 }
-th {
+
+.relationships th {
   background-color: #42A5F5;
   font-weight: bold;
   color: #fff;
   white-space: nowrap;
   border-radius: 0px !important;
 }
-tbody th {
+
+.relationships tbody th {
   background-color: #42A5F5;
   border-bottom: 1px solid black;
 }
-tbody tr:nth-child(2n-1) {
+
+.relationships tbody tr:nth-child(2n-1) {
   background-color: #f5f5f5;
   transition: all .125s ease-in-out;
 }
-tbody tr:hover {
+
+.relationships tbody tr:hover {
   background-color: #C5DCFA !important;
 }
 
@@ -54,9 +57,11 @@ tbody tr:hover {
   margin: 3em 0;
   width: 100%;
 }
-.sticky-col thead, .sticky-intersect thead, .sticky-thead thead, .visits thead{
+
+.sticky-col thead, .sticky-intersect thead, .sticky-thead thead, .visits thead {
   border-bottom: 1px solid black;
 }
+
 .sticky-wrap .sticky-thead,
 .sticky-wrap .sticky-col,
 .sticky-wrap .sticky-intersect {
@@ -68,33 +73,39 @@ tbody tr:hover {
   z-index: 50;
   width: auto; /* Prevent table from stretching to full size */
 }
+
 .sticky-wrap .sticky-thead {
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   z-index: 100;
   width: 100%; /* Force stretch */
 
 }
+
 .sticky-wrap .sticky-thead th {
   border-right: 2px solid black;
 }
+
 .sticky-wrap .sticky-intersect {
   opacity: 1;
   z-index: 150;
 
 }
+
 .sticky-wrap .sticky-intersect th {
   background-color: #3B94DC;
   border-bottom: 1px solid black;
 }
+
 .sticky-wrap td,
 .sticky-wrap th {
   box-sizing: border-box;
 }
 
 /* Not needed for sticky header/column functionality */
-td.user-name {
+.relationships td.user-name {
   text-transform: capitalize;
 }
+
 .sticky-wrap.overflow-y {
   overflow-y: auto;
   max-height: 50vh;

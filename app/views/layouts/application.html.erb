@@ -11,7 +11,7 @@
     <%= favicon_link_tag %>
     <%= favicon_link_tag 'favicon-32x32.png', rel: 'apple-touch-icon', type: 'image/png' %>
   </head>
-  <body>
+  <body class="<%= controller_name.humanize.downcase %>">
     <%= render 'layouts/navigation' %>
 
     <div class="container">

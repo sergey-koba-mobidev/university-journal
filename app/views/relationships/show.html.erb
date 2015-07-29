@@ -1,5 +1,11 @@
-<h1><%= @relationship.discipline.title %> [<%= @relationship.group.title %>]</h1>
-<h3><%= @relationship.semester.name %></h3>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= @relationship.discipline.title %></span>
+    <p>
+      <%= t(:group) %> <%= @relationship.group.title %>, <%= @relationship.semester.name %>
+    </p>
+  </div>
+</div>
 
 <div class="row">
 

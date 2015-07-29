@@ -1,6 +1,6 @@
 <%= render 'heading' %>
 
-<table class="table">
+<table class="hoverable striped">
   <thead>
   <tr>
     <th><%= t(:document) %></th>
@@ -48,5 +48,3 @@
   <% end %>
   </tbody>
 </table>
-
-<%= link_to t(:new) + ' ' + t(:homework), new_visit_homework_path(visit_id: @visit.id, user_id: @user.id) if current_user.student? %>
