@@ -1,12 +1,23 @@
 <div class="authform">
-  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :role => 'form'}) do |f| %>
-    <h3>Forgot your password?</h3>
-    <p>We'll send password reset instructions.</p>
-    <%= devise_error_messages! %>
-    <div class="form-group">
-      <%= f.label :email %>
-      <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
-    </div>
-     <%= f.submit 'Reset Password', :class => 'button right' %>
+  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :post, :role => 'form'}) do |f| %>
+      <div class="card hoverable">
+        <div class="card-content">
+          <span class="card-title black-text">Forgot your password?</span>
+
+          <p>
+            We'll send password reset instructions.
+          </p>
+        </div>
+      </div>
+      <%= devise_error_messages! %>
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <%= f.email_field :email, :autofocus => true %>
+          <%= f.label :email %>
+        </div>
+        <div class="input-field col s12 m6">
+          <%= button_tag t(:reset_password), class: 'btn waves-effect waves-light', type: 'submit' %>
+        </div>
+      </div>
   <% end %>
 </div>
