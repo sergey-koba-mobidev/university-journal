@@ -1,20 +1,29 @@
 <div class="row">
-<%= bootstrap_form_for(@group, html: {class: 'form-horizontal col-md-3 col-md-offset-1'}) do |f| %>
-  <% if @group.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@group.errors.count, "error") %> <%= t(:group_errors) %>:</h2>
+  <%= form_for(@group, html: {class: 'form-horizontal col-md-3 col-md-offset-1'}) do |f| %>
+      <% if @group.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@group.errors.count, "error") %> <%= t(:group_errors) %>:</h2>
 
-      <ul>
-      <% @group.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+            <ul>
+              <% @group.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <%= f.text_field :title, :autofocus => true %>
+          <%= f.label :title %>
+        </div>
+        <div class="input-field col s12 m6">
+          <%= f.select :year, 2015..(Time.zone.now.year + 1)%>
+          <%= f.label :year %>
+        </div>
+      </div>
+
+      <%= button_tag t(:create), class: 'btn waves-effect waves-light', type: 'submit' %>
+
   <% end %>
-
-  <%= f.text_field :title %>
-  <%= f.select :year, Time.zone.now.year..(Time.zone.now.year + 1) %>
-  <%= f.submit %>
-
-<% end %>
 </div>

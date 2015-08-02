@@ -1,11 +1,11 @@
 <% if user_signed_in? %>
   <% if current_user.admin? %>
-    <li><%= link_to 'Semesters', semesters_path %></li>
+    <li><%= link_to 'Semesters', semesters_path, class: 'waves-effect waves-light' %></li>
   <% end %>
   <% if current_user.admin? || current_user.teacher?%>
-    <li><%= link_to t(:users), users_path %></li>
-    <li><%= link_to t(:groups), groups_path %></li>
-    <li><%= link_to t(:disciplines), disciplines_path %></li>
-    <li><%= link_to t(:archive), archive_index_path %></li>
+    <li><%= link_to t(:users), users_path, class: 'waves-effect waves-light' %></li>
+    <li><%= link_to t(:groups), groups_path, class: 'waves-effect waves-light' %></li>
+    <li><%= link_to t(:disciplines), disciplines_path, class: 'waves-effect waves-light' %></li>
+    <li><%= link_to t(:archive), archive_index_path, class: 'waves-effect waves-light' %></li>
   <% end %>
 <% end %>

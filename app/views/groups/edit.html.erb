@@ -1,6 +1,10 @@
-<h1><%= t(:edit) %> <%= t(:group) %></h1>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= t(:edit) %> <%= t(:group) %></span>
+  </div>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to t(:show), @group %> |
-<%= link_to t(:back), groups_path %>
+<%= link_to t(:show), @group, class: 'btn btn-flat waves-effect waves-teal' %>
+<%= link_to t(:back), groups_path, class: 'btn btn-flat waves-effect waves-teal' %>
