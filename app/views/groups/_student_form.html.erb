@@ -1,19 +1,33 @@
-<h3><%= t(:add_student_to_group) %></h3>
-<%= form_tag(add_user_group_path, class: 'form-inline') do |f| %>
-    <%= select_tag 'user_id', {}, {id: 'add_user_id'} %>
-    <%= submit_tag 'Add', class: 'btn btn-success' %>
-<% end %>
-<div class="dropdown">
-    <h3 data-toggle="dropdown" class="clone-trigger">Clone group <span class="glyphicon glyphicon-plus"  aria-hidden="true"></span></h3>
-    <div class="dropdown-menu" id="clone-form">
-    <%= form_for(Group.new(title: (@group.title.gsub(/\D/, '').to_i+10).to_s, year: @group.year+1)) do |f| %>
-        <%= f.text_field :title %>
-        <%= f.number_field :year %>
-        <%= hidden_field_tag 'clone_group_id', @group.id %>
-        <%= f.submit %>
-    <% end %>
-    </div>
+<%= form_tag(add_user_group_path, class: 'form-inline', id: 'add-student-to-group') do |f| %>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= t(:add_student_to_group) %></span>
+    <p>
+      <%= select_tag 'user_id', {}, {id: 'add_user_id', class: 'browser-default', placeholder: 'Start typing...'} %>
+    </p>
+  </div>
+  <div class="card-action">
+    <%= link_to t(:add), '', onclick: '$("#add-student-to-group").submit(); return false;' %>
+  </div>
 </div>
+<% end %>
+
+<%= form_for(Group.new(title: (@group.title.gsub(/\D/, '').to_i+10).to_s, year: @group.year+1)) do |f| %>
+    <div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title black-text">Clone group</span>
+        <p>
+          <%= f.text_field :title %>
+          <%= f.number_field :year %>
+          <%= hidden_field_tag 'clone_group_id', @group.id %>
+        </p>
+      </div>
+      <div class="card-action">
+        <%= link_to t(:create), '', onclick: '$("#new_group").submit(); return false;' %>
+      </div>
+    </div>
+<% end %>
+
 <script type="text/javascript">
     $('#add_user_id').selectize({
         valueField: 'id',

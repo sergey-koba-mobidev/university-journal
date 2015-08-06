@@ -15,7 +15,7 @@
   <div class="col m8 s12">
     <ul class="collection with-header">
       <li class="collection-header"><h4><%= t(:students) %></h4></li>
-      <% @group.users.all.each do |student|%>
+      <% @group.users.order(name: :asc).all.each do |student|%>
           <li class="collection-item">
             <div>
               <%= student.name %>
