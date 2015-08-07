@@ -1,6 +1,10 @@
-<h1>Editing Discipline</h1>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= t(:edit) %> <%= t(:discipline) %></span>
+  </div>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @discipline %> |
-<%= link_to 'Back', disciplines_path %>
+<%= link_to t(:show), @discipline, class: 'btn btn-flat waves-effect waves-teal' %>
+<%= link_to t(:back), disciplines_path, class: 'btn btn-flat waves-effect waves-teal' %>
