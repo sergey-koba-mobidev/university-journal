@@ -1,3 +1,14 @@
-<h3><%= t :user %></h3>
-<p><%= t :name %>: <%= @user.name if @user.name %></p>
-<p><%= t :email %>: <%= @user.email if @user.email %></p>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= @user.name if @user.name %></span>
+
+    <p>
+      <%= gravatar_for @user %>
+      <%= @user.email if @user.email %>
+    </p>
+  </div>
+  <div class="card-action">
+    <%= link_to t(:edit), edit_user_path(@user) %>
+    <%= link_to t(:back), users_path %>
+  </div>
+</div>

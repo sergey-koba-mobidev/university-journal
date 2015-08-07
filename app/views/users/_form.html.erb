@@ -1,5 +1,5 @@
 <div class="row">
-  <%= bootstrap_form_for(@user, html: {class: 'form-horizontal col-md-3 col-md-offset-1'}, url: (@user.new_record?) ? create_manual_users_path : user_path(@user)) do |f| %>
+  <%= form_for(@user, html: {class: 'form-horizontal col-md-3 col-md-offset-1'}, url: (@user.new_record?) ? create_manual_users_path : user_path(@user)) do |f| %>
       <% if @user.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>

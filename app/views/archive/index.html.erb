@@ -1,5 +1,9 @@
-<h1><%=t :archive %></h1>
-<%= grid(@relationships_grid, upper_pagination_panel: true) do |g|
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%=t :archive %></span>
+  </div>
+</div>
+<%= grid(@relationships_grid, upper_pagination_panel: true, class: 'striped') do |g|
 
   g.column name:  t(:semester), attribute: 'year',  model: 'Semester' do |rel|
     rel.semester.name

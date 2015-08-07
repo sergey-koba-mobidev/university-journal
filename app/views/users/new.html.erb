@@ -1,5 +1,9 @@
-<h1><%= t(:new) + ' ' + t(:user) %></h1>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= t(:new) %> <%= t(:user) %></span>
+  </div>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to t(:back), users_path %>
+<%= link_to t(:back), users_path, class: 'btn btn-flat waves-effect waves-teal' %>

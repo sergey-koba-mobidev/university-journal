@@ -13,8 +13,6 @@
 </td>
 <% end %>
 <td>
-  <%= link_to(t(:edit), edit_user_path(user), :class => 'button-xs') %>
-</td>
-<td>
-  <%= link_to(t(:delete), user_path(user), :data => { :confirm => t(:are_you_sure) }, :method => :delete, :class => 'button-xs') unless user == current_user %>
+  <%= link_to raw('<i class="fa fa-pencil"></i>'), edit_user_path(user), title: t(:edit) %>
+  <%= link_to raw('<i class="fa fa-trash"></i>'), user_path(user), method: :delete, data: {confirm: t(:are_you_sure)}, title: t(:delete) unless user == current_user %>
 </td>
