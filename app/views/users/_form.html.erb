@@ -15,8 +15,29 @@
          options = Hash.new
          options[:readonly] = true if current_user.student?
       %>
-      <%= f.text_field :name, options %>
-      <%= f.email_field :email %>
+
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <%= f.text_field :name, options %>
+          <%= f.label :name %>
+        </div>
+        <div class="input-field col s12 m6">
+          <%= f.email_field :email %>
+          <%= f.label :email %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <%= f.password_field :password %>
+          <%= f.label :password %>
+        </div>
+        <div class="input-field col s12 m6">
+          <%= f.password_field :password_confirmation %>
+          <%= f.label :password_confirmation %>
+        </div>
+      </div>
+
       <%
          if current_user.admin?
            roles = User.roles.keys.map { |role| [role.titleize, role] }
@@ -24,10 +45,15 @@
            roles = User.roles.select { |key, value| key == 'student' }.keys.map { |role| [role.titleize, role] }
          end
       %>
-      <%= f.select(:role, roles) %>
-      <%= f.password_field :password %>
-      <%= f.password_field :password_confirmation %>
 
-      <%= f.submit %>
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <%= f.select(:role, roles) %>
+          <%= f.label :role %>
+        </div>
+        <div class="input-field col s12 m6">
+          <%= button_tag t(:save), class: 'btn waves-effect waves-light', type: 'submit' %>
+        </div>
+      </div>
   <% end %>
 </div>
