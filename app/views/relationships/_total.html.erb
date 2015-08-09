@@ -1,13 +1,13 @@
 <div class="row" id="total-cont">
   <% if !current_user.student? %>
   <div class="col-md-2">
-    <%= bootstrap_form_tag(url: update_proportions_relationship_path(relationship), method: :post, html: {class: 'form-horizontal total-form'}) do |f| %>
+    <%= form_tag(update_proportions_relationship_path(relationship), method: :post, html: {class: 'form-horizontal total-form'}) do |f| %>
         <p>
         <% Visit.kinds.each do |kind, index| %>
               <%
                  value = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i
               %>
-            <%= f.number_field 'total['+kind.to_s+'_per_each]', label: 'Per '+kind.to_s, value: value %>
+            <%= number_field_tag 'total['+kind.to_s+'_per_each]', label: 'Per '+kind.to_s, value: value %>
         <% end %>
         </p>
         <p>
@@ -15,10 +15,10 @@
               <%
                  value = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i
               %>
-              <%= f.number_field 'total['+kind.to_s+'_total]', label: 'Total '+kind.to_s, value: value %>
+              <%= number_field_tag 'total['+kind.to_s+'_total]', label: 'Total '+kind.to_s, value: value %>
           <% end %>
         </p>
-        <%= f.submit 'Update', :name => nil %>
+        <%= submit_tag 'Update', :name => nil %>
     <% end %>
   </div>
   <% end %>

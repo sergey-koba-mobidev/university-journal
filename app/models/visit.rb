@@ -3,4 +3,6 @@ class Visit < ActiveRecord::Base
   has_many :attends, dependent: :destroy
 
   enum kind: [:lab, :lecture, :module, :homework]
+
+  default_scope { order(:created_at) }
 end

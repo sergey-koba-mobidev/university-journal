@@ -1,7 +1,7 @@
 <div class="row">
   <% if !current_user.student? %>
   <div class="col-md-1">
-    <%= bootstrap_form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
+    <%= form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
         <%= f.text_field :title %>
         <%= f.hidden_field :relationship_id %>
         <%= f.hidden_field :kind, {value: kind} %>
