@@ -1,13 +1,18 @@
-<h1><%= t(:semesters) %></h1>
+<div class="card hoverable">
+  <div class="card-content">
+    <span class="card-title black-text"><%= t(:semesters) %></span>
+    <p>
+      <%= link_to t(:new) + ' ' + t(:semester), new_semester_path, class: 'btn waves-effect waves-light' %>
+    </p>
+  </div>
+</div>
 
-<%= link_to t(:new) + ' ' + t(:semester), new_semester_path, class: 'btn btn-success' %>
-
-<table class="table">
+<table class="striped">
   <thead>
   <tr>
-    <th>Year</th>
-    <th>Pos</th>
-    <th colspan="3"></th>
+    <th><%= t(:year) %></th>
+    <th><%= t(:pos) %></th>
+    <th><%= t(:actions) %></th>
   </tr>
   </thead>
 
@@ -16,9 +21,11 @@
       <tr>
         <td><%= semester.year %></td>
         <td><%= semester.pos %></td>
-        <td><%= link_to t(:show), semester %></td>
-        <td><%= link_to t(:edit), edit_semester_path(semester) %></td>
-        <td><%= link_to t(:delete), semester, method: :delete, data: {confirm: t(:are_you_sure)} %></td>
+        <td>
+          <%= link_to raw('<i class="fa fa-eye"></i>'), semester, title: t(:show) %>
+          <%= link_to raw('<i class="fa fa-pencil"></i>'), edit_semester_path(semester), title: t(:edit) %>
+          <%= link_to raw('<i class="fa fa-trash"></i>'), semester, method: :delete, data: {confirm: t(:are_you_sure)}, title: t(:delete) %>
+        </td>
       </tr>
   <% end %>
   </tbody>

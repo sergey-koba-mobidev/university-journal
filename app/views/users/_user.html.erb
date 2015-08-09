@@ -7,8 +7,16 @@
 <% if current_user.admin? %>
 <td>
   <%= form_for(user) do |f| %>
-    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-    <%= f.submit t(:change) + ' ' + t(:role), :class => 'button-xs' %>
+      <div class="row">
+        <div class="input-field col s12 m8">
+          <%= f.hidden_field :email %>
+          <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+          <%= f.label :role %>
+        </div>
+        <div class="input-field col s12 m4">
+          <%= button_tag t(:save), class: 'btn waves-effect waves-light', type: 'submit' %>
+        </div>
+      </div>
   <% end %>
 </td>
 <% end %>
