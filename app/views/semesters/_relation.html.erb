@@ -1,6 +1,15 @@
-<%= bootstrap_form_for(semester.relationships.build, html: {class: 'form-horizontal'}) do |f| %>
+<%= form_for(semester.relationships.build, html: {class: 'form-horizontal', id: 'add-relation-to-semester'}) do |f| %>
     <%= f.hidden_field :semester_id %>
-    <%= f.collection_select(:group_id, Group.by_semester(semester), :id, :title) %>
-    <%= f.collection_select(:discipline_id, current_user.allowed_disciplines, :id, :title) %>
-    <%= f.submit t(:add), class: "btn btn-primary" %>
+    <div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title black-text"><%= t(:add_discipline_to_semester) %></span>
+        <p>
+          <%= f.collection_select(:group_id, Group.by_semester(semester), :id, :title) %>
+          <%= f.collection_select(:discipline_id, current_user.allowed_disciplines, :id, :title) %>
+        </p>
+      </div>
+      <div class="card-action">
+        <%= link_to t(:add), '', onclick: '$("#add-relation-to-semester").submit(); return false;' %>
+      </div>
+    </div>
 <% end %>
