@@ -3,7 +3,7 @@
     <span class="card-title black-text"><%= @discipline.title %></span>
 
     <p>
-      <strong>Teacher:</strong>
+      <strong><%= t(:teacher) %>:</strong>
       <%= gravatar_for @discipline.user %>
       <%= @discipline.user.name %>
     </p>
@@ -21,9 +21,9 @@
   <div class="col m8 s12">
     <ul class="collection with-header">
       <li class="collection-header">
-        <h4>Groups
+        <h4><%= t(:groups) %>
           <small>
-            <%= link_to raw('<i class="material-icons">add</i>'), semester_path(current_semester), class: 'btn-floating waves-effect waves-light red' unless current_semester.nil? %>
+            <%= link_to raw('<i class="material-icons">add</i>'), semester_path(current_semester), class: 'btn-floating waves-effect waves-light red', title: t(:add_new_group_to_discipline) unless current_semester.nil? %>
           </small>
         </h4>
       </li>

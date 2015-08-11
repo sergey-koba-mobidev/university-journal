@@ -15,11 +15,11 @@
       <div class="row">
         <div class="input-field col s12 m6">
           <%= f.select :year, Time.zone.now.year..(Time.zone.now.year + 1) %>
-          <%= f.label :year %>
+          <%= f.label t(:year) %>
         </div>
         <div class="input-field col s12 m6">
           <%= f.select(:pos, Semester.pos.keys.map { |pos| [pos.titleize, pos] }) %>
-          <%= f.label :pos %>
+          <%= f.label t(:pos) %>
         </div>
       </div>
 

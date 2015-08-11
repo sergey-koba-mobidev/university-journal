@@ -3,7 +3,7 @@
   <div class="card-content">
     <span class="card-title black-text"><%= t(:add_student_to_group) %></span>
     <p>
-      <%= select_tag 'user_id', {}, {id: 'add_user_id', class: 'browser-default', placeholder: 'Start typing...'} %>
+      <%= select_tag 'user_id', {}, {id: 'add_user_id', class: 'browser-default', placeholder: t(:start_typing)} %>
     </p>
   </div>
   <div class="card-action">
@@ -15,7 +15,7 @@
 <%= form_for(Group.new(title: (@group.title.gsub(/\D/, '').to_i+10).to_s, year: @group.year+1)) do |f| %>
     <div class="card hoverable">
       <div class="card-content">
-        <span class="card-title black-text">Clone group</span>
+        <span class="card-title black-text"><%= t(:clone_group) %></span>
         <p>
           <%= f.text_field :title %>
           <%= f.number_field :year %>

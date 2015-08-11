@@ -14,7 +14,7 @@ TODO:
 - Disciplines can change teachers
 - Slow query in show relationship
 - backup data
-- translate
-- mobile design
-- friendly urlagra
-- student and teaher should be notified via sms and email.
+- translate to ukr
+- style relationships for teacher
+- friendly url
+- student and teacher should be notified via sms and email.

@@ -11,7 +11,7 @@
         <div class="input-field col s12 m8">
           <%= f.hidden_field :email %>
           <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-          <%= f.label :role %>
+          <%= f.label t(:role) %>
         </div>
         <div class="input-field col s12 m4">
           <%= button_tag t(:save), class: 'btn waves-effect waves-light', type: 'submit' %>
@@ -21,6 +21,7 @@
 </td>
 <% end %>
 <td>
+  <%= link_to raw('<i class="fa fa-eye"></i>'), user, title: t(:show) %>
   <%= link_to raw('<i class="fa fa-pencil"></i>'), edit_user_path(user), title: t(:edit) %>
   <%= link_to raw('<i class="fa fa-trash"></i>'), user_path(user), method: :delete, data: {confirm: t(:are_you_sure)}, title: t(:delete) unless user == current_user %>
 </td>
