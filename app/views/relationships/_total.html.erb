@@ -1,28 +1,31 @@
 <div class="row" id="total-cont">
   <% if !current_user.student? %>
-  <div class="col-md-2">
+  <div class="col s12 m2">
     <%= form_tag(update_proportions_relationship_path(relationship), method: :post, html: {class: 'form-horizontal total-form'}) do |f| %>
-        <p>
+
         <% Visit.kinds.each do |kind, index| %>
               <%
                  value = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i
               %>
-            <%= number_field_tag 'total['+kind.to_s+'_per_each]', label: 'Per '+kind.to_s, value: value %>
+            <div class="input-field">
+                <%= number_field_tag 'total['+kind.to_s+'_per_each]',  value %>
+                <%= label_tag 'Per '+kind.to_s%>
+            </div>
         <% end %>
-        </p>
-        <p>
           <% Visit.kinds.each do |kind, index| %>
               <%
                  value = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i
               %>
-              <%= number_field_tag 'total['+kind.to_s+'_total]', label: 'Total '+kind.to_s, value: value %>
+            <div class="input-field">
+              <%= number_field_tag 'total['+kind.to_s+'_total]', value %>
+              <%= label_tag 'Total '+kind.to_s %>
+            </div>
           <% end %>
-        </p>
-        <%= submit_tag 'Update', :name => nil %>
+        <%= button_tag t(:save), class: 'btn waves-effect waves-light', type: 'submit' %>
     <% end %>
   </div>
   <% end %>
-  <div class="col-md-10">
+  <div class="col s12 m10">
     <table class="visits">
       <thead>
       <tr>

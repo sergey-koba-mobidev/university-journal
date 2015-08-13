@@ -15,5 +15,4 @@ TODO:
 - Slow query in show relationship
 - backup data
 - style relationships for teacher
-- friendly url
 - student and teacher should be notified via sms and email.

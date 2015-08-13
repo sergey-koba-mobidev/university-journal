@@ -1,50 +1,57 @@
 <div class="row">
   <% if !current_user.student? %>
-  <div class="col-md-1">
-    <%= form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
-        <%= f.text_field :title %>
-        <%= f.hidden_field :relationship_id %>
-        <%= f.hidden_field :kind, {value: kind} %>
-        <%= f.submit t(:add), class: 'btn btn-success' %>
-    <% end %>
-  </div>
+      <div class="col s12 m12">
+        <%= form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
+            <div class="row">
+              <div class="input-field col m4">
+                <%= f.text_field :title %>
+                <%= f.label t(:title) %>
+              </div>
+              <%= f.hidden_field :relationship_id %>
+              <%= f.hidden_field :kind, {value: kind} %>
+              <div class="input-field col m8">
+                <%= f.submit t(:add), class: 'btn btn-success' %>
+              </div>
+            </div>
+        <% end %>
+      </div>
   <% end %>
-  <div class="col-md-8">
+  <div class="col s12 m12">
     <table class="visits <%= kind %> hoverable">
       <thead>
-        <tr>
-          <th class="delimiter"><%= t(:student) %></th>
-          <% @relationship.visits.send(kind).each do |visit| %>
-          <th colspan="2" class="delimiter" id="visit-<%= visit.id %>">
+      <tr>
+        <th class="delimiter"><%= t(:student) %></th>
+        <% @relationship.visits.send(kind).each do |visit| %>
+            <th colspan="2" class="delimiter" id="visit-<%= visit.id %>">
               <%= render 'visit_form', visit: visit %>
-          </th>
-          <% end %>
-        </tr>
-      </thead>
-        <% @relationship.group.users.each do |student| %>
-        <tr>
-          <th class="delimiter"><%= student.name %></th>
-          <% @relationship.visits.send(kind).each do |visit| %>
-                <%= render 'visit', visit: visit, student: student %>
-          <% end %>
-        </tr>
+            </th>
         <% end %>
-        <tr>
+      </tr>
+      </thead>
+      <% @relationship.group.users.each do |student| %>
+          <tr>
+            <th class="delimiter"><%= student.name %></th>
+            <% @relationship.visits.send(kind).each do |visit| %>
+                <%= render 'visit', visit: visit, student: student %>
+            <% end %>
+          </tr>
+      <% end %>
+      <tr>
         <td class="delimiter"><b><%= t(:rdate) %>:</b></td>
-          <% @relationship.visits.send(kind).each do |visit| %>
+        <% @relationship.visits.send(kind).each do |visit| %>
             <td colspan="2" class="delimiter"><%= visit.created_at.strftime('%m.%d') %></td>
-          <% end %>
-        </tr>
-        <% if !current_user.student? %>
-        <tr>
-          <td class="delimiter"><b>Remove:</b></td>
+        <% end %>
+      </tr>
+      <% if !current_user.student? %>
+          <tr>
+            <td class="delimiter"><b>Remove:</b></td>
             <% @relationship.visits.send(kind).each do |visit| %>
                 <td colspan="2" class="delimiter">
                   <%= link_to 'x', visit, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
                 </td>
             <% end %>
-        </tr>
-        <% end %>
+          </tr>
+      <% end %>
     </table>
   </div>
 
