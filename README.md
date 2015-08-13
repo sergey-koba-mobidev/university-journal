@@ -11,8 +11,7 @@ Main features:
 - Uploading Homeworks and adding corrections.
 
 TODO:
-- Disciplines can change teachers
-- Slow query in show relationship
-- backup data
-- style relationships for teacher
+- Slow query in show relationship (needs caching)
+- Disciplines can change teachers in other semester
 - student and teacher should be notified via sms and email.
+- backup data
