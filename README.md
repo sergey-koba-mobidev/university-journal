@@ -10,7 +10,9 @@ Main features:
 - Autocalculating the student rank
 - Uploading Homeworks and adding corrections.
 
+- uses cache for stressful queries
+- notifies about homework via email
+
 TODO:
-- student and teacher should be notified via sms and email.
 - backup data
 - Disciplines can change teachers in other semester

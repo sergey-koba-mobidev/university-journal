@@ -22,6 +22,9 @@ class HomeworksController < ApplicationController
     @homework = Homework.find(params[:id])
     @homework.body = params[:homework][:body]
     if @homework.save
+      #Notify student
+      UserMailer.new_correction_email(@homework).deliver_now
+
       redirect_to :back, notice: 'Correction was updated.'
     else
       redirect_to :back, alert: 'Can\'t update correction.'
@@ -46,7 +49,7 @@ class HomeworksController < ApplicationController
 
   def create
     hm_count = @user.homeworks.where(visit_id: @visit.id).count
-    redirect_to :root, :alert => 'Access denied.' if hm_count == MAX_HOMEWORKS
+    redirect_to :root, :alert => 'Access denied. Too many Homeworks!' if hm_count == MAX_HOMEWORKS
 
     @homework = Homework.new(homework_params)
     @homework.user = @user
@@ -54,6 +57,9 @@ class HomeworksController < ApplicationController
 
     respond_to do |format|
       if @homework.save
+        #Notify teacher
+        UserMailer.new_homework_email(@homework).deliver_now
+
         format.html { redirect_to visit_homeworks_path(visit_id: @visit.id, user_id: @user.id), notice: 'Homework was successfully created.' }
         format.json { render :show, status: :created, location: visit_homeworks_path(visit_id: @visit.id, user_id: @user.id) }
       else

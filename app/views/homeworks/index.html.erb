@@ -21,7 +21,7 @@
         </td>
         <td>
           <% if current_user.admin? || current_user.teacher? %>
-              <%= bootstrap_form_for(h, html: {class: 'form-inline homework-correction-form'}) do |f| %>
+              <%= form_for(h, html: {class: 'homework-correction-form'}) do |f| %>
                   <% if h.errors.any? %>
                       <div id="error_explanation">
                         <h2><%= pluralize(h.errors.count, "error") %> prohibited this homework from being saved:</h2>
@@ -33,9 +33,9 @@
                         </ul>
                       </div>
                   <% end %>
-                  <%= f.text_area :body, cols: 50, rows: 10, label: false %>
+                    <%= f.text_area :body, cols: 50, rows: 10, label: false %>
 
-                  <%= f.submit t(:update_correction) %>
+                  <%= button_tag t(:update_correction), class: 'btn waves-effect waves-light', type: 'submit' %>
               <% end %>
           <% else %>
             <%= (h.body.present?) ? simple_format(h.body) : '-' %>

@@ -1,0 +1,28 @@
+<h1>New Corrections</h1>
+
+<table cellspacing="5" cellpadding="5" border="0">
+  <tbody>
+  <tr>
+    <td><strong>Discipline:</strong></td>
+    <td><%= @homework.visit.relationship.discipline.title %></td>
+  </tr>
+  <tr>
+    <td><strong>Teacher:</strong></td>
+    <td><%= @homework.visit.relationship.discipline.user.name %></td>
+  </tr>
+  <tr>
+    <td><strong>Teacher's comment:</strong></td>
+    <td><%= simple_format(@homework.body) %></td>
+  </tr>
+  <tr>
+    <td><strong>View:</strong></td>
+    <td><%= link_to @homework.document_file_name, visit_homeworks_url(visit_id: @homework.visit.id, user_id: @student.id) %></td>
+  </tr>
+  <tr>
+    <td><strong>Date:</strong></td>
+    <td><%= @homework.updated_at %></td>
+  </tr>
+  </tbody>
+</table>
+
+<p>This is an automatic message. Please, don't answer it.</p>

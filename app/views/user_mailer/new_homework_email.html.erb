@@ -1,0 +1,32 @@
+<h1>New Homework</h1>
+
+<table cellspacing="5" cellpadding="5" border="0">
+    <tbody>
+        <tr>
+          <td><strong>Discipline:</strong></td>
+          <td><%= @homework.visit.relationship.discipline.title %></td>
+        </tr>
+        <tr>
+          <td><strong>Group:</strong></td>
+          <td><%= @homework.visit.relationship.group.title %> (<%= @homework.visit.relationship.group.year %>)</td>
+        </tr>
+        <tr>
+          <td><strong>Student:</strong></td>
+          <td><%= @student.name %></td>
+        </tr>
+        <tr>
+          <td><strong>Student's comment:</strong></td>
+          <td><%= @homework.comment_text %></td>
+        </tr>
+        <tr>
+          <td><strong>Download:</strong></td>
+          <td><%= link_to @homework.document_file_name, @homework.document.url %></td>
+        </tr>
+        <tr>
+          <td><strong>Date:</strong></td>
+          <td><%= @homework.created_at %></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>This is an automatic message. Please, don't answer it.</p>

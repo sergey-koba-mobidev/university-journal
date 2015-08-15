@@ -1,0 +1,12 @@
+New Homework
+================
+
+Discipline: <%= @homework.visit.relationship.discipline.title %>
+Group: <%= @homework.visit.relationship.group.title %> (<%= @homework.visit.relationship.group.year %>)
+Student: <%= @student.name %>
+Student's comment: <%= @homework.comment_text %>
+Download: <%= @homework.document.url %>
+Date: <%= @homework.created_at %>
+
+================
+This is an automatic message. Please, don't answer it.

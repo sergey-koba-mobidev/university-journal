@@ -4,6 +4,7 @@
         <span class="card-title black-text"><%= @relationship.discipline.title %></span>
 
         <p>
+          <%= t(:teacher) %> <%= @relationship.discipline.user.name %> <br/>
           <%= t(:group) %> <%= @relationship.group.title %>, <%= @relationship.semester.name %>
         </p>
       </div>

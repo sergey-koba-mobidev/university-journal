@@ -1,0 +1,11 @@
+New Corrections
+================
+
+Discipline: <%= @homework.visit.relationship.discipline.title %>
+Teacher: <%= @homework.visit.relationship.discipline.user.name %>
+Teacher's comment: <%= @homework.body %>
+View: visit_homeworks_url(visit_id: @homework.visit.id, user_id: @student.id)
+Date: <%= @homework.updated_at %>
+
+================
+This is an automatic message. Please, don't answer it.

@@ -7,4 +7,7 @@
       <%= link_to t(:new) + ' ' + t(:homework), new_visit_homework_path(visit_id: @visit.id, user_id: @user.id), class: 'btn waves-effect waves-light' if current_user.student? && action_name != 'new' %>
     </p>
   </div>
+  <div class="card-action">
+    <%= link_to t(:marks), relationship_path(@visit.relationship) %>
+  </div>
 </div>
