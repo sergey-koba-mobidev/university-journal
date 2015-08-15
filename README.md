@@ -14,5 +14,7 @@ Main features:
 - notifies about homework via email
 
 TODO:
+- add deployment
+- fix urls in emails
 - backup data
 - Disciplines can change teachers in other semester
