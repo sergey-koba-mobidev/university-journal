@@ -1,6 +1,11 @@
 class Attend < ActiveRecord::Base
   belongs_to :visit
   belongs_to :user
+  belongs_to :group
+  belongs_to :discipline
+  belongs_to :semester
+  belongs_to :relationship
+
   after_initialize :set_defaults, :if => :new_record?
 
   enum presence: [:present, :absent, :late]

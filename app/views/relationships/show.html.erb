@@ -1,54 +1,57 @@
-<div class="card hoverable">
-  <div class="card-content">
-    <span class="card-title black-text"><%= @relationship.discipline.title %></span>
-    <p>
-      <%= t(:group) %> <%= @relationship.group.title %>, <%= @relationship.semester.name %>
-    </p>
-  </div>
-</div>
+<% cache(cache_key_for_relationship(@relationship)) do %>
+    <div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title black-text"><%= @relationship.discipline.title %></span>
 
-<div class="row">
-
-  <!-- Nav tabs -->
-  <div class="col s12">
-    <ul class="tabs">
-    <% Visit.kinds.each do |kind, index| %>
-          <li class="tab col">
-            <a href="#<%= kind.to_s.pluralize %>" <%= 'class=active' if index == 0 %>><%= t(kind.to_s.pluralize.downcase) %></a>
-          </li>
-    <% end %>
-      <li class="tab col">
-        <a href="#total"><%= t(:total) %></a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Tab panes -->
-    <% Visit.kinds.each do |kind, index| %>
-      <div class="col s12" id="<%= kind.to_s.pluralize %>">
-          <%= render 'visits', relationship: @relationship, kind: kind %>
+        <p>
+          <%= t(:group) %> <%= @relationship.group.title %>, <%= @relationship.semester.name %>
+        </p>
       </div>
-    <% end %>
-    <div class="col s12" id="total">
-      <%= render 'total', relationship: @relationship %>
     </div>
-</div>
-<script>
-    var reload_total_table = false;
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        if ($(e.target).attr('id') == 'total-tab-header' && reload_total_table){
-            $('#total-cont .visits').css('opacity',0.3);
-            $.ajax({
-                url: '<%= total_relationship_path(@relationship) %>',
-                type: 'GET',
-                error: function() {
-                },
-                success: function(res) {
-                    $('#total').html(res);
-                    $('#total-cont .visits').css('opacity',1);
-                    reload_total_table = false;
-                }
-            });
-        }
-    })
-</script>
+
+    <div class="row">
+
+      <!-- Nav tabs -->
+      <div class="col s12">
+        <ul class="tabs">
+          <% Visit.kinds.each do |kind, index| %>
+              <li class="tab col">
+                <a href="#<%= kind.to_s.pluralize %>" <%= 'class=active' if index == 0 %>><%= t(kind.to_s.pluralize.downcase) %></a>
+              </li>
+          <% end %>
+          <li class="tab col">
+            <a href="#total"><%= t(:total) %></a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tab panes -->
+      <% Visit.kinds.each do |kind, index| %>
+          <div class="col s12" id="<%= kind.to_s.pluralize %>">
+            <%= render 'visits', relationship: @relationship, kind: kind %>
+          </div>
+      <% end %>
+      <div class="col s12" id="total">
+        <%= render 'total', relationship: @relationship %>
+      </div>
+    </div>
+    <script>
+        var reload_total_table = false;
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            if ($(e.target).attr('id') == 'total-tab-header' && reload_total_table) {
+                $('#total-cont .visits').css('opacity', 0.3);
+                $.ajax({
+                    url: '<%= total_relationship_path(@relationship) %>',
+                    type: 'GET',
+                    error: function () {
+                    },
+                    success: function (res) {
+                        $('#total').html(res);
+                        $('#total-cont .visits').css('opacity', 1);
+                        reload_total_table = false;
+                    }
+                });
+            }
+        })
+    </script>
+<% end %>

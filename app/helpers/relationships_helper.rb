@@ -30,4 +30,11 @@ module RelationshipsHelper
         'F'
     end
   end
+
+  def cache_key_for_relationship(relationship)
+    semester = relationship.semester
+    discipline = relationship.discipline
+    group = relationship.group
+    "relationship/#{relationship.id}-#{relationship.updated_at}-#{semester.id}-#{semester.updated_at}-#{discipline.id}-#{discipline.updated_at}-#{group.id}-#{group.updated_at}"
+  end
 end

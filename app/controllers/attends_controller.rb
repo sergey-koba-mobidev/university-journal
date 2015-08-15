@@ -12,6 +12,7 @@ class AttendsController < ApplicationController
     @attend.discipline_id = @attend.visit.relationship.discipline_id
     @attend.semester_id = @attend.visit.relationship.semester_id
     if owner_or_admin(@attend.visit.relationship.discipline) && @attend.save
+      @attend.relationship.touch
       respond_with @attend
     else
       redirect_to :back, alert: 'Access denied!'
@@ -21,6 +22,7 @@ class AttendsController < ApplicationController
   def update
     @attend.presence = params[:attend][:presence]
     if owner_or_admin(@attend.visit.relationship.discipline) && @attend.save
+      @attend.relationship.touch
       respond_with @attend
     else
       redirect_to :back, alert: 'Access denied!'
@@ -30,6 +32,7 @@ class AttendsController < ApplicationController
   def update_mark
     @attend.mark = params[:attend][:mark]
     if owner_or_admin(@attend.visit.relationship.discipline) && @attend.save
+      @attend.relationship.touch
       respond_with @attend
     else
       respond_with @attend, template: 'attends/_mark_error'

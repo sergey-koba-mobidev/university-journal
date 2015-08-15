@@ -18,7 +18,7 @@
       <% @group.users.order(name: :asc).all.each do |student|%>
           <li class="collection-item">
             <div>
-              <%= student.name %>
+              <%= link_to student.name, student %>
               <%= link_to raw('<i class="material-icons">delete</i>'), remove_user_group_path(user_id: student.id), method: :delete, data: {confirm: t(:are_you_sure) + ' ' + t(:all_marks_will_be_lost)}, class: 'secondary-content', title: t(:delete) %>
             </div>
           </li>

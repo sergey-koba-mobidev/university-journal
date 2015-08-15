@@ -77,6 +77,7 @@ class GroupsController < ApplicationController
   def remove_user
     @user = User.find(params[:user_id])
     @group.users.destroy(@user)
+    @group.touch
     respond_to do |format|
       format.html { redirect_to @group, notice: 'Student was successfully removed.' }
       format.js
@@ -94,6 +95,7 @@ class GroupsController < ApplicationController
           format.js
         end
       else
+        @group.touch
         respond_to do |format|
           format.html { redirect_to @group, notice: 'Student was successfully added.' }
           format.js

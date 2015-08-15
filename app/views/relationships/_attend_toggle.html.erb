@@ -2,21 +2,21 @@
     <% if attend.present? %>
         <%= f.hidden_field :presence, value: 'absent' %>
         <% if !current_user.student? %>
-            <%= link_to '*', '#', :onclick=>'$(this).parent().submit()' %>
+            <%= link_to '*', '#', :onclick=>'$(this).parent().submit(); return false;' %>
         <% else %>
             *
         <% end %>
     <% elsif attend.absent? %>
         <%= f.hidden_field :presence, value: 'late' %>
         <% if !current_user.student? %>
-            <%= link_to 'H', '#', :onclick=>'$(this).parent().submit()' %>
+            <%= link_to 'H', '#', :onclick=>'$(this).parent().submit(); return false;' %>
         <% else %>
             H
         <% end %>
     <% elsif attend.late? %>
         <%= f.hidden_field :presence, value: 'present' %>
         <% if !current_user.student? %>
-            <%= link_to 'оп', '#', :onclick=>'$(this).parent().submit()' %>
+            <%= link_to 'оп', '#', :onclick=>'$(this).parent().submit(); return false;' %>
         <% else %>
             оп
         <% end %>

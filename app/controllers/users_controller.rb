@@ -50,6 +50,11 @@ class UsersController < ApplicationController
                            end
 
     if successfully_updated
+      # for caching purpose
+      @user.groups.each do |group|
+        group.touch
+      end
+
       redirect_to users_path, :notice => "User updated."
     else
       render :edit
