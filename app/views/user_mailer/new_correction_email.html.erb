@@ -16,7 +16,7 @@
   </tr>
   <tr>
     <td><strong>View:</strong></td>
-    <td><%= link_to @homework.document_file_name, visit_homeworks_url(visit_id: @homework.visit.id, user_id: @student.id) %></td>
+    <td><%= link_to @homework.document_file_name, visit_homeworks_url(visit_id: @homework.visit.id, user_id: @student.id, host: Rails.application.secrets.host) %></td>
   </tr>
   <tr>
     <td><strong>Date:</strong></td>

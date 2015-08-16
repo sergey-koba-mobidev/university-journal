@@ -7,5 +7,5 @@ class Homework < ActiveRecord::Base
   validates_with AttachmentSizeValidator, :attributes => :document, :less_than => 10.megabytes
 
   has_attached_file :document
-  validates_attachment :document, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)}
+  validates_attachment :document, :content_type => {:content_type => %w(application/zip image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)}
 end

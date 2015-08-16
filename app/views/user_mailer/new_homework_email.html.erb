@@ -20,7 +20,7 @@
         </tr>
         <tr>
           <td><strong>Download:</strong></td>
-          <td><%= link_to @homework.document_file_name, @homework.document.url %></td>
+          <td><%= link_to @homework.document_file_name, 'http://' + Rails.application.secrets.host + @homework.document.url %></td>
         </tr>
         <tr>
           <td><strong>Date:</strong></td>

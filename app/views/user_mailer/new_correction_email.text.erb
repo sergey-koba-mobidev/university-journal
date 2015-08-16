@@ -4,7 +4,7 @@ New Corrections
 Discipline: <%= @homework.visit.relationship.discipline.title %>
 Teacher: <%= @homework.visit.relationship.discipline.user.name %>
 Teacher's comment: <%= @homework.body %>
-View: visit_homeworks_url(visit_id: @homework.visit.id, user_id: @student.id)
+View: visit_homeworks_url(visit_id: @homework.visit.id, user_id: @student.id, host: Rails.application.secrets.host)
 Date: <%= @homework.updated_at %>
 
 ================
