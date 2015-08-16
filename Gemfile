@@ -21,6 +21,9 @@ gem 'wice_grid'
 gem 'paperclip', '~> 4.3'
 gem 'font-awesome-rails'
 
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

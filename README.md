@@ -12,6 +12,7 @@ Main features:
 
 - uses cache for stressful queries
 - notifies about homework via email
+- ansible + capistrano deployment
 
 TODO:
 - add deployment
