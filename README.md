@@ -20,6 +20,5 @@ A Ruby on Rails based university classes manager.
 - run capistrano as `cap production deploy`
 
 # TODO:
-- homework needs theme
-- backup data
+- Backup data
 - Disciplines can change teachers in other semester

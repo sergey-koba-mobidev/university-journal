@@ -24,6 +24,11 @@ class UsersController < ApplicationController
     else
       if @user.save
         @user.confirm!
+        if params[:group_id].present?
+          group = Group.find(params[:group_id])
+          @user.groups << group
+          group.touch
+        end
         redirect_to users_path, notice: "User created."
       else
         render :new

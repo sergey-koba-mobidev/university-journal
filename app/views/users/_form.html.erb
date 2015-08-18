@@ -55,5 +55,13 @@
           <%= button_tag t(:save), class: 'btn waves-effect waves-light', type: 'submit' %>
         </div>
       </div>
+      <% if @user.new_record? && current_semester.present? %>
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <%= select_tag(:group_id, options_from_collection_for_select(Group.by_semester(current_semester), :id, :title), include_blank: true) %>
+              <%= f.label t(:group) %>
+            </div>
+          </div>
+      <% end %>
   <% end %>
 </div>
