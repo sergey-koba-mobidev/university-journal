@@ -1,5 +1,5 @@
 class AttendsController < ApplicationController
-  before_action :set_attend, only: [:update, :update_mark]
+  before_action :set_attend, only: [:update, :update_mark, :update_title]
   before_action AdminOrTeacherActionCallback
 
   respond_to :js
@@ -36,6 +36,16 @@ class AttendsController < ApplicationController
       respond_with @attend
     else
       respond_with @attend, template: 'attends/_mark_error'
+    end
+  end
+
+  def update_title
+    @attend.title = params[:attend][:title]
+    if owner_or_admin(@attend.visit.relationship.discipline) && @attend.save
+      @attend.relationship.touch
+      redirect_to :back, notice: 'Title updated!'
+    else
+      redirect_to :back, alert: 'Access denied!'
     end
   end
 

@@ -20,7 +20,7 @@ class HomeworksController < ApplicationController
 
   def update
     @homework = Homework.find(params[:id])
-    @homework.body = params[:homework][:body]
+    @homework.body = params[:homework][:body] if params[:homework][:body]
     if @homework.save
       #Notify student
       UserMailer.new_correction_email(@homework).deliver_now
@@ -77,6 +77,7 @@ class HomeworksController < ApplicationController
 
   def set_visit
     @visit = Visit.find(params[:visit_id])
+    @attend = Attend.find_by_visit_id_and_user_id(params[:visit_id], params[:user_id])
   end
 
   def set_user

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :attends, only: [:create, :update] do
     member do
       post 'update_mark'
+      post 'update_title'
     end
   end
   resources :groups do
