@@ -5,4 +5,4 @@
 
 [all:vars]
 passenger_env=production
-server_name=univer-journal.org
+server_name=u-journal.net.ua

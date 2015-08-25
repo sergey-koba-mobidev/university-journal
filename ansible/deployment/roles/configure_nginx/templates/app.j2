@@ -6,6 +6,8 @@ server {
 
   passenger_enabled on;
   passenger_app_env {{ passenger_env }};
+  passenger_user {{ app_user }};
+  passenger_group {{ app_user }};
 
   location ~ ^/assets/ {
     expires 1y;

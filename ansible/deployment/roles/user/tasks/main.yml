@@ -1,6 +1,6 @@
 # Add the user 'app_user'
 - name: Create leduser user
-  user: name={{ app_user }} comment="LEDSHOP user"
+  user: name={{ app_user }} comment="UNIVER user"
 
 # Add to groups
 - name: Set user groups and shell
@@ -11,7 +11,7 @@
 
 # Using key data from a local file on the management machine
 - name: Add authorized key
-  authorized_key: user={{ app_user }} key="{{ lookup('file', 'leduser/id_rsa.pub') }}"
+  authorized_key: user={{ app_user }} key="{{ lookup('file', 'univeruser/id_rsa.pub') }}"
 
 # Add SSH private key to root user
 - name: Copy key to remote deploy user

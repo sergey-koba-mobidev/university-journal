@@ -23,7 +23,7 @@
           db: univer_production
           priv: "ALL"
           role_attr_flags: "CREATEDB"
-    - znzj.rbenv
-    - ChengLong.nginx-passenger
+#    - znzj.rbenv
+#    - ChengLong.nginx-passenger
     - configure_nginx
-    - pgolm.monit
+#    - pgolm.monit
