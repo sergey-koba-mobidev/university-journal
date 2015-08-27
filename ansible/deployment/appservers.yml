@@ -7,7 +7,7 @@
     - vars/monit.yml
     - group_vars/appservers
   roles:
-    - sysinit
+#    - sysinit
     - user
     - app
     - role: ANXS.postgresql

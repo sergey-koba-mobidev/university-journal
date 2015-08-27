@@ -1,5 +1,5 @@
 # Add the user 'app_user'
-- name: Create leduser user
+- name: Create univer user
   user: name={{ app_user }} comment="UNIVER user"
 
 # Add to groups
@@ -15,7 +15,7 @@
 
 # Add SSH private key to root user
 - name: Copy key to remote deploy user
-  copy: src=leduser/id_rsa dest=/home/{{ app_user }}/.ssh/id_rsa owner={{ app_user }} group={{ app_user }} mode=0600
+  copy: src=univeruser/id_rsa dest=/home/{{ app_user }}/.ssh/id_rsa owner={{ app_user }} group={{ app_user }} mode=0600
 
 # Default Bash profile
 - name: Copy bash profile
