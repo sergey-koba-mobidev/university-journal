@@ -24,4 +24,6 @@ A Ruby on Rails based university classes manager.
 - Disciplines can change teachers in other semester
 - after visit creation the tab is dropped
 - edit dates for visits
+- fix inputs style for marks for relationship view
+- keep language after sign out / sig in
 - add RAILS_ENV export to .bashrc

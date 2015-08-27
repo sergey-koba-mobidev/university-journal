@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :groupings
   has_many :homeworks, dependent: :destroy
 
+  default_scope { order("name ASC") }
+
   enum role: [:student, :teacher, :admin]
 
   def set_default_role
