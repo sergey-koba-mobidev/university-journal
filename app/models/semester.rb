@@ -22,7 +22,7 @@ class Semester < ActiveRecord::Base
   class << self
     def current
       begin
-        Semester.find_by!(year: Time.zone.now.year, pos: (Time.zone.now.month<9) ? Semester.pos['spring'] : Semester.pos['autumn'])
+        Semester.find_by!(year: Time.zone.now.year, pos: (Time.zone.now.month<8) ? Semester.pos['spring'] : Semester.pos['autumn'])
       rescue
         nil
       end

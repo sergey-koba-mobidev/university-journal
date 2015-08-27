@@ -27,14 +27,16 @@
           </small>
         </h4>
       </li>
-      <% @semester.relationships.filter_discipline(@discipline).each do |relationship| %>
-          <li class="collection-item">
-            <div>
-              <%= link_to relationship.group.title + ' (' + relationship.group.year.to_s + ')', relationship.group %>
+      <% if @semester.present? %>
+          <% @semester.relationships.filter_discipline(@discipline).each do |relationship| %>
+              <li class="collection-item">
+                <div>
+                  <%= link_to relationship.group.title + ' (' + relationship.group.year.to_s + ')', relationship.group %>
 
-              <%= link_to t(:marks), relationship_path(relationship), class: 'secondary-content' %>
-            </div>
-          </li>
+                  <%= link_to t(:marks), relationship_path(relationship), class: 'secondary-content' %>
+                </div>
+              </li>
+          <% end %>
       <% end %>
     </ul>
   </div>
