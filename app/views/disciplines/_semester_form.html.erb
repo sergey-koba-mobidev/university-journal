@@ -3,7 +3,7 @@
       <div class="card-content">
         <span class="card-title black-text"><%= t(:semester) %></span>
         <p>
-          <%= select_tag 'semester_id', options_from_collection_for_select(Semester.all, 'id', 'name', semester.id), {class: 'form-control'} %>
+          <%= select_tag 'semester_id', options_from_collection_for_select(Semester.all, 'id', 'name', semester.present? ? semester.id : nil), {class: 'form-control'} %>
         </p>
       </div>
       <div class="card-action">
