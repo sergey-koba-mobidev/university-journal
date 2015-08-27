@@ -26,4 +26,5 @@ A Ruby on Rails based university classes manager.
 - edit dates for visits
 - fix inputs style for marks for relationship view
 - keep language after sign out / sig in
+- expire for cache
 - add RAILS_ENV export to .bashrc
