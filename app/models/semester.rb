@@ -2,7 +2,7 @@ class Semester < ActiveRecord::Base
   has_many :relationships, dependent: :destroy
 
   enum pos: [:spring, :autumn]
-  default_scope { order 'semesters.year, semesters.pos DESC'}
+  default_scope { order 'semesters.year, semesters.pos DESC' }
 
   validates :year, presence: true
   validates :pos, presence: true
@@ -21,7 +21,11 @@ class Semester < ActiveRecord::Base
 
   class << self
     def current
-      Semester.find_by!(year: Time.zone.now.year, pos: (Time.zone.now.month<9) ? Semester.pos['spring'] : Semester.pos['autumn'])
+      begin
+        Semester.find_by!(year: Time.zone.now.year, pos: (Time.zone.now.month<9) ? Semester.pos['spring'] : Semester.pos['autumn'])
+      rescue
+        nil
+      end
     end
   end
 end
