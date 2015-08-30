@@ -8,9 +8,9 @@ class VisitsController < ApplicationController
     @visit = Visit.new(visit_params)
     if owner_or_admin(@visit.relationship.discipline) && @visit.save
       @visit.relationship.touch
-      redirect_to :back, notice: 'Successfully added!'
+      redirect_to relationship_path(@visit.relationship, kind: @visit.kind), notice: 'Successfully added!'
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_to relationship_path(@visit.relationship, kind: @visit.kind), alert: 'Access denied!'
     end
   end
 

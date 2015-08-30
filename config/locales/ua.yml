@@ -70,7 +70,7 @@ ua:
   password_confirmation: "Підтверждення паролю"
   leave_fields_blank_password: "Залиште ці поля пустими, якщо Ви не бажаєте змінювати пароль"
   you_must_enter_current_password: "Ви повинні ввести поточний пароль, щоб внести зміни"
-  to_view_journal: ", щоби побачити Ващ Журнал"
+  to_view_journal: ", щоби побачити Ваш Журнал"
   forgot_password: "Забули пароль?"
   start_typing: "Почніть писати..."
   will_paginate:

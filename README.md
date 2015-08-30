@@ -22,6 +22,5 @@ A Ruby on Rails based university classes manager.
 # TODO:
 - Backup data
 - Disciplines can change teachers in other semester
-- after visit creation the tab is dropped
 - expire for cache
 - add RAILS_ENV export to .bashrc

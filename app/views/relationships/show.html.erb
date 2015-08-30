@@ -17,7 +17,7 @@
         <ul class="tabs">
           <% Visit.kinds.each do |kind, index| %>
               <li class="tab col">
-                <a href="#<%= kind.to_s.pluralize %>" <%= 'class=active' if index == 0 %>><%= t(kind.to_s.pluralize.downcase) %></a>
+                <a href="#<%= kind.to_s.pluralize %>" <%= 'class=active' if kind == params[:kind] %>><%= t(kind.to_s.pluralize.downcase) %></a>
               </li>
           <% end %>
           <li class="tab col">
