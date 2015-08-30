@@ -1,0 +1,2 @@
+$("#visit-date-<%= @visit.id %>").replaceWith("<%= escape_javascript(render('relationships/visit_date_form', visit: @visit)) %>");
+$("#visit-date-<%= @visit.id %>").fadeOut().fadeIn().fadeOut().fadeIn();

@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :semesters
   resources :visits, only: [:create, :destroy, :show, :update] do
     resources :homeworks
+    member do
+      post 'update_created_at'
+    end
   end
   resources :homeworks, only: [:create, :destroy, :show, :update]
   resources :relationships, only: [:create, :destroy, :show] do

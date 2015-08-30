@@ -39,7 +39,9 @@
       <tr>
         <td class="delimiter"><b><%= t(:rdate) %>:</b></td>
         <% @relationship.visits.send(kind).each do |visit| %>
-            <td colspan="2" class="delimiter"><%= visit.created_at.strftime('%d.%m') %></td>
+            <td colspan="2" class="delimiter">
+              <%= render 'visit_date_form', visit: visit %>
+            </td>
         <% end %>
       </tr>
       <% if !current_user.student? %>

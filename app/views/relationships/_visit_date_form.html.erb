@@ -1,0 +1,7 @@
+<% if !current_user.student? %>
+    <%= form_for(visit, url: update_created_at_visit_path(visit), remote: true, method: :post, html: {id: "visit-date-#{visit.id}"}) do |f| %>
+        <%= f.text_field :created_at, :onblur => '$(this).parent().submit(); return false;', value: visit.created_at.strftime('%d.%m') %>
+    <% end %>
+<% else %>
+    <%= visit.created_at.strftime('%d.%m') %>
+<% end %>

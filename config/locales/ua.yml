@@ -24,7 +24,7 @@ ua:
   teacher: "Викладач"
   edit_account: "Профіль"
   sign_in: "Увійти"
-  remember_me: "Запом'ятати мене"
+  remember_me: "Запам'ятати мене"
   press: "натисніть"
   sign_out: "Вихід"
   sign_up: "Реєстрація"
@@ -71,7 +71,7 @@ ua:
   leave_fields_blank_password: "Залиште ці поля пустими, якщо Ви не бажаєте змінювати пароль"
   you_must_enter_current_password: "Ви повинні ввести поточний пароль, щоб внести зміни"
   to_view_journal: ", щоби побачити Ващ Журнал"
-  forgot_password: "Забуи пароль?"
+  forgot_password: "Забули пароль?"
   start_typing: "Почніть писати..."
   will_paginate:
       next_label: "Далі"

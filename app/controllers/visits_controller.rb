@@ -1,5 +1,5 @@
 class VisitsController < ApplicationController
-  before_action :set_visit, only: [:destroy, :update]
+  before_action :set_visit, only: [:destroy, :update, :update_created_at]
   before_action AdminOrTeacherActionCallback
 
   respond_to :js
@@ -15,7 +15,19 @@ class VisitsController < ApplicationController
   end
 
   def update
-    @visit.title = params[:visit][:title]
+    @visit.title = params[:visit][:title] if params[:visit][:title]
+    if owner_or_admin(@visit.relationship.discipline) && @visit.save
+      @visit.relationship.touch
+      respond_with @visit
+    else
+      redirect_to :back, alert: 'Access denied!'
+    end
+  end
+
+  def update_created_at
+    day, month = params[:visit][:created_at].split('.')
+    @visit.created_at = @visit.created_at.change(day: day, month: month)
+
     if owner_or_admin(@visit.relationship.discipline) && @visit.save
       @visit.relationship.touch
       respond_with @visit
