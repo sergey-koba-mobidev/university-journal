@@ -37,9 +37,9 @@ class RelationshipsController < ApplicationController
   def update_proportions
     @relationship.proportions = params[:total]
     if @relationship.save
-      redirect_to :back, notice: 'Total is saved!'
+      redirect_to relationship_path(@relationship, kind: :total), notice: 'Total is saved!'
     else
-      redirect_to :back, alert: 'Total is NOT saved!'
+      redirect_to relationship_path(@relationship, kind: :total), alert: 'Total is NOT saved!'
     end
   end
 

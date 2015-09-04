@@ -21,7 +21,7 @@
               </li>
           <% end %>
           <li class="tab col">
-            <a href="#total"><%= t(:total) %></a>
+            <a href="#total" <%= 'class=active' if 'total' == params[:kind] %>><%= t(:total) %></a>
           </li>
         </ul>
       </div>

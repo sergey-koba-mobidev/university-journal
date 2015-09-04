@@ -13,6 +13,7 @@
       <% end %>
       <%
          options = Hash.new
+         options[:autofocus] = true
          options[:readonly] = true if current_user.student?
       %>
 

@@ -38,11 +38,13 @@ class VisitsController < ApplicationController
 
   def destroy
     if owner_or_admin(@visit.relationship.discipline)
+      kind = @visit.kind
+      relationship = @visit.relationship
       @visit.relationship.touch
       @visit.destroy
-      redirect_to :back, notice: 'Deleted!'
+      redirect_to relationship_path(relationship, kind: kind), notice: 'Deleted!'
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_to relationship_path(relationship, kind: kind), alert: 'Access denied!'
     end
   end
 
