@@ -35,6 +35,6 @@ module RelationshipsHelper
     semester = relationship.semester
     discipline = relationship.discipline
     group = relationship.group
-    "relationship/#{relationship.id}-#{relationship.updated_at}-#{semester.id}-#{semester.updated_at}-#{discipline.id}-#{discipline.updated_at}-#{group.id}-#{group.updated_at}-#{I18n.locale}-#{current_user.role}"
+    "relationship/#{relationship.id}-#{relationship.updated_at}-#{semester.id}-#{semester.updated_at}-#{discipline.id}-#{discipline.updated_at}-#{group.id}-#{group.updated_at}-#{I18n.locale}-#{current_user.role}-#{params[:kind]}"
   end
 end

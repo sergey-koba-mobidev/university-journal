@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       redirect_to users_path, alert: "Access denied!"
     else
       if @user.save
-        @user.confirm!
+        @user.skip_confirmation!
         if params[:group_id].present?
           group = Group.find(params[:group_id])
           @user.groups << group

@@ -20,7 +20,7 @@
     <table class="visits <%= kind %> hoverable">
       <thead>
       <tr>
-        <th class="delimiter"><%= t(:student) %></th>
+        <th class="delimiter student-name"><%= t(:student) %></th>
         <% @relationship.visits.send(kind).each do |visit| %>
             <th colspan="2" class="delimiter" id="visit-<%= visit.id %>">
               <%= render 'visit_form', visit: visit %>
@@ -30,7 +30,7 @@
       </thead>
       <% @relationship.group.users.each do |student| %>
           <tr>
-            <th class="delimiter"><%= student.name %></th>
+            <th class="delimiter student-name"><%= student.name %></th>
             <% @relationship.visits.send(kind).each do |visit| %>
                 <%= render 'visit', visit: visit, student: student %>
             <% end %>

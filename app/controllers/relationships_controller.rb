@@ -4,6 +4,7 @@ class RelationshipsController < ApplicationController
   before_action
 
   def show
+    params[:kind] = :lab if params[:kind].nil?
     @attends = Attend.where(visit_id: @relationship.visits.all).where(user_id: @relationship.group.users.all).all
   end
 
