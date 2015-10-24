@@ -1,2 +1,5 @@
 $("#attend-presence-<%= @attend.user_id %>-<%= @attend.visit_id %>").html("<%= escape_javascript(render('relationships/attend_toggle', attend: @attend)) %>");
 $("#attend-mark-<%= @attend.user_id %>-<%= @attend.visit_id %>").html("<%= escape_javascript(render('relationships/mark_form', attend: @attend)) %>");
+<% if @attend.present? && @attend.visit.kind.to_s == 'homework' && (current_user.id == @attend.user.id || !current_user.student?) %>
+    $("#attend-mark-<%= @attend.user_id %>-<%= @attend.visit_id %>").append("<%= j link_to fa_icon('eye') + ' ' + @attend.title, visit_homeworks_path(visit_id: @attend.visit.id, user_id: @attend.user.id), class: 'view-attend' %>");
+<% end %>

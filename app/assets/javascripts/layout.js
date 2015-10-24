@@ -4,5 +4,8 @@ $(document).ready(function () {
     $('.tab').on('click', function(){
         $(window).resize();
     });
+
     $('select').material_select();
+
+    $('.sticky-wrap').doubleScroll({resetOnWindowResize: true});
 });
