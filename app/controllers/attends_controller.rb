@@ -8,6 +8,8 @@ class AttendsController < ApplicationController
     @attend = Attend.new(attend_params)
 
     existing_attend = Attend.where(
+        visit_id: @attend.visit_id,
+        user_id: @attend.user_id,
         kind: Visit.kinds[@attend.visit.kind],
         relationship_id: @attend.visit.relationship_id,
         group_id: @attend.visit.relationship.group_id,
