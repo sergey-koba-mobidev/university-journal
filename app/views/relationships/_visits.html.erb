@@ -28,9 +28,9 @@
         <% end %>
       </tr>
       </thead>
-      <% @relationship.group.users.each do |student| %>
+      <% @relationship.group.users.each_with_index do |student, i| %>
           <tr>
-            <th class="delimiter student-name"><%= student.name %></th>
+            <th class="delimiter student-name"><%= "#{i+1}. " + student.name %></th>
             <% @relationship.visits.send(kind).each do |visit| %>
                 <%= render 'visit', visit: visit, student: student %>
             <% end %>

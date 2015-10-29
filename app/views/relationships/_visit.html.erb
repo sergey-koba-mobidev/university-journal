@@ -14,5 +14,7 @@
   <% end %>
   <% if visit.kind.to_s == 'homework' && (current_user.id == student.id || !current_user.student?) && attend.present? %>
       <%= link_to fa_icon('eye') + ' ' + attend.title, visit_homeworks_path(visit_id: visit.id, user_id: student.id), class: 'view-attend' %>
+  <% elsif visit.kind.to_s == 'homework' && attend.present? && current_user.student?%>
+      <%= attend.title %>
   <% end %>
 </td>
