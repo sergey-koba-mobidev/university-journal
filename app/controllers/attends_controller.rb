@@ -6,6 +6,16 @@ class AttendsController < ApplicationController
 
   def create
     @attend = Attend.new(attend_params)
+
+    existing_attend = Attend.where(
+        kind: Visit.kinds[@attend.visit.kind],
+        relationship_id: @attend.visit.relationship_id,
+        group_id: @attend.visit.relationship.group_id,
+        discipline_id: @attend.visit.relationship.discipline_id,
+        semester_id: @attend.visit.relationship.semester_id
+    )
+    respond_with existing_attend if existing_attend.present?
+
     @attend.kind = Visit.kinds[@attend.visit.kind]
     @attend.relationship_id = @attend.visit.relationship_id
     @attend.group_id = @attend.visit.relationship.group_id
