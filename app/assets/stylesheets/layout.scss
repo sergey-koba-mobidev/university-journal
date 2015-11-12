@@ -22,6 +22,10 @@ nav {
   height: 18px !important;
 }
 
+div.card.hoverable {
+  width: 100%;
+}
+
 @media only screen and (max-width: 601px) {
   .tabs {
     li {

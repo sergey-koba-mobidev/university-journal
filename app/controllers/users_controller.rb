@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   def create_manual
     @user = User.new(user_params)
+    @user.email = @user.email.downcase
     if (!@user.student? and !current_user.admin?)
       redirect_to users_path, alert: "Access denied!"
     else
@@ -47,10 +48,10 @@ class UsersController < ApplicationController
     end
 
     successfully_updated = if needs_password?(@user, user_params)
-                             @user.update_column(:email, user_params.delete(:email))
+                             @user.update_column(:email, user_params.delete(:email).downcase)
                              @user.update(user_params)
                            else
-                             @user.update_column(:email, user_params.delete(:email))
+                             @user.update_column(:email, user_params.delete(:email).downcase)
                              @user.update_without_password(user_params)
                            end
 
