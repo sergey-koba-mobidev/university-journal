@@ -3,9 +3,10 @@ New Homework
 
 Discipline: <%= @homework.visit.relationship.discipline.title %>
 Group: <%= @homework.visit.relationship.group.title %> (<%= @homework.visit.relationship.group.year %>)
-Student: <%= @student.name %>
+Student: <%= @student.name %> (<%= @student.email %>)
 Student's comment: <%= @homework.comment_text %>
 Download: <%= 'http://' + Rails.application.secrets.host + @homework.document.url %>
+Add corrections: visit_homeworks_url(visit_id: @homework.visit_id, user_id: @student.id, host: Rails.application.secrets.host)
 Date: <%= @homework.created_at %>
 
 ================

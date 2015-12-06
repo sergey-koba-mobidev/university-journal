@@ -5,7 +5,7 @@
 
     <p>
       <%= t(:teacher) %>: <%= @visit.relationship.discipline.user.name %> <br/>
-      <%= t(:student) %>: <%= @user.name %> <br/>
+      <%= t(:student) %>: <%= link_to @user.name, user_path(@user), target: "_blank" %> <br/>
       <% if current_user.student? %>
           <%= t(:title) %>: <%= @attend.title %>
       <% else %>
@@ -26,6 +26,6 @@
     </p>
   </div>
   <div class="card-action">
-    <%= link_to t(:marks), relationship_path(@visit.relationship) %>
+    <%= link_to t(:marks), relationship_path(@visit.relationship, kind: "homewrok") %>
   </div>
 </div>

@@ -30,7 +30,7 @@
       </thead>
       <% @relationship.group.users.each_with_index do |student, i| %>
           <tr>
-            <th class="delimiter student-name"><%= "#{i+1}. " + student.name %></th>
+            <th class="delimiter student-name"><%= link_to "#{i+1}. " + student.name, user_path(student), target: "_blank" %></th>
             <% @relationship.visits.send(kind).each do |visit| %>
                 <%= render 'visit', visit: visit, student: student %>
             <% end %>

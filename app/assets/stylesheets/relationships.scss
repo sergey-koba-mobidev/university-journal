@@ -84,6 +84,11 @@
 .view-attend {
   float: right;
 }
+.student-name{
+  a {
+    color: white;
+  }
+}
 
 @media only screen and (max-device-width: 480px) {
   .student-name {
