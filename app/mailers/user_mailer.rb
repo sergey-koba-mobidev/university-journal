@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
     @student = homework.user
     @teacher = homework.visit.relationship.discipline.user
     @homework = homework
-    mail(to: @teacher.email, subject: 'New Homework uploaded')
+    mail(to: @teacher.email, subject: 'New Homework from ' + @student.email)
   end
 
   def new_correction_email(homework)
