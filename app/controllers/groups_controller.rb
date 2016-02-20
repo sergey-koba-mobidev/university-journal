@@ -86,19 +86,23 @@ class GroupsController < ApplicationController
 
   def add_user
     @user = User.find(params[:user_id])
-    if @user.student?
-      begin
-        @group.users << @user
-      rescue ActiveRecord::RecordInvalid => e
-        respond_to do |format|
-          format.html { redirect_to @group, alert: e.message }
-          format.js
-        end
-      else
-        @group.touch
-        respond_to do |format|
-          format.html { redirect_to @group, notice: 'Student was successfully added.' }
-          format.js
+    if @user.nil?
+      redirect_to @group, alert: 'No user was selected'
+    else
+      if @user.student?
+        begin
+          @group.users << @user
+        rescue ActiveRecord::RecordInvalid => e
+          respond_to do |format|
+            format.html { redirect_to @group, alert: e.message }
+            format.js
+          end
+        else
+          @group.touch
+          respond_to do |format|
+            format.html { redirect_to @group, notice: 'Student was successfully added.' }
+            format.js
+          end
         end
       end
     end
