@@ -1,6 +1,6 @@
 <% if !current_user.student? %>
     <%= form_for(attend, url: update_mark_attend_path(attend), remote: true, method: :post) do |f| %>
-        <%= f.text_field :mark, :onblur => '$(this).parent().submit(); return false;', value: (attend.mark==0)?'':attend.mark %>
+        <%= f.text_field :mark, :onblur => '$(this).parent().submit(); return false;', value: (attend.mark==0)?'': "%g" % ("%.1f" % attend.mark)  %>
     <% end %>
 <% else %>
     <%= (attend.mark==0)?'':attend.mark %>
