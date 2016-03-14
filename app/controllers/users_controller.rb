@@ -42,6 +42,8 @@ class UsersController < ApplicationController
       redirect_to users_path, alert: "Access denied!" and return
     end
 
+    user_params.delete(:name) if current_user.student? && user_params[:name].present?
+
     if user_params[:password].blank?
       user_params.delete(:password)
       user_params.delete(:password_confirmation)
