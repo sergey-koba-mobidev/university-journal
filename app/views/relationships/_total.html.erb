@@ -53,9 +53,9 @@
                    kind_total = 0 if total == 0 || per_each == 0
                    student_total += kind_total
                 %>
-                <td class="delimiter"> <%= kind_total %> </td>
+                <td class="delimiter"> <%= "%g" % ("%.1f" % kind_total) %> </td>
             <% end %>
-            <td class="delimiter mark<%= mark_by_total(student_total) %>"> <%= student_total %> </td>
+            <td class="delimiter mark<%= mark_by_total(student_total) %>"> <%= "%g" % ("%.1f" % student_total) %> </td>
             <td class="delimiter mark<%= mark_by_total(student_total) %>"> <%= mark_by_total(student_total) %> </td>
             <td class="delimiter mark<%= mark_by_total(student_total) %>"> <%= ects_by_total(student_total) %> </td>
           </tr>
