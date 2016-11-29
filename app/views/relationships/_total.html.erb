@@ -50,7 +50,7 @@
                    total = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_total".to_sym].gsub(/\D/, '').to_i
                    per_each = (relationship.proportions.nil?) ? 0 : relationship.proportions["#{kind.to_s}_per_each".to_sym].gsub(/\D/, '').to_i
                    kind_total = (relationship.proportions.nil?) ? 0 : (total.to_f*sum.to_f).to_f / (per_each.to_f * num.to_f).to_f
-                   kind_total = 0 if total == 0 || per_each == 0 || kind_total == 'NaN'
+                   kind_total = 0 if total == 0 || per_each == 0 || kind_total.nan?
                    student_total += kind_total
                 %>
                 <td class="delimiter"> <%= "%g" % ("%.1f" % kind_total) %> </td>
