@@ -19,7 +19,7 @@ A Ruby on Rails based university classes manager.
 - run ansible as `cd ansible/deployment` & `ansible-playbook -i inventories/production appservers.yml`
 - run capistrano as `cap production deploy`
 
-# TODO:
+# Roadmap
 - Backup data
 - Disciplines can change teachers in other semester
 - expire for cache
