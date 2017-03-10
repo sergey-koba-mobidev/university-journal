@@ -24,4 +24,4 @@ A Ruby on Rails based university classes manager.
 - Disciplines can change teachers in other semester
 - expire for cache
 - add RAILS_ENV export to .bashrc
-- button to set attends with 1 click
+- button to set no attends with 1 click
