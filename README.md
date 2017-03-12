@@ -25,3 +25,4 @@ A Ruby on Rails based university classes manager.
 - expire for cache
 - add RAILS_ENV export to .bashrc
 - button to set no attends with 1 click
+- docker
