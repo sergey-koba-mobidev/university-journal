@@ -305,3 +305,9 @@ DEPENDENCIES
   web-console (~> 2.0)
   wice_grid
   will_paginate
+
+RUBY VERSION
+   ruby 2.2.0p0
+
+BUNDLED WITH
+   1.17.1
