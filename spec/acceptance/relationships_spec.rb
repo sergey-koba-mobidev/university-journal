@@ -26,4 +26,23 @@ resource "Relationships" do
       end
     end
   end
+
+  get "/api/v1/relationships/:relationship_id/modules" do
+
+    context "200" do
+      let(:relationship_id) { Relationship.last.id }
+      let(:raw_post) {params.to_json}
+
+      example "Get Modules for Relationship" do    
+        do_request
+
+        expected_response = {
+          status: 0,
+          response: Api::V1::Visit::Representer.for_collection.new(Visit.all)
+        }
+        expect(status).to eq(200)
+        expect(response_body).to eq(expected_response.to_json)
+      end
+    end
+  end
 end

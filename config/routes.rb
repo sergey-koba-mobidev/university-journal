@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'sign_in' => 'users#sign_in'
       get  'relationships/current' => 'relationships#current'
+      get  'relationships/:relationship_id/modules' => 'visits#get_modules'
     end
   end
 end

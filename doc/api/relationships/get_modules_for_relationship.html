@@ -111,8 +111,8 @@ table th, table td {
         <p class="explanation">Relationship between groups, disciplines and semesters. Uses Authorization header to provide Bearer token.</p>
 
       <div class="article">
-        <h2>Get Current Relationships for user</h2>
-        <h3>GET /api/v1/relationships/current</h3>
+        <h2>Get Modules for Relationship</h2>
+        <h3>GET /api/v1/relationships/:relationship_id/modules</h3>
 
 
 
@@ -120,12 +120,12 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.GxfLgJk52sfiXUF-GMU8FWuq164exbcF3P-O4F7zrrk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0fQ.Z_eLgX2uquT4c-vGLd0wnZJDGwLOf-FiDhggPVxegAA
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">GET /api/v1/relationships/current</pre>
+          <pre class="request route highlight">GET /api/v1/relationships/2/modules</pre>
 
             <h4>Query Parameters</h4>
             <pre class="request query_parameters highlight">{}: </pre>
@@ -138,11 +138,11 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-ETag: W/&quot;57ed3eb993a503d55b8b3c8d202f6c8a&quot;
+ETag: W/&quot;92ba65abd9b7930447dd8f85aaa04b8d&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: b5fd6017-552c-43dc-8068-1f4b626b629f
-X-Runtime: 0.391326
-Content-Length: 139</pre>
+X-Request-Id: 6294461b-b4e5-4b70-a3ec-33bd5eade953
+X-Runtime: 0.067411
+Content-Length: 217</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
@@ -150,14 +150,20 @@ Content-Length: 139</pre>
   &quot;status&quot;: 0,
   &quot;response&quot;: [
     {
-      &quot;id&quot;: 1,
-      &quot;semester_id&quot;: 1,
-      &quot;group_id&quot;: 1,
-      &quot;discipline&quot;: {
-        &quot;id&quot;: 1,
-        &quot;title&quot;: &quot;Web technologies and web design&quot;,
-        &quot;user_id&quot;: 1
-      }
+      &quot;id&quot;: 3,
+      &quot;title&quot;: &quot;Module 1&quot;,
+      &quot;relationship_id&quot;: 2,
+      &quot;kind&quot;: &quot;module&quot;,
+      &quot;enabled&quot;: null,
+      &quot;object_id&quot;: null
+    },
+    {
+      &quot;id&quot;: 4,
+      &quot;title&quot;: &quot;Module 2&quot;,
+      &quot;relationship_id&quot;: 2,
+      &quot;kind&quot;: &quot;module&quot;,
+      &quot;enabled&quot;: null,
+      &quot;object_id&quot;: null
     }
   ]
 }</pre>
