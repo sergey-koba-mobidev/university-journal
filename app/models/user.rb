@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
     self.role ||= :student
   end
 
+  def api_token
+    payload = { :user_id => id }
+    JWT.encode payload, Rails.application.secrets.secret_key_base, 'HS256'
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,

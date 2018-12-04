@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Session API</title>
+    <title>Relationships API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,56 +106,30 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Session API</h1>
+      <h1>Relationships API</h1>
 
-        <p class="explanation">User session management</p>
+        <p class="explanation">Relationship between groups, disciplines and semesters. Uses Authorization header to provide Bearer token.</p>
 
       <div class="article">
-        <h2>Sign In</h2>
-        <h3>POST /api/v1/sign_in</h3>
+        <h2>Get Current Relationships for user</h2>
+        <h3>GET /api/v1/relationships/current</h3>
 
-          <h3>Parameters</h3>
-          <table class="parameters table table-striped table-bordered table-condensed">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="required">
-                    <span class="name">email</span>
-                </td>
-                <td>
-                  <span class="description">admin@journal.com</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="required">
-                    <span class="name">password</span>
-                </td>
-                <td>
-                  <span class="description">12345678</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
 
 
           <h3>Request</h3>
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.GxfLgJk52sfiXUF-GMU8FWuq164exbcF3P-O4F7zrrk
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/sign_in</pre>
+          <pre class="request route highlight">GET /api/v1/relationships/current</pre>
 
+            <h4>Query Parameters</h4>
+            <pre class="request query_parameters highlight">{}: </pre>
 
-            <h4>Body</h4>
-            <pre class="request body">{"email":"admin@journal.com","password":"12345678"}</pre>
 
 
             <h3>Response</h3>
@@ -164,23 +138,28 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-ETag: W/&quot;e6eab4824c561791ac4c2cb6f8905a85&quot;
+ETag: W/&quot;57ed3eb993a503d55b8b3c8d202f6c8a&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 679117a4-cb2c-4854-ba29-138b3ef8227e
-X-Runtime: 0.340303
-Content-Length: 194</pre>
+X-Request-Id: 973645c2-4b72-476d-8f4b-e2896228d542
+X-Runtime: 0.694042
+Content-Length: 139</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;status&quot;: 0,
-  &quot;response&quot;: {
-    &quot;id&quot;: 3,
-    &quot;email&quot;: &quot;admin@journal.com&quot;,
-    &quot;name&quot;: &quot;Test User&quot;,
-    &quot;role&quot;: &quot;student&quot;,
-    &quot;api_token&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.LGXscrDcwN9McqXmLbvJHQb_0WkzeJoGw0sdpnM3Upc&quot;
-  }
+  &quot;response&quot;: [
+    {
+      &quot;id&quot;: 1,
+      &quot;semester_id&quot;: 1,
+      &quot;group_id&quot;: 1,
+      &quot;discipline&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;Web technologies and web design&quot;,
+        &quot;user_id&quot;: 1
+      }
+    }
+  ]
 }</pre>
       </div>
     </div>

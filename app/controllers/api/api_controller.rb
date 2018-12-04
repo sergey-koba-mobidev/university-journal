@@ -37,13 +37,17 @@ class Api::ApiController < ApplicationController
       if payload
         user = User.find(payload['user_id'])
         if user
-          auto_login(user)
+          @user = user
           return true
         end
       end
     end
 
     render_error_json(['Auth token is not correct or user not found'], 401)
+  end
+
+  def current_user 
+    @user
   end
 
   def bearer_token

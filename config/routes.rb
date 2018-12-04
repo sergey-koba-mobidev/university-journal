@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post 'sign_in' => 'users#sign_in'
+      get  'relationships/current' => 'relationships#current'
     end
   end
 end

@@ -28,9 +28,10 @@ A Ruby on Rails based university classes manager.
 - `docker-compose run web bundle install --with test development`
 - `docker-compose run web rake db:create`
 - `docker-compose run web rake db:migrate`
-- `docker-compose run web rake db:create_admin`
+- `docker-compose run web rake db:seed`
 - `docker-compose up -d`
-- go to [http://localhost:3000](http://localhost:3000) use `admin@journal.com/12345678` as login and password
+- go to [http://localhost:3000](http://localhost:3000) use `admin@journal.com/12345678` as login and password for Admin
+- go to [http://localhost:3000](http://localhost:3000) use `student@journal.com/12345678` as login and password for Student
 
 ### Start app
 - `docker-compose up -d`
