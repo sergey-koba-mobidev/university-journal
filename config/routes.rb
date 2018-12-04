@@ -39,4 +39,10 @@ Rails.application.routes.draw do
       post 'create_manual'
     end
   end
+
+  namespace :api do
+    namespace :v1 do
+      post 'sign_in' => 'users#sign_in'
+    end
+  end
 end

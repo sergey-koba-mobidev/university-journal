@@ -21,6 +21,13 @@ gem 'wice_grid'
 gem 'paperclip', '~> 4.3'
 gem 'font-awesome-rails'
 
+# Api
+gem 'jwt'
+gem 'rspec_api_documentation'
+
+# Trb
+gem 'trailblazer-rails'
+
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
 
@@ -28,7 +35,7 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
 end

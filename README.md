@@ -25,7 +25,7 @@ A Ruby on Rails based university classes manager.
 - `cp .env.example .env`
 - `docker-compose build`
 - `docker-compose up -d db`
-- `docker-compose run web bundle install`
+- `docker-compose run web bundle install --with test development`
 - `docker-compose run web rake db:create`
 - `docker-compose run web rake db:migrate`
 - `docker-compose run web rake db:create_admin`
@@ -40,6 +40,13 @@ A Ruby on Rails based university classes manager.
 
 ### Remove app
 - `docker-compose down`
+
+## Tests
+- `docker-compose run web bundle exec rspec`
+
+## Doc
+- build doc `docker-compose run web bundle exec rake docs:generate`
+- open file `./doc/api/idnex.html`
 
 # Deployment
 - run ansible as `cd ansible/deployment` & `ansible-playbook -i inventories/production appservers.yml`

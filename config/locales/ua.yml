@@ -76,3 +76,5 @@ ua:
   will_paginate:
       next_label: "Далі"
       previous_label: "Назад"
+  api:
+    sign_in_failure: Невiрний email або пароль

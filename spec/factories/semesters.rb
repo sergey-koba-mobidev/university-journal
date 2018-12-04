@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :semester do
     year 1
 pos 1

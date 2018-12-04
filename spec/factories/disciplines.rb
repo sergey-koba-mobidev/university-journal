@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :discipline do
     title "MyString"
 user nil

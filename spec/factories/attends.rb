@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :attend do
     visit nil
 user nil
