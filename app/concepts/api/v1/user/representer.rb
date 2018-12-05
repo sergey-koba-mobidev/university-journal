@@ -10,4 +10,7 @@ class Api::V1::User::Representer < Representable::Decorator
   property :name
   property :role
   property :api_token
+
+  property :created_at
+  property :updated_at
 end

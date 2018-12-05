@@ -19,5 +19,7 @@ class DbSeedService
     relationship = Relationship.find_or_create_by!(semester_id: semester.id, discipline_id: discipline.id, group_id: group.id)
     module_1_visit = Visit.find_or_create_by!(title: "Module 1", relationship_id: relationship.id, kind: :module)
     module_2_visit = Visit.find_or_create_by!(title: "Module 2", relationship_id: relationship.id, kind: :module)
+
+    module1 = DisciplineModule.find_or_create_by!(title: "HTML and CSS", discipline_id: discipline.id, duration: 3600)
   end
 end

@@ -10,4 +10,7 @@ class Api::V1::Visit::Representer < Representable::Decorator
   property :kind
   property :enabled
   property :object_id
+
+  property :created_at
+  property :updated_at
 end

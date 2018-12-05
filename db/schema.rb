@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181204180441) do
+ActiveRecord::Schema.define(version: 20181205145933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20181204180441) do
 
   add_index "attends", ["user_id"], name: "index_attends_on_user_id", using: :btree
   add_index "attends", ["visit_id"], name: "index_attends_on_visit_id", using: :btree
+
+  create_table "discipline_modules", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "discipline_id"
+    t.integer  "duration"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "discipline_modules", ["discipline_id"], name: "index_discipline_modules_on_discipline_id", using: :btree
 
   create_table "disciplines", force: :cascade do |t|
     t.string   "title"
@@ -79,6 +89,28 @@ ActiveRecord::Schema.define(version: 20181204180441) do
 
   add_index "homeworks", ["user_id"], name: "index_homeworks_on_user_id", using: :btree
   add_index "homeworks", ["visit_id"], name: "index_homeworks_on_visit_id", using: :btree
+
+  create_table "question_groups", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "discipline_module_id"
+    t.integer  "position"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "question_groups", ["discipline_module_id"], name: "index_question_groups_on_discipline_module_id", using: :btree
+
+  create_table "questions", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "question_group_id"
+    t.integer  "kind"
+    t.string   "answer"
+    t.jsonb    "variants"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "questions", ["question_group_id"], name: "index_questions_on_question_group_id", using: :btree
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "semester_id"

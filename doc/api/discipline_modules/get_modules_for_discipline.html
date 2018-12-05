@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Relationships API</title>
+    <title>Discipline Modules API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Relationships API</h1>
+      <h1>Discipline Modules API</h1>
 
-        <p class="explanation">Relationship between groups, disciplines and semesters. Uses Authorization header to provide Bearer token.</p>
+        <p class="explanation">Modules for disciplines. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
 
       <div class="article">
-        <h2>Get Modules for Relationship</h2>
-        <h3>GET /api/v1/relationships/:relationship_id/modules</h3>
+        <h2>Get modules for discipline</h2>
+        <h3>GET /api/v1/disciplines/:discipline_id/modules</h3>
 
 
 
@@ -120,12 +120,12 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2fQ.vg6SNULd88MyyCNFhUVuv-TOWHcnGBRCfvjDrQg_W2w
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.Urn_armY_N5qnpgo70C6XphiY9rpVAB3hE-N5p0fS0A
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">GET /api/v1/relationships/3/modules</pre>
+          <pre class="request route highlight">GET /api/v1/disciplines/1/modules</pre>
 
             <h4>Query Parameters</h4>
             <pre class="request query_parameters highlight">{}: </pre>
@@ -138,11 +138,11 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-ETag: W/&quot;66b17023c120cfc36436a742b4d761a1&quot;
+ETag: W/&quot;bf5ebd2ba0f7efdcc5deefb681a5a239&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 9816c104-bac2-464d-a8ce-cf918e158c35
-X-Runtime: 0.094207
-Content-Length: 377</pre>
+X-Request-Id: b4099de8-abff-4a97-9a87-0c1d23e138cb
+X-Runtime: 0.423734
+Content-Length: 171</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
@@ -150,24 +150,12 @@ Content-Length: 377</pre>
   &quot;status&quot;: 0,
   &quot;response&quot;: [
     {
-      &quot;id&quot;: 5,
-      &quot;title&quot;: &quot;Module 1&quot;,
-      &quot;relationship_id&quot;: 3,
-      &quot;kind&quot;: &quot;module&quot;,
-      &quot;enabled&quot;: null,
-      &quot;object_id&quot;: null,
-      &quot;created_at&quot;: &quot;2018-12-05T18:48:51.341Z&quot;,
-      &quot;updated_at&quot;: &quot;2018-12-05T18:48:51.341Z&quot;
-    },
-    {
-      &quot;id&quot;: 6,
-      &quot;title&quot;: &quot;Module 2&quot;,
-      &quot;relationship_id&quot;: 3,
-      &quot;kind&quot;: &quot;module&quot;,
-      &quot;enabled&quot;: null,
-      &quot;object_id&quot;: null,
-      &quot;created_at&quot;: &quot;2018-12-05T18:48:51.346Z&quot;,
-      &quot;updated_at&quot;: &quot;2018-12-05T18:48:51.346Z&quot;
+      &quot;id&quot;: 1,
+      &quot;title&quot;: &quot;HTML and CSS&quot;,
+      &quot;discipline_id&quot;: 1,
+      &quot;duration&quot;: 3600,
+      &quot;created_at&quot;: &quot;2018-12-05T18:48:50.617Z&quot;,
+      &quot;updated_at&quot;: &quot;2018-12-05T18:48:50.617Z&quot;
     }
   ]
 }</pre>

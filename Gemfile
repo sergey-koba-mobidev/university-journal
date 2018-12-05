@@ -24,6 +24,7 @@ gem 'font-awesome-rails'
 # Api
 gem 'jwt'
 gem 'rspec_api_documentation'
+gem "pundit"
 
 # Trb
 gem 'trailblazer-rails'

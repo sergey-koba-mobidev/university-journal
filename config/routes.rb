@@ -45,6 +45,8 @@ Rails.application.routes.draw do
       post 'sign_in' => 'users#sign_in'
       get  'relationships/current' => 'relationships#current'
       get  'relationships/:relationship_id/modules' => 'visits#get_modules'
+
+      get  'disciplines/:discipline_id/modules' => 'discipline_modules#index'
     end
   end
 end

@@ -9,4 +9,7 @@ class Api::V1::Relationship::Representer < Representable::Decorator
   property :group_id
 
   property :discipline, decorator: Api::V1::Discipline::Representer
+
+  property :created_at
+  property :updated_at
 end

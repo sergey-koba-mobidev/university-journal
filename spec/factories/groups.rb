@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :group do
-    title "MyString"
+    title { "MyString" }
   end
 
 end

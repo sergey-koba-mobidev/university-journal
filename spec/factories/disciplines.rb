@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :discipline do
-    title "MyString"
-user nil
+    title { "MyString" }
+    user { nil }
   end
 
 end
