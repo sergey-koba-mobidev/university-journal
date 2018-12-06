@@ -4,6 +4,7 @@ class CreateQuestionGroups < ActiveRecord::Migration
       t.string :title
       t.references :discipline_module, index: true
       t.integer :position
+      t.integer :points
 
       t.timestamps null: false
     end

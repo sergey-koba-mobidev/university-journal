@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Session API</title>
+    <title>Modules API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,56 +106,30 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Session API</h1>
+      <h1>Modules API</h1>
 
-        <p class="explanation">User session management</p>
+        <p class="explanation">Modules for students to pass. Uses Authorization header to provide Bearer token. Allows to get module, answer questions, see results.</p>
 
       <div class="article">
-        <h2>Sign In Error</h2>
-        <h3>POST /api/v1/sign_in</h3>
+        <h2>Get module for student</h2>
+        <h3>GET /api/v1/relationships/:relationship_id/modules/:id</h3>
 
-          <h3>Parameters</h3>
-          <table class="parameters table table-striped table-bordered table-condensed">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="required">
-                    <span class="name">email</span>
-                </td>
-                <td>
-                  <span class="description">admin@journal.com</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="required">
-                    <span class="name">password</span>
-                </td>
-                <td>
-                  <span class="description">12345678</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
 
 
           <h3>Request</h3>
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5fQ.wFIsvAgXXSx7W5MwxxqXHvAV9K9Y06ZHrbzS6WuEwaA
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/sign_in</pre>
+          <pre class="request route highlight">GET /api/v1/relationships/4/modules/7</pre>
 
+            <h4>Query Parameters</h4>
+            <pre class="request query_parameters highlight">{}: </pre>
 
-            <h4>Body</h4>
-            <pre class="request body">{"email":"nonexisting@user.com","password":"12345678"}</pre>
 
 
             <h3>Response</h3>
@@ -164,16 +138,63 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-Cache-Control: no-cache
-X-Request-Id: 5e9bda24-1d47-44cd-9074-c72bfa1458e2
-X-Runtime: 0.007970
-Content-Length: 46</pre>
+ETag: W/&quot;1fb9612a471b7813a5db5a2e6144ee99&quot;
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 952b1cd9-bab0-4e19-a75f-e1be5fe9802c
+X-Runtime: 0.104231
+Content-Length: 584</pre>
             <h4>Status</h4>
-            <pre class="response status">400 Bad Request</pre>
+            <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
-  &quot;status&quot;: 1,
-  &quot;error&quot;: &quot;Wrong email or password&quot;
+  &quot;status&quot;: 0,
+  &quot;response&quot;: {
+    &quot;id&quot;: 1,
+    &quot;user_id&quot;: 9,
+    &quot;visit_id&quot;: 7,
+    &quot;status&quot;: &quot;started&quot;,
+    &quot;questions&quot;: [
+      {
+        &quot;kind&quot;: &quot;text&quot;,
+        &quot;variants&quot;: [
+
+        ],
+        &quot;description&quot;: &quot;Write an example of html form&quot;
+      },
+      {
+        &quot;kind&quot;: &quot;one&quot;,
+        &quot;variants&quot;: [
+          &quot;style&quot;,
+          &quot;color&quot;,
+          &quot;text-color&quot;
+        ],
+        &quot;description&quot;: &quot;Choose CSS property to set text color&quot;
+      },
+      {
+        &quot;kind&quot;: &quot;many&quot;,
+        &quot;variants&quot;: [
+          &quot;text-shadow&quot;,
+          &quot;animation&quot;,
+          &quot;text-size&quot;
+        ],
+        &quot;description&quot;: &quot;Choose properties introduced in CSS 3&quot;
+      }
+    ],
+    &quot;answers&quot;: [
+      null,
+      null,
+      null
+    ],
+    &quot;results&quot;: [
+      null,
+      null,
+      null
+    ],
+    &quot;total&quot;: 0,
+    &quot;opened_until&quot;: &quot;2018-12-06T17:38:08.977Z&quot;,
+    &quot;created_at&quot;: &quot;2018-12-06T16:38:08.986Z&quot;,
+    &quot;updated_at&quot;: &quot;2018-12-06T16:38:08.986Z&quot;
+  }
 }</pre>
       </div>
     </div>

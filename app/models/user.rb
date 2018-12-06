@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :groupings, :dependent => :destroy
   has_many :groups, :through => :groupings
   has_many :homeworks, dependent: :destroy
+  has_many :student_modules
 
   default_scope { order("name ASC") }
 

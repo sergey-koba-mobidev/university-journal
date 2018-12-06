@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181205145933) do
+ActiveRecord::Schema.define(version: 20181206080349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20181205145933) do
     t.string   "title"
     t.integer  "discipline_module_id"
     t.integer  "position"
+    t.integer  "points"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
@@ -131,6 +132,22 @@ ActiveRecord::Schema.define(version: 20181205145933) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "student_modules", force: :cascade do |t|
+    t.integer  "visit_id"
+    t.integer  "user_id"
+    t.integer  "status"
+    t.jsonb    "questions"
+    t.jsonb    "answers"
+    t.jsonb    "results"
+    t.integer  "total"
+    t.datetime "opened_until"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "student_modules", ["user_id"], name: "index_student_modules_on_user_id", using: :btree
+  add_index "student_modules", ["visit_id"], name: "index_student_modules_on_visit_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
