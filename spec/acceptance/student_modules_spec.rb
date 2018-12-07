@@ -28,5 +28,34 @@ resource "Modules" do
       end
     end
   end
+
+  post "/api/v1/relationships/:relationship_id/modules/:id/questions/:question_id/answer" do
+    with_options with_example: true do
+      parameter :answer, '1', required: true
+    end
+
+    context "200" do
+      let(:relationship_id) { Relationship.last.id }
+      let(:id) { Visit.first.id }
+      let(:student_module) { StudentModule::Get.(params: {id: id}, current_user: User.last)[:student_module] }
+      let(:question_id) { student_module.questions[0]["id"] }
+      let(:raw_post) {params.to_json}
+
+      example "Post answer for module question" do    
+        request = {
+          answer: "1"
+        }
+
+        do_request(request)
+        
+        expected_response = {
+          status: 0,
+          response: Api::V1::StudentModule::Representer.new(StudentModule.last)
+        }
+        expect(status).to eq(200)
+        expect(response_body).to include("{\"id\":#{question_id},\"answer\":\"1\"}")
+      end
+    end
+  end
   
 end

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Session API</title>
+    <title>Modules API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Session API</h1>
+      <h1>Modules API</h1>
 
-        <p class="explanation">User session management</p>
+        <p class="explanation">Modules for students to pass. Uses Authorization header to provide Bearer token. Allows to get module, answer questions, see results.</p>
 
       <div class="article">
-        <h2>Sign In</h2>
-        <h3>POST /api/v1/sign_in</h3>
+        <h2>Post answer for module question</h2>
+        <h3>POST /api/v1/relationships/:relationship_id/modules/:id/questions/:question_id/answer</h3>
 
           <h3>Parameters</h3>
           <table class="parameters table table-striped table-bordered table-condensed">
@@ -125,18 +125,10 @@ table th, table td {
             <tbody>
               <tr>
                 <td class="required">
-                    <span class="name">email</span>
+                    <span class="name">answer</span>
                 </td>
                 <td>
-                  <span class="description">admin@journal.com</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="required">
-                    <span class="name">password</span>
-                </td>
-                <td>
-                  <span class="description">12345678</span>
+                  <span class="description">1</span>
                 </td>
               </tr>
             </tbody>
@@ -147,15 +139,16 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMX0.JQ9z9-_E56Ew-kFzKEf2GU6XMKVryOFDVT6y5MIkLmA
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/sign_in</pre>
+          <pre class="request route highlight">POST /api/v1/relationships/5/modules/9/questions/21/answer</pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">{"email":"admin@journal.com","password":"12345678"}</pre>
+            <pre class="request body">{"answer":"1"}</pre>
 
 
             <h3>Response</h3>
@@ -164,25 +157,84 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-ETag: W/&quot;3bec1922ee4f5cd826752ae22d04f04d&quot;
+ETag: W/&quot;e03d79f42ac8dcd90ca7e23a7fd1d835&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 5cdfdf37-debe-45d1-a0e1-fc26ef0189dd
-X-Runtime: 0.039383
+X-Request-Id: 6cd0bc6d-f1d1-484c-a170-5aee36c3ffde
+X-Runtime: 0.044463
 Vary: Origin
-Content-Length: 274</pre>
+Content-Length: 722</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;status&quot;: 0,
   &quot;response&quot;: {
-    &quot;id&quot;: 7,
-    &quot;email&quot;: &quot;admin@journal.com&quot;,
-    &quot;name&quot;: &quot;Test User&quot;,
-    &quot;role&quot;: &quot;student&quot;,
-    &quot;api_token&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3fQ.qeucrveV5xBCjXCOBsdO36a35iEq3MEvDHdTQdG3CGk&quot;,
-    &quot;created_at&quot;: &quot;2018-12-07T12:36:19.718Z&quot;,
-    &quot;updated_at&quot;: &quot;2018-12-07T12:36:19.718Z&quot;
+    &quot;id&quot;: 2,
+    &quot;user_id&quot;: 11,
+    &quot;visit_id&quot;: 9,
+    &quot;status&quot;: &quot;started&quot;,
+    &quot;questions&quot;: [
+      {
+        &quot;id&quot;: 21,
+        &quot;kind&quot;: &quot;text&quot;,
+        &quot;variants&quot;: [
+
+        ],
+        &quot;description&quot;: &quot;Write an example of html form&quot;
+      },
+      {
+        &quot;id&quot;: 23,
+        &quot;kind&quot;: &quot;one&quot;,
+        &quot;variants&quot;: [
+          &quot;style&quot;,
+          &quot;color&quot;,
+          &quot;text-color&quot;
+        ],
+        &quot;description&quot;: &quot;Choose CSS property to set text color&quot;
+      },
+      {
+        &quot;id&quot;: 25,
+        &quot;kind&quot;: &quot;many&quot;,
+        &quot;variants&quot;: [
+          &quot;text-shadow&quot;,
+          &quot;animation&quot;,
+          &quot;text-size&quot;
+        ],
+        &quot;description&quot;: &quot;Choose properties introduced in CSS 3&quot;
+      }
+    ],
+    &quot;answers&quot;: [
+      {
+        &quot;id&quot;: 21,
+        &quot;answer&quot;: &quot;1&quot;
+      },
+      {
+        &quot;id&quot;: 23,
+        &quot;answer&quot;: null
+      },
+      {
+        &quot;id&quot;: 25,
+        &quot;answer&quot;: null
+      }
+    ],
+    &quot;results&quot;: [
+      {
+        &quot;id&quot;: 21,
+        &quot;result&quot;: null
+      },
+      {
+        &quot;id&quot;: 23,
+        &quot;result&quot;: null
+      },
+      {
+        &quot;id&quot;: 25,
+        &quot;result&quot;: null
+      }
+    ],
+    &quot;total&quot;: 0,
+    &quot;opened_until&quot;: &quot;2018-12-07T13:36:20.289Z&quot;,
+    &quot;created_at&quot;: &quot;2018-12-07T12:36:20.294Z&quot;,
+    &quot;updated_at&quot;: &quot;2018-12-07T12:36:20.339Z&quot;
   }
 }</pre>
       </div>

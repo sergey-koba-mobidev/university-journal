@@ -24,18 +24,26 @@ class StudentModule < ActiveRecord::Base
 
     def generate(options, params:, current_user:, **)
       questions, answers, results = [], [], []
+      question_id = 1
       options[:discipline_module].question_groups.each do |group|
         group_questions = group.questions 
         if group_questions.count > 0
           offset = rand(group_questions.count)
           question = group_questions.offset(offset).first
           questions << {
+            id: question.id,
             kind: question.kind,
             variants: question.variants,
             description: question.description
           }
-          answers << nil
-          results << nil
+          answers << {
+            id: question.id,
+            answer: nil
+          }
+          results << {
+            id: question.id,
+            result: nil
+          }
         end
       end
       options[:student_module] = StudentModule.create({
