@@ -25,6 +25,7 @@ gem 'font-awesome-rails'
 gem 'jwt'
 gem 'rspec_api_documentation'
 gem "pundit"
+gem 'rack-cors', require: 'rack/cors'
 
 # Trb
 gem 'trailblazer-rails'
