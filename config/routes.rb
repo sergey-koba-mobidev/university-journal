@@ -49,6 +49,9 @@ Rails.application.routes.draw do
       post 'relationships/:relationship_id/modules/:id/questions/:question_id/answer' => 'student_modules#answer'
 
       get  'disciplines/:discipline_id/modules' => 'discipline_modules#index'
+      post 'disciplines/:discipline_id/modules' => 'discipline_modules#create'
+      post 'disciplines/:discipline_id/modules/:id' => 'discipline_modules#update'
+      delete 'disciplines/:discipline_id/modules/:id' => 'discipline_modules#delete'
     end
   end
 end

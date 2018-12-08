@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Session API</title>
+    <title>Discipline Modules API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,56 +106,30 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Session API</h1>
+      <h1>Discipline Modules API</h1>
 
-        <p class="explanation">User session management</p>
+        <p class="explanation">Modules for disciplines. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
 
       <div class="article">
-        <h2>Sign In Error</h2>
-        <h3>POST /api/v1/sign_in</h3>
+        <h2>Delete module for discipline</h2>
+        <h3>DELETE /api/v1/disciplines/:discipline_id/modules/:id</h3>
 
-          <h3>Parameters</h3>
-          <table class="parameters table table-striped table-bordered table-condensed">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="required">
-                    <span class="name">email</span>
-                </td>
-                <td>
-                  <span class="description">admin@journal.com</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="required">
-                    <span class="name">password</span>
-                </td>
-                <td>
-                  <span class="description">12345678</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
 
 
           <h3>Request</h3>
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5fQ.wFIsvAgXXSx7W5MwxxqXHvAV9K9Y06ZHrbzS6WuEwaA
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/sign_in</pre>
+          <pre class="request route highlight">DELETE /api/v1/disciplines/5/modules/6</pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">{"email":"nonexisting@user.com","password":"12345678"}</pre>
+            <pre class="request body">{}</pre>
 
 
             <h3>Response</h3>
@@ -164,17 +138,18 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-Cache-Control: no-cache
-X-Request-Id: 1e78dbd6-92a0-4925-98e3-3197cd8d2ee1
-X-Runtime: 0.008476
+ETag: W/&quot;69bc247f93d9c14bd6808d54d74a6be9&quot;
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 13027d29-4fb9-43f5-a964-1fb7b7bee686
+X-Runtime: 0.011565
 Vary: Origin
-Content-Length: 46</pre>
+Content-Length: 28</pre>
             <h4>Status</h4>
-            <pre class="response status">400 Bad Request</pre>
+            <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
-  &quot;status&quot;: 1,
-  &quot;error&quot;: &quot;Wrong email or password&quot;
+  &quot;status&quot;: 0,
+  &quot;response&quot;: null
 }</pre>
       </div>
     </div>

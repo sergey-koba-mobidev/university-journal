@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Session API</title>
+    <title>Discipline Modules API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Session API</h1>
+      <h1>Discipline Modules API</h1>
 
-        <p class="explanation">User session management</p>
+        <p class="explanation">Modules for disciplines. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
 
       <div class="article">
-        <h2>Sign In Error</h2>
-        <h3>POST /api/v1/sign_in</h3>
+        <h2>Error creating module for discipline</h2>
+        <h3>POST /api/v1/disciplines/:discipline_id/modules</h3>
 
           <h3>Parameters</h3>
           <table class="parameters table table-striped table-bordered table-condensed">
@@ -125,18 +125,18 @@ table th, table td {
             <tbody>
               <tr>
                 <td class="required">
-                    <span class="name">email</span>
+                    <span class="name">title</span>
                 </td>
                 <td>
-                  <span class="description">admin@journal.com</span>
+                  <span class="description">Html &amp; Css</span>
                 </td>
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">password</span>
+                    <span class="name">duration</span>
                 </td>
                 <td>
-                  <span class="description">12345678</span>
+                  <span class="description">3600</span>
                 </td>
               </tr>
             </tbody>
@@ -147,15 +147,16 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1fQ._dsc_Y9QReZr2ESo9zRZDv71fL1OA7GPPwnyFP2ctq8
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/sign_in</pre>
+          <pre class="request route highlight">POST /api/v1/disciplines/3/modules</pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">{"email":"nonexisting@user.com","password":"12345678"}</pre>
+            <pre class="request body">{"title":"Html \u0026 Css"}</pre>
 
 
             <h3>Response</h3>
@@ -165,16 +166,16 @@ X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
 Cache-Control: no-cache
-X-Request-Id: 1e78dbd6-92a0-4925-98e3-3197cd8d2ee1
-X-Runtime: 0.008476
+X-Request-Id: beb98fea-5198-44bd-ba65-0b13adfb5eb0
+X-Runtime: 0.017043
 Vary: Origin
-Content-Length: 46</pre>
+Content-Length: 64</pre>
             <h4>Status</h4>
             <pre class="response status">400 Bad Request</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;status&quot;: 1,
-  &quot;error&quot;: &quot;Wrong email or password&quot;
+  &quot;error&quot;: &quot;duration, is not a number, can&#39;t be blank&quot;
 }</pre>
       </div>
     </div>
