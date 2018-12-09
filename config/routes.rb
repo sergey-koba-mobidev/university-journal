@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       post 'question_groups/:question_group_id/questions' => 'questions#create'
       post 'question_groups/:question_group_id/questions/:id' => 'questions#update'
       delete 'question_groups/:question_group_id/questions/:id' => 'questions#delete'
+
+      get  'disciplines' => 'disciplines#index'
     end
   end
 end
