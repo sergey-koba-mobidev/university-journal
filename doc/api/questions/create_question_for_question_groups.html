@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Question Groups API</title>
+    <title>Questions API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Question Groups API</h1>
+      <h1>Questions API</h1>
 
-        <p class="explanation">Question Groups for disciplines modules. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
+        <p class="explanation">Question for question groups. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
 
       <div class="article">
-        <h2>Error creating question group for discipline module</h2>
-        <h3>POST /api/v1/modules/:discipline_module_id/question_groups</h3>
+        <h2>Create question for question groups</h2>
+        <h3>POST /api/v1/question_groups/:question_group_id/questions</h3>
 
           <h3>Parameters</h3>
           <table class="parameters table table-striped table-bordered table-condensed">
@@ -125,26 +125,34 @@ table th, table td {
             <tbody>
               <tr>
                 <td class="required">
-                    <span class="name">title</span>
+                    <span class="name">description</span>
                 </td>
                 <td>
-                  <span class="description">Html</span>
+                  <span class="description">What is html?</span>
                 </td>
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">position</span>
+                    <span class="name">kind</span>
                 </td>
                 <td>
-                  <span class="description">1</span>
+                  <span class="description">0</span>
                 </td>
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">points</span>
+                    <span class="name">answer</span>
                 </td>
                 <td>
-                  <span class="description">2</span>
+                  <span class="description">markup language</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="required">
+                    <span class="name">variants</span>
+                </td>
+                <td>
+                  <span class="description">[]</span>
                 </td>
               </tr>
             </tbody>
@@ -155,16 +163,16 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNX0.ynX-fi_-VqTqix5NhPIx7cAiLufRORahCQ_1XilvJJ8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyM30.s2aUZ6prrJjWdnKrquu2tAROtskIqKd-Y_Jo744L-rc
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/modules/9/question_groups</pre>
+          <pre class="request route highlight">POST /api/v1/question_groups/37/questions</pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">{"title":"Html","position":1}</pre>
+            <pre class="request body">{"description":"What is html?","kind":0,"answer":"markup language","variants":"[]"}</pre>
 
 
             <h3>Response</h3>
@@ -173,17 +181,29 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-Cache-Control: no-cache
-X-Request-Id: 33634949-29a6-4cc8-813b-7e365f383ae9
-X-Runtime: 0.045298
+ETag: W/&quot;445ae1730395bb4048028c3fb7e80c6b&quot;
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 3522800a-b19b-4cc8-86db-83b396a0cec5
+X-Runtime: 0.036324
 Vary: Origin
-Content-Length: 62</pre>
+Content-Length: 221</pre>
             <h4>Status</h4>
-            <pre class="response status">400 Bad Request</pre>
+            <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
-  &quot;status&quot;: 1,
-  &quot;error&quot;: &quot;points, is not a number, can&#39;t be blank&quot;
+  &quot;status&quot;: 0,
+  &quot;response&quot;: {
+    &quot;id&quot;: 61,
+    &quot;description&quot;: &quot;What is html?&quot;,
+    &quot;question_group_id&quot;: 37,
+    &quot;kind&quot;: &quot;text&quot;,
+    &quot;answer&quot;: &quot;markup language&quot;,
+    &quot;variants&quot;: [
+
+    ],
+    &quot;created_at&quot;: &quot;2018-12-09T11:25:00.550Z&quot;,
+    &quot;updated_at&quot;: &quot;2018-12-09T11:25:00.550Z&quot;
+  }
 }</pre>
       </div>
     </div>

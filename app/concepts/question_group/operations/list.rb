@@ -2,7 +2,7 @@ class QuestionGroup < ActiveRecord::Base
   class List < Trailblazer::Operation
     step Policy::Pundit( QuestionGroupPolicy, :list? )
     step :get_discipline_module
-    step :get_modules
+    step :get_groups
 
     def get_discipline_module(options, params:, **)
       options[:discipline_module] = DisciplineModule.where(id: params[:discipline_module_id]).first
@@ -13,7 +13,7 @@ class QuestionGroup < ActiveRecord::Base
       true
     end
 
-    def get_modules(options, params:, current_user:, **)
+    def get_groups(options, params:, current_user:, **)
       options[:models] = options[:discipline_module].question_groups
     end
   end

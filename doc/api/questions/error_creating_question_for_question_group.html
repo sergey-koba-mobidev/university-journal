@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Question Groups API</title>
+    <title>Questions API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Question Groups API</h1>
+      <h1>Questions API</h1>
 
-        <p class="explanation">Question Groups for disciplines modules. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
+        <p class="explanation">Question for question groups. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
 
       <div class="article">
-        <h2>Error creating question group for discipline module</h2>
-        <h3>POST /api/v1/modules/:discipline_module_id/question_groups</h3>
+        <h2>Error creating question for question group</h2>
+        <h3>POST /api/v1/question_groups/:question_group_id/questions</h3>
 
           <h3>Parameters</h3>
           <table class="parameters table table-striped table-bordered table-condensed">
@@ -125,26 +125,34 @@ table th, table td {
             <tbody>
               <tr>
                 <td class="required">
-                    <span class="name">title</span>
+                    <span class="name">description</span>
                 </td>
                 <td>
-                  <span class="description">Html</span>
+                  <span class="description">What is html?</span>
                 </td>
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">position</span>
+                    <span class="name">kind</span>
                 </td>
                 <td>
-                  <span class="description">1</span>
+                  <span class="description">0</span>
                 </td>
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">points</span>
+                    <span class="name">answer</span>
                 </td>
                 <td>
-                  <span class="description">2</span>
+                  <span class="description">markup language</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="required">
+                    <span class="name">variants</span>
+                </td>
+                <td>
+                  <span class="description">[]</span>
                 </td>
               </tr>
             </tbody>
@@ -155,16 +163,16 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNX0.ynX-fi_-VqTqix5NhPIx7cAiLufRORahCQ_1XilvJJ8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.jOCDuuDVw42mb5tucb4c7rUN1EX5MSocPi32nCOSDp4
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/modules/9/question_groups</pre>
+          <pre class="request route highlight">POST /api/v1/question_groups/40/questions</pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">{"title":"Html","position":1}</pre>
+            <pre class="request body">{"description":"What is html?","answer":"markup language","variants":"[]"}</pre>
 
 
             <h3>Response</h3>
@@ -174,16 +182,16 @@ X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
 Cache-Control: no-cache
-X-Request-Id: 33634949-29a6-4cc8-813b-7e365f383ae9
-X-Runtime: 0.045298
+X-Request-Id: b7997918-2b69-443a-9f02-6850f9756180
+X-Runtime: 0.028187
 Vary: Origin
-Content-Length: 62</pre>
+Content-Length: 60</pre>
             <h4>Status</h4>
             <pre class="response status">400 Bad Request</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;status&quot;: 1,
-  &quot;error&quot;: &quot;points, is not a number, can&#39;t be blank&quot;
+  &quot;error&quot;: &quot;kind, is not a number, can&#39;t be blank&quot;
 }</pre>
       </div>
     </div>
