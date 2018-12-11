@@ -57,5 +57,27 @@ resource "Modules" do
       end
     end
   end
+
+  post "/api/v1/relationships/:relationship_id/modules/:id/finish" do
+
+    context "200" do
+      let(:relationship_id) { Relationship.last.id }
+      let(:id) { Visit.first.id }
+      let(:raw_post) {params.to_json}
+
+      example "Finish module" do    
+        StudentModule::Generate.(params: {id: id}, current_user: User.last)
+        do_request
+        
+        expected_response = {
+          status: 0,
+          response: Api::V1::StudentModule::Representer.new(StudentModule.last)
+        }
+        expect(status).to eq(200)
+        expect(response_body).to eq(expected_response.to_json)
+        expect(StudentModule.last.status).to eq("finished")
+      end
+    end
+  end
   
 end

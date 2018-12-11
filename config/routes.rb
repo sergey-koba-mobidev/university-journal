@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       get  'relationships/:relationship_id/modules' => 'visits#get_modules'
       get  'relationships/:relationship_id/modules/:id' => 'student_modules#show'
       post 'relationships/:relationship_id/modules/:id/questions/:question_id/answer' => 'student_modules#answer'
+      post 'relationships/:relationship_id/modules/:id/finish' => 'student_modules#finish'
 
       get  'disciplines/:discipline_id/modules' => 'discipline_modules#index'
       post 'disciplines/:discipline_id/modules' => 'discipline_modules#create'

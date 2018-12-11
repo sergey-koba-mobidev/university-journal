@@ -1,11 +1,10 @@
 class StudentModule < ActiveRecord::Base
-  class Answer < Trailblazer::Operation
+  class Finish < Trailblazer::Operation
     step Model(Visit, :find_by)
     step Policy::Pundit( VisitPolicy, :show? )
     step :check_enabled
     step :get_module
-    step :check_timeout
-    step :answer
+    step :finish
     
     def check_enabled(options, params:, **)
       if !options[:model].enabled
@@ -26,26 +25,8 @@ class StudentModule < ActiveRecord::Base
       true
     end
 
-    def check_timeout(options, params:, **)
-      if Time.now.utc > options[:student_module].opened_until
-        options[:error_msg] = 'Time is out. Module has finished you cannot answer anymore.'
-        return false
-      end
-      if options[:student_module].status != "started"
-        options[:error_msg] = 'Module has finished you cannot answer anymore.'
-        return false
-      end
-      true
-    end
-
-    def answer(options, params:, **)
-      options[:student_module].answers = options[:student_module].answers.map do |item| 
-        if item["id"]==params[:question_id].to_i 
-          item["answer"] = params[:answer]
-        end
-        item
-      end
-      options[:student_module].save
+    def finish(options, params:, **)
+      options[:student_module].update_attribute(:status, StudentModule.statuses['finished'])
       true
     end
   end
