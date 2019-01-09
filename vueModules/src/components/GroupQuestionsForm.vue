@@ -40,6 +40,8 @@
                     :indexQuestion="question.index"
                     :indexVariant="indexVariant"
                     :variant="variant"
+                    @selectVariant="handleSelectVariant"
+                    @editVariant="handleEditVariant"
                 />
                 <button class="btn waves-effect waves-light Group__question-add" @click="addVariant">добавить вариант</button>
             </div>
@@ -132,6 +134,22 @@
                 e.preventDefault();
                 this.question.variants.push("");
             },
+            handleSelectVariant(value) {
+                this.setData({ fields: {
+                        answer: value
+                    }
+                })
+            },
+            handleEditVariant(index, value) {
+                const newVariants = this.variants.map((variant, i) => {
+                    return (index === i) ? value : variant
+                });
+
+                this.setData({ fields: {
+                        variants: newVariants
+                    }
+                })
+            }
         },
         mounted() {
             this.setData({ fields: {

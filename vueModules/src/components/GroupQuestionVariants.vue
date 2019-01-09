@@ -42,6 +42,7 @@
                     return this.answer;
                 },
                 set(value) {
+                    this.$emit('selectVariant', value)
                 }
             },
             variantText: {
@@ -49,6 +50,7 @@
                     return this.variant;
                 },
                 set(value) {
+                    this.$emit('editVariant', this.indexVariant, value);
                 }
             }
         },
