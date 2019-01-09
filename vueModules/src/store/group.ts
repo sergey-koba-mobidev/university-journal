@@ -101,8 +101,26 @@ const module: Module<GroupState, {}> = {
             commit("setQuestions", questions);
             commit("setGroupFetchStatus", "ok");
         },
-        async submitForm({ state, commit, dispatch, getters }) {
-            dispatch("groupForm/submit");
+        async submitEditGroupForm({ state, commit, dispatch, getters }, { disciplineModuleId, id }) {
+            dispatch("groupForm/submit", {payload: { disciplineModuleId, id}});
+
+            let questions = [];
+
+            for (let i in state.questionForms) {
+                questions.push({
+                    description:  getters[`questionForm-${i}/field`]("text"),
+                    kind:  getters[`questionForm-${i}/field`]("kind"),
+                    answer:  getters[`questionForm-${i}/field`]("answer"),
+                    variants:  getters[`questionForm-${i}/field`]("variants"),
+                });
+            }
+
+            console.log("post: ", questions);
+
+
+            // postUpdateQuestion
+
+            // api.postUpdateGroup
 
             // for (let i of state.members) {
             //     dispatch(`memberForm${i}/submit`);
@@ -114,6 +132,10 @@ const module: Module<GroupState, {}> = {
             //     console.error(errors);
             //     return;
             // }
+
+
+            // TODO add redirecting
+            // router.push(`/teacher`);
         },
     },
     modules: {
@@ -139,8 +161,8 @@ const module: Module<GroupState, {}> = {
                     ],
                 },
             },
-            async onSubmit({ commit, getters }, { disciplineModuleId, id }) {
-                const params = {  disciplineModuleId, id };
+            async onSubmit({ rootState, commit, getters }, { disciplineModuleId, id }  ) {
+                const params = { disciplineModuleId, id };
 
                 const body = {
                     title : getters['field']("title"),
@@ -154,8 +176,6 @@ const module: Module<GroupState, {}> = {
                     console.error(errors);
                     return
                 }
-
-                router.push(`/teacher`);
             },
         }),
     }

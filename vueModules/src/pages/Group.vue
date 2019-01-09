@@ -1,7 +1,7 @@
 <template>
     <div class="Group">
         <div class="Group__form">
-            <form class="" @submit.prevent="submit({payload: {disciplineModuleId, id}})">
+            <form class="">
                 <div class="Group__title">
                     <div class="Group__title-discipline">Web technologies and web design</div>
                 </div>
@@ -11,8 +11,8 @@
                         <div class="flex-grow-1">
                             <input type="text" v-model="title" class="Group__info-value">
                             <validation
-                                    formKey="groupForm"
-                                    field="title"
+                                formKey="groupForm"
+                                field="title"
                             />
                         </div>
                     </div>
@@ -21,8 +21,8 @@
                         <div class="flex-grow-1">
                             <input type="text" v-model="position" class="Group__info-value">
                             <validation
-                                    formKey="groupForm"
-                                    field="position"
+                                formKey="groupForm"
+                                field="position"
                             />
                         </div>
                     </div>
@@ -31,8 +31,8 @@
                         <div class="flex-grow-1">
                             <input type="text" v-model="points" class="Group__info-value">
                             <validation
-                                    formKey="groupForm"
-                                    field="points"
+                                formKey="groupForm"
+                                field="points"
                             />
                         </div>
                     </div>
@@ -91,7 +91,7 @@
         },
         data() {
             return {
-                id: this.$route.params.groupId,
+                id: parseInt(this.$route.params.groupId),
                 newKind: '',
                 disciplineModuleId: JSON.parse(localStorage.getItem("selectedGroup")).disciplineModuleId
             }
@@ -110,13 +110,16 @@
         },
         methods: {
             ...mapMutations(["addQuestionForm"]),
-            ...mapActions(["initGroup", "submitForm"]),
+            ...mapActions(["initGroup", "submitEditGroupForm"]),
             ...mapActions("groupForm", ["submit"]),
             handleBack() {
                 this.$router.push(`/teacher`);
             },
             handleSubmitForms() {
-                this.submitForm();
+                this.submitEditGroupForm({
+                    disciplineModuleId: this.disciplineModuleId,
+                    id: this.id
+                });
             },
             handleAddQuestion() {
                 this.addQuestionForm();

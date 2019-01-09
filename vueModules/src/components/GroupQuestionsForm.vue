@@ -132,7 +132,14 @@
             }),
             addVariant(e) {
                 e.preventDefault();
-                this.question.variants.push("");
+
+                // TODO add checking for kind of question
+
+                if (this.variants === undefined) { // if question exists
+                    this.variants = [];
+                }
+
+                this.variants.push("");
             },
             handleSelectVariant(value) {
                 this.setData({ fields: {
