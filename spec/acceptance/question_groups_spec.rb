@@ -28,6 +28,26 @@ resource "Question Groups" do
     end
   end
 
+  get "/api/v1/modules/:discipline_module_id/question_groups/:id" do
+
+    context "200" do
+      let(:discipline_module_id) { DisciplineModule.last.id }
+      let(:id) { DisciplineModule.last.question_groups.last.id }
+      let(:raw_post) {params.to_json}
+
+      example "Get question group for discipline modules" do
+        do_request
+
+        expected_response = {
+          status: 0,
+          response: Api::V1::QuestionGroup::Representer.new(QuestionGroup.find(id))
+        }
+        expect(status).to eq(200)
+        expect(response_body).to eq(expected_response.to_json)
+      end
+    end
+  end
+
   post "/api/v1/modules/:discipline_module_id/question_groups" do
     with_options with_example: true do
       parameter :title, 'Html', required: true
