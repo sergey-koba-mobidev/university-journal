@@ -15,7 +15,7 @@ resource "Question Groups" do
       let(:discipline_module_id) { DisciplineModule.last.id }
       let(:raw_post) {params.to_json}
 
-      example "Get question groups for discipline modules" do
+      example "Get question groups for discipline module" do
         do_request
 
         expected_response = {
@@ -35,7 +35,7 @@ resource "Question Groups" do
       let(:id) { DisciplineModule.last.question_groups.last.id }
       let(:raw_post) {params.to_json}
 
-      example "Get question group for discipline modules" do
+      example "Get question group for discipline module" do
         do_request
 
         expected_response = {

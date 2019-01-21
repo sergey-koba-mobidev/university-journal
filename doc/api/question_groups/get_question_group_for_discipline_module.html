@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Disciplines API</title>
+    <title>Question Groups API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Disciplines API</h1>
+      <h1>Question Groups API</h1>
 
-        <p class="explanation">Disciplines. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
+        <p class="explanation">Question Groups for disciplines modules. Uses Authorization header to provide Bearer token. Only admins and Teachers can access</p>
 
       <div class="article">
-        <h2>Get all disciplines</h2>
-        <h3>GET /api/v1/disciplines</h3>
+        <h2>Get question group for discipline module</h2>
+        <h3>GET /api/v1/modules/:discipline_module_id/question_groups/:id</h3>
 
 
 
@@ -120,12 +120,12 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMX0.JQ9z9-_E56Ew-kFzKEf2GU6XMKVryOFDVT6y5MIkLmA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNX0.ynX-fi_-VqTqix5NhPIx7cAiLufRORahCQ_1XilvJJ8
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">GET /api/v1/disciplines</pre>
+          <pre class="request route highlight">GET /api/v1/modules/9/question_groups/24</pre>
 
             <h4>Query Parameters</h4>
             <pre class="request query_parameters highlight">{}: </pre>
@@ -138,26 +138,26 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-ETag: W/&quot;4bed979050c4575a3edf10361cae631c&quot;
+ETag: W/&quot;486ec6530255160ee05069362fee99ab&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: ac212c16-aa56-46ad-8f58-981d4b332b45
-X-Runtime: 0.048609
+X-Request-Id: a467d08e-0eab-48d7-9312-df5abbcc70de
+X-Runtime: 0.013384
 Vary: Origin
-Content-Length: 169</pre>
+Content-Length: 177</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;status&quot;: 0,
-  &quot;response&quot;: [
-    {
-      &quot;id&quot;: 6,
-      &quot;title&quot;: &quot;Web technologies and web design&quot;,
-      &quot;user_id&quot;: 11,
-      &quot;created_at&quot;: &quot;2019-01-21T16:31:14.268Z&quot;,
-      &quot;updated_at&quot;: &quot;2019-01-21T16:31:14.268Z&quot;
-    }
-  ]
+  &quot;response&quot;: {
+    &quot;id&quot;: 24,
+    &quot;title&quot;: &quot;CSS3&quot;,
+    &quot;discipline_module_id&quot;: 9,
+    &quot;position&quot;: 3,
+    &quot;points&quot;: 2,
+    &quot;created_at&quot;: &quot;2019-01-21T16:31:14.768Z&quot;,
+    &quot;updated_at&quot;: &quot;2019-01-21T16:31:14.768Z&quot;
+  }
 }</pre>
       </div>
     </div>
