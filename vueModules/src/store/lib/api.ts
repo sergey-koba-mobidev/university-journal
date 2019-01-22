@@ -51,7 +51,7 @@ class ApiService {
         return this.get(`/v1/disciplines/${id}/modules`);
     }
 
-    public postCretaeModule({ params, body }) {
+    public postCreateModule({ params, body }) {
         return this.post(
             `/v1/disciplines/${params.disciplineId}/modules`,
             body
@@ -74,6 +74,25 @@ class ApiService {
         );
     }
 
+    public postUpdateQuestion({ params, body }) {
+        return this.post(
+            `/v1/question_groups/${params.questionGroupId}/questions/${params.id}`,
+            body
+        );
+    }
+
+    public postCreateQuestion({ params, body }) {
+        return this.post(
+            `/v1/question_groups/${params.questionGroupId}/questions`,
+            body
+        );
+    }
+
+    public deleteQuestion({ params }) {
+        return this.delete(
+            `/v1/question_groups/${params.questionGroupId}/questions/${params.id}`
+        );
+    }
 
 
 
@@ -103,13 +122,13 @@ class ApiService {
             )
             .catch((error: HttpResponse) => Promise.resolve({response: null, errors: error, status: 422}));
     }
-    //
-    // private delete(url: string, request?: HttpOptions) {
-    //     return V.http
-    //         .delete(url, request)
-    //         .then((response: HttpResponse) => response.json())
-    //         .catch((error: HttpResponse) => Promise.resolve({response: null, errors: error, status: 422}));
-    // }
+
+    private delete(url: string, request?: HttpOptions) {
+        return V.http
+            .delete(`${host}${url}`, request)
+            .then((response: HttpResponse) => response.json())
+            .catch((error: HttpResponse) => Promise.resolve({response: null, errors: error, status: 422}));
+    }
 }
 
 export default new ApiService();

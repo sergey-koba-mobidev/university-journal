@@ -34,6 +34,7 @@
         color: #dc0000;
         min-height: 21px;
         overflow: hidden;
+        margin-top: -10px;
 
         &__message {
             display: block;
