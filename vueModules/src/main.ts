@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
 
     if (to.matched.some(record => record.meta.requiresAuth) && !logined) {
         return next({
-            path: '/auth',
+            path: '/modules/auth',
             query: { ...to.query, redirect: to.fullPath }
         });
     }

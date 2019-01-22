@@ -93,7 +93,7 @@
         &__btn {
             margin-top: 1rem;
         }
-    }    
+    }
 </style>
 
 <style lang="scss">

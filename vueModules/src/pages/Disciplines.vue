@@ -57,7 +57,7 @@
         methods: {
             ...mapActions(["getDisciplines", "logoutUser"]),
             handleShowModule(disciplineId, id) {
-                this.$router.push(`/disciplines/${disciplineId}/modules/${id}`);
+                this.$router.push(`/modules/disciplines/${disciplineId}/modules/${id}`);
             },
 
         },

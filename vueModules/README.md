@@ -1,4 +1,4 @@
-# journal
+# Modules for journal
 
 > testing module for univer-journal
 
@@ -6,13 +6,15 @@
 
 ``` bash
 # install dependencies
-npm install
+`docker-compose run modules_front npm install`
 
 # serve with hot reload at localhost:8080
-npm run dev
+#npm run dev
 
 # build for production with minification
-npm run build
+#npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Details
+
+For detailed explanation see README.md in root folder

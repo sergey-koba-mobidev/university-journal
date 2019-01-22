@@ -84,3 +84,5 @@ vueModules/node_modules
 vueModules/dist
 vueModules/pakage-lock.json
 vueModules/.idea
+
+.caddy

@@ -1,0 +1,18 @@
+localhost:80 {
+  proxy /sockjs-node ujournal_modules_front:8080 {
+    websocket
+  }
+  proxy /modules ujournal_modules_front:8080 {
+    transparent
+  }
+  proxy / ujournal_web:3000 {
+    transparent
+  }
+  limits {
+    header 1MB
+    body 10MB
+  }
+  header / -Server
+  log stdout
+  errors stdout
+}

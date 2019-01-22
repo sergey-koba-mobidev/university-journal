@@ -6,7 +6,7 @@ import { stringify } from "querystring";
 type HttpOptions = Http.HttpOptions;
 type HttpResponse = Http.HttpResponse;
 
-let host = 'http://localhost:3000/api';
+let host = '/api';
 
 type Response<T = {}> = Promise<CommonResponse<T>>;
 
