@@ -8,6 +8,9 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
+  watchOptions: {
+      poll: true
+  },
   module: {
     rules: [
       {
@@ -118,3 +121,5 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
 }
+
+

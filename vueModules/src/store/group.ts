@@ -134,7 +134,7 @@ const module: Module<GroupState, {}> = {
                 }
             }
 
-            router.push(`/teacher`);
+            router.push(`/modules/teacher`);
         },
         async deleteQuestion({ getters }, id) {
             const params = {
