@@ -101,8 +101,4 @@
         background: url("../assets/Auth-bg.jpg") center;
         background-size: cover;
     }
-
-    .BaseValidationError {
-        margin-top: -10px;
-    }
 </style>

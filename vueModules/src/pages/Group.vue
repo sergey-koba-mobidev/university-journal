@@ -10,30 +10,21 @@
                         <div class="Group__info-label">Название группы</div>
                         <div class="flex-grow-1">
                             <input type="text" v-model="title" class="Group__info-value">
-                            <validation
-                                formKey="groupForm"
-                                field="title"
-                            />
+                            <validation formKey="groupForm" field="title"/>
                         </div>
                     </div>
                     <div class="Group__info-row">
                         <div class="Group__info-label">Позиция</div>
                         <div class="flex-grow-1">
                             <input type="text" v-model="position" class="Group__info-value">
-                            <validation
-                                formKey="groupForm"
-                                field="position"
-                            />
+                            <validation formKey="groupForm" field="position"/>
                         </div>
                     </div>
                     <div class="Group__info-row">
                         <div class="Group__info-label">Количество баллов</div>
                         <div class="flex-grow-1">
                             <input type="text" v-model="points" class="Group__info-value">
-                            <validation
-                                formKey="groupForm"
-                                field="points"
-                            />
+                            <validation formKey="groupForm" field="points"/>
                         </div>
                     </div>
                 </div>
@@ -110,16 +101,16 @@
         },
         methods: {
             ...mapMutations(["addQuestionForm"]),
-            ...mapActions(["initGroup", "submitEditGroupForm"]),
+            ...mapActions(["initGroup"]),
             ...mapActions("groupForm", ["submit"]),
             handleBack() {
                 this.$router.push(`/teacher`);
             },
             handleSubmitForms() {
-                this.submitEditGroupForm({
+                this.submit({payload: {
                     disciplineModuleId: this.disciplineModuleId,
                     id: this.id
-                });
+                }});
             },
             handleAddQuestion() {
                 this.addQuestionForm();

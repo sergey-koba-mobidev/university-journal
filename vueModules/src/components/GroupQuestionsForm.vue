@@ -1,22 +1,21 @@
 <template>
-    <form
-        class="row Group__question"
-    >
+    <form class="row Group__question">
         <!-- TITLE -->
         <div class="Group__question-row">
             <div class="Group__question-label">Текст вопроса:</div>
             <div class="input-field Group__question-value text">
                 <input type="text" v-model="text">
+                <validation :formKey="formName" field="text"/>
             </div>
             <!-- delete -->
-            <i class="material-icons Group__question-delete">close</i>
+            <i class="material-icons Group__question-delete" @click="deleteQuestion(question.id)">close</i>
         </div>
         <!-- KIND -->
         <div class="Group__question-row">
             <div class="Group__question-label">Тип вопроса:</div>
             <div class="Group__question-value">
                 <label class="Group__question-valueLabel">
-                    <input name="kind" type="radio" value="text"/>
+                    <input name="kind" type="radio" value="text" v-model="kind"/>
                     <span> открытый </span>
                 </label>
                 <label class="Group__question-valueLabel">
@@ -27,15 +26,16 @@
                     <input name="kind" type="radio" value="many" v-model="kind"/>
                     <span> несколько вариантов ответа </span>
                 </label>
+                <validation :formKey="formName" field="kind"/>
             </div>
         </div>
         <!-- VARIANTS -->
-        <div class="Group__question-row" v-if="question.kind !== 'text'">
+        <div class="Group__question-row" v-if="kind && kind !== 'text'">
             <div class="Group__question-label">Варианты ответов:</div>
             <div>
                 <variants
                     v-for="(variant, indexVariant) in variants"
-                    :questionType="question.type"
+                    :kind="kind"
                     :answer="answer"
                     :indexQuestion="question.index"
                     :indexVariant="indexVariant"
@@ -52,6 +52,7 @@
 <script>
     import { mapState, mapMutations, mapActions } from "vuex";
     import variants from "../components/GroupQuestionVariants";
+    import validation from "../components/BaseValidationError";
 
     export default {
         name: "GroupQuestionsForm",
@@ -63,6 +64,7 @@
         },
         components: {
             variants,
+            validation,
         },
         computed: {
             ...mapState({
@@ -72,6 +74,12 @@
             }),
             formName() {
                 return `questionForm-${this.question.index}`
+            },
+            id: {
+                get() {
+                    return this.field("id");
+                },
+                set(value) {},
             },
             text: {
                 get() {
@@ -87,6 +95,7 @@
                 },
                 set(value) {
                     this.changeField({ field: "kind", value });
+                    this.changeField({ field: "answer", value: null });
                 },
             },
             variants: {
@@ -107,7 +116,15 @@
             },
         },
         methods: {
-            // ...mapMutations(["removeMember"]),
+            ...mapMutations(["removeMember"]),
+            ...mapMutations({
+                setData(commit, payload) {
+                    return commit(
+                        `${this.formName}/setData`,
+                        payload
+                    );
+                }
+            }),
             ...mapActions({
                 submit(dispatch, payload) {
                     return dispatch(
@@ -122,20 +139,11 @@
                     );
                 },
             }),
-            ...mapMutations({
-                setData(commit, payload) {
-                    return commit(
-                        `${this.formName}/setData`,
-                        payload
-                    );
-                }
-            }),
+            ...mapActions(["deleteQuestion"]),
             addVariant(e) {
                 e.preventDefault();
 
-                // TODO add checking for kind of question
-
-                if (this.variants === undefined) { // if question exists
+                if (this.variants === undefined) { // if question is new
                     this.variants = [];
                 }
 
@@ -160,6 +168,7 @@
         },
         mounted() {
             this.setData({ fields: {
+                id: this.question.id,
                 text: this.question.text,
                 kind: this.question.kind,
                 variants: this.question.variants,

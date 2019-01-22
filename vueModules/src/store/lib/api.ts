@@ -81,6 +81,19 @@ class ApiService {
         );
     }
 
+    public postCreateQuestion({ params, body }) {
+        return this.post(
+            `/v1/question_groups/${params.questionGroupId}/questions`,
+            body
+        );
+    }
+
+    public deleteQuestion({ params }) {
+        return this.delete(
+            `/v1/question_groups/${params.questionGroupId}/questions/${params.id}`
+        );
+    }
+
 
 
     private get(url: string, request?: HttpOptions) {
@@ -109,13 +122,13 @@ class ApiService {
             )
             .catch((error: HttpResponse) => Promise.resolve({response: null, errors: error, status: 422}));
     }
-    //
-    // private delete(url: string, request?: HttpOptions) {
-    //     return V.http
-    //         .delete(url, request)
-    //         .then((response: HttpResponse) => response.json())
-    //         .catch((error: HttpResponse) => Promise.resolve({response: null, errors: error, status: 422}));
-    // }
+
+    private delete(url: string, request?: HttpOptions) {
+        return V.http
+            .delete(`${host}${url}`, request)
+            .then((response: HttpResponse) => response.json())
+            .catch((error: HttpResponse) => Promise.resolve({response: null, errors: error, status: 422}));
+    }
 }
 
 export default new ApiService();
