@@ -103,7 +103,7 @@
             ...mapMutations(["closeModuleModal", "openModuleModal"]),
             ...mapActions(["getModule", "postAnswers"]),
             handleBack() {
-                this.$router.push(`/disciplines/`);
+                this.$router.push(`/modules/disciplines/`);
             },
             handleAnswer(questionId, event) {
                 const answer = event.path[0].value;

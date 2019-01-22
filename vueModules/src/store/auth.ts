@@ -31,7 +31,7 @@ const module: Module<AuthState, {}> = {
             localStorage.removeItem("user");
             localStorage.removeItem("token");
 
-            router.push("/auth");
+            router.push("/mosules/auth");
         }
     },
     modules: {

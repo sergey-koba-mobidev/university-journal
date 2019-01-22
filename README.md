@@ -23,15 +23,17 @@ A Ruby on Rails based university classes manager.
 
 ### Install
 - `cp .env.example .env`
-- `docker-compose build`
-- `docker-compose up -d db`
-- `docker-compose run web bundle install --with test development`
-- `docker-compose run web rake db:create`
-- `docker-compose run web rake db:migrate`
-- `docker-compose run web rake db:seed`
+- `docker-compose build` - build docker images
+- `docker-compose up -d db` - spin up db container
+- `docker-compose run web bundle install --with test development` - intasll gems for ruby
+- `docker-compose run web rake db:create` - create database
+- `docker-compose run web rake db:migrate` - migrate database
+- `docker-compose run web rake db:seed` - seed database with test data
+- `docker-compose run modules_front npm install` - install npm for modules
 - `docker-compose up -d`
-- go to [http://localhost:3000](http://localhost:3000) use `admin@journal.com/12345678` as login and password for Admin
-- go to [http://localhost:3000](http://localhost:3000) use `student@journal.com/12345678` as login and password for Student
+- go to [http://localhost](http://localhost) use `admin@journal.com/12345678` as login and password for Admin
+- go to [http://localhost](http://localhost) use `student@journal.com/12345678` as login and password for Student
+- go to [http://localhost/modules](http://localhost/modules) use `student@journal.com/12345678` to login as Student and pass modules or `admin@journal.com/12345678` to login as teacher and edit modules.
 
 ### Start app
 - `docker-compose up -d`
@@ -57,6 +59,5 @@ A Ruby on Rails based university classes manager.
 - Backup data
 - Disciplines can change teachers in other semester
 - expire for cache
-- add RAILS_ENV export to .bashrc
 - button to set no attends with 1 click
-- docker
+- kubernetes

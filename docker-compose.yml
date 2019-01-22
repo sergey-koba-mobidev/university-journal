@@ -1,5 +1,16 @@
 version: '3.5'
 services:
+  caddy:
+    image: abiosoft/caddy:0.10.14
+    volumes:
+      - ./docker_configs/caddy/Caddyfile:/etc/Caddyfile
+      - ./.caddy:/root/.caddy
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - ACME_AGREE=true
+
   db:
     image: postgres:9.5.4
     env_file: .env
@@ -10,17 +21,31 @@ services:
 
   web:
     build: .
+    container_name: ujournal_web
     command:  bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
       - bundle-cache:/usr/local/bundle:cached
     ports:
-      - "3000:3000"
+      - 3000
     env_file: .env
     stdin_open: true
     tty: true
     depends_on:
       - db
+  
+  modules_front:
+    build:
+      context: ./vueModules
+    container_name: ujournal_modules_front
+    command: npm run dev
+    ports:
+      - 8080
+    volumes:
+      - ./vueModules:/web:cached
+    depends_on:
+      - web
+
 
   mailcatcher:
     image: schickling/mailcatcher

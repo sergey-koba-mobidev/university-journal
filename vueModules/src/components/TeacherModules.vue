@@ -60,7 +60,7 @@
         },
         methods: {
             handleShowForm(disciplineId) {
-                this.$router.push(`/teacher/discipline/${disciplineId}/create-module`);
+                this.$router.push(`/modules/teacher/discipline/${disciplineId}/create-module`);
             }
         },
     }

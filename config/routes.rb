@@ -56,6 +56,7 @@ Rails.application.routes.draw do
 
       get  'modules/:discipline_module_id/question_groups' => 'question_groups#index'
       post 'modules/:discipline_module_id/question_groups' => 'question_groups#create'
+      get  'modules/:discipline_module_id/question_groups/:id' => 'question_groups#show'
       post 'modules/:discipline_module_id/question_groups/:id' => 'question_groups#update'
       delete 'modules/:discipline_module_id/question_groups/:id' => 'question_groups#delete'
       

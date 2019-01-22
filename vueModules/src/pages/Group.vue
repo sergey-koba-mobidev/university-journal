@@ -69,7 +69,7 @@
     import modal from "../components/BaseModalWindow";
     import validation from "../components/BaseValidationError";
     import { mapFieldsToComputed } from "../store/lib/vuex-form/index";
-    
+
 
     export default {
         name: "Group",
@@ -104,7 +104,7 @@
             ...mapActions(["initGroup"]),
             ...mapActions("groupForm", ["submit"]),
             handleBack() {
-                this.$router.push(`/teacher`);
+                this.$router.push(`/modules/teacher`);
             },
             handleSubmitForms() {
                 this.submit({payload: {
@@ -136,7 +136,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         &__info {
             border-bottom: 2px solid #827f7f;
             padding: 10px 20px;

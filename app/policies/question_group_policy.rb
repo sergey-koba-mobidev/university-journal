@@ -3,6 +3,10 @@ class QuestionGroupPolicy < ApplicationPolicy
     user.admin? || user.teacher?
   end
 
+  def show?
+    list?
+  end
+
   def create?
     list?
   end
