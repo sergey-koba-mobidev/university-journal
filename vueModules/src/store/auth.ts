@@ -31,7 +31,7 @@ const module: Module<AuthState, {}> = {
             localStorage.removeItem("user");
             localStorage.removeItem("token");
 
-            router.push("/mosules/auth");
+            router.push("/modules/auth");
         }
     },
     modules: {
@@ -80,7 +80,7 @@ const module: Module<AuthState, {}> = {
 
                 commit("setUserData", {email: response.email, name: response.name}, {root: true});
 
-                const path = response.role === "student" ? "/disciplines" : "/teacher";
+                const path = response.role === "student" ? "/modules/disciplines" : "/modules/teacher";
 
                 const redirect = router.currentRoute.query.redirect;
 
