@@ -59,6 +59,10 @@ class ApiService {
     }
 
     // question group
+    public getGroupData(disciplineModuleId, id) {
+        return this.get(`/v1/modules/${disciplineModuleId}/question_groups/${id}`);
+    }
+
     public getQuestionGroups(id) {
         return this.get(`/v1/modules/${id}/question_groups`);
     }
@@ -76,21 +80,21 @@ class ApiService {
 
     public postUpdateQuestion({ params, body }) {
         return this.post(
-            `/v1/question_groups/${params.questionGroupId}/questions/${params.id}`,
+            `/v1/question_groups/${params.groupId}/questions/${params.id}`,
             body
         );
     }
 
     public postCreateQuestion({ params, body }) {
         return this.post(
-            `/v1/question_groups/${params.questionGroupId}/questions`,
+            `/v1/question_groups/${params.groupId}/questions`,
             body
         );
     }
 
     public deleteQuestion({ params }) {
         return this.delete(
-            `/v1/question_groups/${params.questionGroupId}/questions/${params.id}`
+            `/v1/question_groups/${params.groupId}/questions/${params.id}`
         );
     }
 

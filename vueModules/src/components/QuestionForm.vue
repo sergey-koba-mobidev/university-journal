@@ -8,7 +8,7 @@
                 <validation :formKey="formName" field="text"/>
             </div>
             <!-- delete -->
-            <i class="material-icons Group__question-delete" @click="deleteQuestion(question.id)">close</i>
+            <i class="material-icons Group__question-delete" @click="deleteQuestion({ formName: formName, questionId: question.id })">close</i>
         </div>
         <!-- KIND -->
         <div class="Group__question-row">
@@ -40,10 +40,12 @@
                     :indexQuestion="question.index"
                     :indexVariant="indexVariant"
                     :variant="variant"
+                    :key="indexVariant"
                     @selectVariant="handleSelectVariant"
                     @editVariant="handleEditVariant"
+                    @removeVariant="handleRemoveVariant"
                 />
-                <button class="btn waves-effect waves-light Group__question-add" @click="addVariant">добавить вариант</button>
+                <button class="btn waves-effect waves-light Group__question-add" @click="handleAddVariant">добавить вариант</button>
             </div>
         </div>
     </form>
@@ -51,11 +53,11 @@
 
 <script>
     import { mapState, mapMutations, mapActions } from "vuex";
-    import variants from "../components/GroupQuestionVariants";
+    import variants from "./Variant";
     import validation from "../components/BaseValidationError";
 
     export default {
-        name: "GroupQuestionsForm",
+        name: "QuestionForm",
         props: {
             question: {
                 type: Object,
@@ -140,7 +142,7 @@
                 },
             }),
             ...mapActions(["deleteQuestion"]),
-            addVariant(e) {
+            handleAddVariant(e) {
                 e.preventDefault();
 
                 if (this.variants === undefined) { // if question is new
@@ -149,22 +151,22 @@
 
                 this.variants.push("");
             },
+            handleRemoveVariant(indexVarinat) {
+                this.variants.splice(indexVarinat, 1);
+
+                if (this.answer.indexOf(indexVarinat)) {
+                    const indexAnser = this.answer.indexOf(indexVarinat);
+                    this.answer.splice(indexAnser, 1);
+                }
+            },
             handleSelectVariant(value) {
-                this.setData({ fields: {
-                        answer: value
-                    }
-                })
+                this.answer = value;
             },
             handleEditVariant(index, value) {
-                const newVariants = this.variants.map((variant, i) => {
+                this.variants = this.variants.map((variant, i) => {
                     return (index === i) ? value : variant
                 });
-
-                this.setData({ fields: {
-                        variants: newVariants
-                    }
-                })
-            }
+            },
         },
         mounted() {
             this.setData({ fields: {

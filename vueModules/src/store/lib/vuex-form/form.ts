@@ -281,6 +281,9 @@ export class Form<TFields = any> implements Module<FormState<TFields>, any> {
                             : e.length !== 0
                 );
             },
+            dirty: state => {
+                return state.touched.size !== 0;
+            },
             field: state => field => {
                 return state.fields.get(field);
             },

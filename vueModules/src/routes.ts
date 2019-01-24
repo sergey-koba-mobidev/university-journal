@@ -55,7 +55,7 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: `/modules/teacher/group/:groupId`,
+        path: `/modules/teacher/group/:disciplineModuleId/:groupId`,
         component: group,
         meta: { requiresAuth: true }
     }

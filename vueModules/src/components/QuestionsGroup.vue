@@ -85,8 +85,7 @@
         methods: {
             ...mapActions(["getGroupList"]),
             handleShowGroup(disciplineModuleId, groupId) {
-                localStorage.setItem("selectedGroup", JSON.stringify({disciplineModuleId, groupId}));
-                this.$router.push(`/modules/teacher/group/${groupId}`);
+                this.$router.push(`/modules/teacher/group/${disciplineModuleId}/${groupId}`);
             },
             handleModuleClick(isOpened, moduleId) {
                 if (!isOpened) {

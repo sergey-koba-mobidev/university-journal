@@ -6,13 +6,13 @@
                 <input type="text" class="Variants__itemLabel" v-model="variantText">
             </span>
         </label>
-        <i class="material-icons Variants__remove">close</i>
+        <i class="material-icons Variants__remove" @click="handleRemoveVariant">close</i>
     </div>
 </template>
 
 <script>
     export default {
-        name: "GroupQuestionVariants",
+        name: "Variant",
         props: {
             kind: {
                 type: String,
@@ -62,6 +62,11 @@
                         : "checkbox"
             }
         },
+        methods: {
+            handleRemoveVariant() {
+                this.$emit('removeVariant', this.indexVariant);
+            }
+        }
     }
 </script>
 
