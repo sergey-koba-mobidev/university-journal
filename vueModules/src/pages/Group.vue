@@ -41,7 +41,7 @@
             <!-- BUTTONS -->
             <div class="Group__buttons">
                 <button
-                    class="btn waves-effect waves-light Group__question-add question"
+                    class="btn waves-effect waves-light Group__buttons-add question"
                     @click="addQuestionForm"
                 >
                     добавить еще один вопрос
@@ -212,8 +212,19 @@
                     fill: #fff;
                 }
             }
-        }
 
+            &-add {
+                background: #efefef;
+                color: #1e887e;
+                font-weight: 600;
+                font-size: 14px;
+                text-transform: lowercase;
+                max-width: 240px;
+                align-self: center;
+                margin-top: -1rem;
+                margin-bottom: 3rem;
+            }
+        }
 
         .BaseValidationError {
             margin-top: -15px;

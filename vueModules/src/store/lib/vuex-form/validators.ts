@@ -13,7 +13,7 @@ export const custom = (func: Validator) => (value, fields, rootState, rootGetter
 
 export const required = (): Validator => (value) => {
     if (value === "" || value === 0 || value === undefined || value === null || value === false)  {
-        return "validators.required";
+        return "Заполните поле!";
     }
 }
 

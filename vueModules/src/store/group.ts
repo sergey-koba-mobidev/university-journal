@@ -1,6 +1,6 @@
 import { Module } from "vuex";
 import api from "./lib/api";
-import { Form, required } from "./lib/vuex-form/index";
+import {custom, Form, required} from "./lib/vuex-form/index";
 import router from "../main";
 
 export interface GroupState {
@@ -140,12 +140,11 @@ const module: Module<GroupState, {}> = {
 
                 if (errors) {
                     console.error(errors);
-                    return;
                 }
             }
 
             commit("setGroupFetchStatus", { name: "Save", status: "ok"});
-            router.push(`/modules/teacher`);
+            // router.push(`/modules/teacher`);
         },
         async deleteQuestion({ state, commit, getters }, { formName, questionId }) {
             commit("removeQuestionForm", formName.split("-")[1] );
@@ -224,6 +223,7 @@ import store from './../store';
 
 function createNewForm(formName: string) {
     store.registerModule(formName, new Form({
+        throttle: 300,
         fields: {
             id: {
                 type: Number,
@@ -233,6 +233,7 @@ function createNewForm(formName: string) {
                 validators: [
                     required(),
                 ],
+
             },
             kind: {
                 type: String,
@@ -243,7 +244,17 @@ function createNewForm(formName: string) {
             variants: {
                 type: String,
                 validators: [
-                    required()
+                    custom((variants) => {
+                        if (!variants) {
+                            // TODO check if kind is not "text"
+                            return;
+                        }
+                        for (let variant of variants) {
+                            if (!variant) {
+                                return "Все варианты должны быть введены!";
+                            }
+                        }
+                    }),
                 ],
             },
             answer: {
@@ -254,7 +265,6 @@ function createNewForm(formName: string) {
             },
         },
         onSubmit({ commit, getters }) {
-            console.log("here");
         },
     }));
 }

@@ -45,6 +45,7 @@
                     @editVariant="handleEditVariant"
                     @removeVariant="handleRemoveVariant"
                 />
+                <validation :formKey="formName" field="variants"/>
                 <button class="btn waves-effect waves-light Group__question-add" @click="handleAddVariant">добавить вариант</button>
             </div>
         </div>
@@ -151,12 +152,28 @@
 
                 this.variants.push("");
             },
-            handleRemoveVariant(indexVarinat) {
-                this.variants.splice(indexVarinat, 1);
+            handleRemoveVariant(indexVariant) {
+                this.variants.splice(indexVariant, 1);
 
-                if (this.answer.indexOf(indexVarinat)) {
-                    const indexAnser = this.answer.indexOf(indexVarinat);
-                    this.answer.splice(indexAnser, 1);
+                if (!this.answer) {
+                    return;
+                }
+
+                if (this.kind === "one"){
+                    if (this.answer === indexVariant) {
+                        this.answer = null;
+                    } else if (this.answer > indexVariant ) {
+                        this.answer--;
+                    }
+                }
+
+                if (this.kind === "many"){
+                    const indexAnswer = this.answer.indexOf(indexVariant);
+
+                    if (indexAnswer !== -1) {
+                        this.answer.splice(indexAnswer, 1);
+                    }
+                    this.answer = this.answer.map(a => a > indexVariant ? a - 1 : a);
                 }
             },
             handleSelectVariant(value) {
@@ -223,13 +240,6 @@
                 font-weight: 600;
                 font-size: 14px;
                 text-transform: lowercase;
-
-                &.question {
-                    max-width: 240px;
-                    align-self: center;
-                    margin-top: -1rem;
-                    margin-bottom: 3rem;
-                }
             }
 
             &-delete {
