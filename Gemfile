@@ -55,7 +55,6 @@ group :development do
   gem 'spring-commands-rspec'
 end
 group :test do
-  gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
