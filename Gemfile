@@ -30,6 +30,9 @@ gem 'rack-cors', require: 'rack/cors'
 # Trb
 gem 'trailblazer-rails'
 gem 'reform-rails'
+gem 'trailblazer-cells'
+gem 'cells-rails'
+gem "cells-erb"
 
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'

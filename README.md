@@ -61,3 +61,4 @@ A Ruby on Rails based university classes manager.
 - expire for cache
 - button to set no attends with 1 click
 - kubernetes
+- Rails 5

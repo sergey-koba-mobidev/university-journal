@@ -1,0 +1,34 @@
+<li class="collection-item <%= result.present? ? "grey lighten-3" : "" %>" id="question_row_<%= id %>">
+  <div class="row">
+    <b> <%= index %>. <%= description %> </b>
+  </div>
+
+  <div class="row">
+    <div class="col m3 s12">
+      <% variants.each do |var| %>
+        <%= var %><br />
+      <% end %>
+    </div>
+    <div class="col m3 s12 green-text">
+      <%= right_answer %>
+    </div>
+    <div class="col m3 s12">
+      <%= answer %>
+    </div>
+    <div class="col m3 s12">
+      <% if student_module.present? %>
+        <%= form_tag(update_answer_result_student_module_path(student_module), method: :post, remote: true, id: "answer_result_#{id}", class: "form-horizontal") do |f| %>
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <%= hidden_field_tag :answer_id, id %>
+              <%= text_field_tag :result, result, id: "result_#{id}" %>
+            </div>
+            <div class="input-field col s12 m6">
+              <%= submit_tag I18n.t(:save), class: 'btn green' %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</li>

@@ -82,6 +82,7 @@ en:
   labs: "Labs"
   lectures: "Lectures"
   modules: "Modules"
+  module: "Module"
   total: "Total"
   mark: "Mark"
   marks: "Marks"
@@ -94,8 +95,29 @@ en:
   to_view_journal: " to view your Journal"
   forgot_password: "Forgot password?"
   start_typing: "Start typing..."
+  online_modules: "Online modules"
+  enabled: "Enabled"
+  results: "Results"
   will_paginate:
     next_label: "Next"
     previous_label: "Previous"
   api:
     sign_in_failure: Wrong email or password
+  student_module:
+    status: "Status"
+    statuses:
+      started: "In process"
+      finished: "Finished"
+      deleted: "Deleted"
+      empty: "Not started"
+    checked:
+      done: "Checked"
+      not: "Not checked"
+    check: "Check"
+    answers: "Answers"
+    cancel: "Cancel"
+    cancel_success: "Module for student was successfully canceled"
+    cancel_error: "Error canceling module for student"
+    check_finished: "Module was successfully checked"
+    copy_result: "Copy result to the journal"
+    result_copied: "Module result was copied to the journal"

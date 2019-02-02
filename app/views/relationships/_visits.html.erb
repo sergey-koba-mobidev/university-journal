@@ -1,6 +1,6 @@
 <div class="row">
   <% if !current_user.student? %>
-      <div class="col s12 m12">
+      <div class="col s8 m8">
         <%= form_for(@relationship.visits.build, html: {class: 'form-horizontal'}) do |f| %>
             <div class="row">
               <div class="input-field col m4">

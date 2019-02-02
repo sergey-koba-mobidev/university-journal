@@ -155,7 +155,7 @@ const module: Module<GroupState, {}> = {
                     return
                 }
 
-                router.push(`/teacher`);
+                router.push(`/modules/teacher`);
             },
         }),
     }

@@ -23,7 +23,7 @@ class StudentModule < ActiveRecord::Base
     end
 
     def generate(options, params:, current_user:, **)
-      questions, answers, results = [], [], []
+      questions, answers, results, right_answers = [], [], [], []
       question_id = 1
       options[:discipline_module].question_groups.each do |group|
         group_questions = group.questions 
@@ -44,6 +44,10 @@ class StudentModule < ActiveRecord::Base
             id: question.id,
             result: nil
           }
+          right_answers << {
+            id: question.id,
+            answer: question.answer
+          }
         end
       end
       options[:student_module] = StudentModule.create({
@@ -54,6 +58,7 @@ class StudentModule < ActiveRecord::Base
         opened_until: Time.now.utc + options[:discipline_module].duration,
         questions: questions,
         answers: answers,
+        right_answers: right_answers,
         results: results
       })
       true

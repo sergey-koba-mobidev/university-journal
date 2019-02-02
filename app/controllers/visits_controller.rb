@@ -1,5 +1,5 @@
 class VisitsController < ApplicationController
-  before_action :set_visit, only: [:destroy, :update, :update_created_at]
+  before_action :set_visit, only: [:destroy, :update, :update_created_at, :result]
   before_action AdminOrTeacherActionCallback
 
   respond_to :js
@@ -15,7 +15,7 @@ class VisitsController < ApplicationController
   end
 
   def update
-    @visit.title = params[:visit][:title] if params[:visit][:title]
+    @visit.assign_attributes(visit_params)
     if owner_or_admin(@visit.relationship.discipline) && @visit.save
       @visit.relationship.touch
       respond_with @visit
@@ -55,7 +55,7 @@ class VisitsController < ApplicationController
   end
 
   def visit_params
-    params.require(:visit).permit(:relationship_id, :title, :kind)
+    params.require(:visit).permit(:relationship_id, :title, :kind, :enabled, :object_id)
   end
 
   def owner_or_admin(discipline)

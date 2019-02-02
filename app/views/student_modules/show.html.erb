@@ -1,0 +1,31 @@
+<div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title black-text"><%= @student_module.user.name %></span>
+
+        <p>
+          <%= t(:module) %> <b><%= @student_module.visit.title %> (<%= @student_module.visit.discipline_module.title %>)</b> <br/>
+          <%= t(:discipline) %> <b><%= @student_module.visit.relationship.discipline.title %></b> <br/>
+          <%= t(:teacher) %> <b><%= @student_module.visit.relationship.discipline.user.name %></b> <br/>
+          <%= t(:group) %> <b><%= @student_module.visit.relationship.group.title %>, <%= @student_module.visit.relationship.semester.name %></b> <br/>
+          <%= t(:group) %> <b><%= @student_module.visit.relationship.group.title %>, <%= @student_module.visit.relationship.semester.name %></b> <br/>
+          <%= t("student_module.status") %> <b><%= t("student_module.statuses.#{@student_module.status}") %> (<%= @student_module.opened_until %>)</b> <br/>
+        </p>
+      </div>
+      <div class="card-action">
+          <a href="<%= result_visit_path(@student_module.visit) %>"><%= @student_module.visit.title %> (<%= @student_module.visit.discipline_module.title %>)</a>
+          <a href="<%= finish_check_student_module_path(@student_module) %>">Завершить проверку</a>
+      </div>
+</div>
+
+<div class="col m12 s12">
+    <ul class="collection with-header">
+      <li class="collection-header"><h4><%= t("student_module.answers") %> </h4> 
+      <%= form_tag(check_answers_student_module_path(@student_module), method: :post, remote: true, class: "form-horizontal") do |f| %>
+        <%= submit_tag I18n.t("student_module.check"), class: 'btn blue' %>
+      <% end %>
+      <% @student_module.questions.each_with_index do |q, index| %>
+        <%= cell(Question::Cell::Check, OpenStruct.new(q), student_module: @student_module, index: index) %>
+      <% end %>
+    </ul>
+  </div>
+</div>

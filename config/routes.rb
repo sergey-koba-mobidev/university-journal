@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :visits, only: [:create, :destroy, :show, :update] do
     resources :homeworks
     member do
+      get 'result'
       post 'update_created_at'
     end
   end
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
       post 'update_proportions'
       get 'total'
     end
+    resources :discipline_modules, only: [:index]
   end
   resources :attends, only: [:create, :update] do
     member do
@@ -30,6 +32,14 @@ Rails.application.routes.draw do
       delete 'remove_user'
       post   'add_user'
       get    'search_user'
+    end
+  end
+  resources :student_modules, only: [:show, :destroy] do
+    member do
+      post 'update_answer_result'
+      post 'check_answers'
+      get  'finish_check'
+      get  'copy_result'
     end
   end
 

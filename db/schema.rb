@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181206080349) do
+ActiveRecord::Schema.define(version: 20190129163306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,8 +142,10 @@ ActiveRecord::Schema.define(version: 20181206080349) do
     t.jsonb    "results"
     t.integer  "total"
     t.datetime "opened_until"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.boolean  "checked"
+    t.jsonb    "right_answers"
   end
 
   add_index "student_modules", ["user_id"], name: "index_student_modules_on_user_id", using: :btree

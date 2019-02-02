@@ -1,0 +1,7 @@
+<% if @error.nil? %>
+  $("#answer_result_<%= @answer_id %>").fadeOut().fadeIn().fadeOut().fadeIn();
+  $("#question_row_<%= @answer_id %>").addClass('grey lighten-3');
+  $("#result_<%= @answer_id %>").val(<%= @result %>);
+<% else %>
+  alert("<%= @error %>");
+<% end %>

@@ -13,6 +13,7 @@ class Api::V1::StudentModule::Representer < Representable::Decorator
   property :results
   property :total
   property :opened_until
+  property :checked
   
   property :created_at
   property :updated_at
