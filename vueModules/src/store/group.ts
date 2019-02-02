@@ -101,20 +101,49 @@ const module: Module<GroupState, {}> = {
             commit("setQuestions", questions);
             commit("setGroupFetchStatus", "ok");
         },
-        async submitForm({ state, commit, dispatch, getters }) {
-            dispatch("groupForm/submit");
+        async submitQuestionForms({ state, dispatch, getters }) {
+            for (let i in state.questionForms) {
+                dispatch(`questionForm-${i}/submit`);
+            }
 
-            // for (let i of state.members) {
-            //     dispatch(`memberForm${i}/submit`);
-            // }
+            for (let i in state.questionForms) {
+                // TODO rewrite localStorage with state
+                const params = {
+                    questionGroupId: JSON.parse(localStorage.getItem("selectedGroup")).groupId,
+                    id: getters[`questionForm-${i}/field`]("id"),
+                };
 
-            // const { errors } = await api.postCreateICO({ body });
+                const body = {
+                    description:  getters[`questionForm-${i}/field`]("text"),
+                    kind:  getters[`questionForm-${i}/field`]("kind") === "many"
+                                ? 2
+                                : getters[`questionForm-${i}/field`]("kind") === "one"
+                                    ? 1
+                                    : 0,
+                    answer:  getters[`questionForm-${i}/field`]("answer"),
+                    variants:  getters[`questionForm-${i}/field`]("variants"),
+                };
 
-            // if (errors) {
-            //     console.error(errors);
-            //     return;
-            // }
+                const { errors } = params.id
+                    ? await api.postUpdateQuestion({ params, body })
+                    : await api.postCreateQuestion({ params, body });
+
+                if (errors) {
+                    console.error(errors);
+                    return;
+                }
+            }
+
+            router.push(`/modules/teacher`);
         },
+        async deleteQuestion({ getters }, id) {
+            const params = {
+                questionGroupId: JSON.parse(localStorage.getItem("selectedGroup")).groupId,
+                id: id,
+            };
+
+            const { errors }= await api.deleteQuestion({ params });
+        }
     },
     modules: {
         groupForm: new Form({
@@ -139,8 +168,8 @@ const module: Module<GroupState, {}> = {
                     ],
                 },
             },
-            async onSubmit({ commit, getters }, { disciplineModuleId, id }) {
-                const params = {  disciplineModuleId, id };
+            async onSubmit({ rootState, commit, dispatch, getters }, { disciplineModuleId, id }  ) {
+                const params = { disciplineModuleId, id };
 
                 const body = {
                     title : getters['field']("title"),
@@ -155,7 +184,7 @@ const module: Module<GroupState, {}> = {
                     return
                 }
 
-                router.push(`/modules/teacher`);
+                dispatch("submitQuestionForms", {}, {root: true});
             },
         }),
     }
@@ -166,21 +195,32 @@ import store from './../store';
 function createNewForm(formName: string) {
     store.registerModule(formName, new Form({
         fields: {
+            id: {
+                type: Number,
+            },
             text: {
                 type: String,
-                validators: [],
+                validators: [
+                    required(),
+                ],
             },
             kind: {
                 type: String,
-                validators: [],
+                validators: [
+                    required()
+                ],
             },
             variants: {
                 type: String,
-                validators: [],
+                validators: [
+                    required()
+                ],
             },
             answer: {
                 type: String,
-                validators: [],
+                validators: [
+                    // required()
+                ],
             },
         },
         onSubmit({ commit, getters }) {

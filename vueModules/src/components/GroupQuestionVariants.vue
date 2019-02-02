@@ -1,8 +1,7 @@
 <template>
     <div class="Variants">
         <label>
-            <!--//:checked="question.answer.includes(indexVariant)"-->
-            <input :name="'variant-'+indexQuestion" :type="questionType" :value="indexVariant" v-model="selectedVariant"/>
+            <input :name="'variant-'+indexQuestion" :type="type" :value="indexVariant" v-model="selectedVariant"/>
             <span>
                 <input type="text" class="Variants__itemLabel" v-model="variantText">
             </span>
@@ -15,7 +14,7 @@
     export default {
         name: "GroupQuestionVariants",
         props: {
-            questionType: {
+            kind: {
                 type: String,
                 default: ""
             },
@@ -39,7 +38,9 @@
         computed: {
             selectedVariant: {
                 get() {
-                    return this.answer;
+                    return this.answer === null
+                        ? []
+                        : this.answer;
                 },
                 set(value) {
                     this.$emit('selectVariant', value)
@@ -52,6 +53,13 @@
                 set(value) {
                     this.$emit('editVariant', this.indexVariant, value);
                 }
+            },
+            type() {
+                return this.kind === "text"
+                    ? "text"
+                    : this.kind === "one"
+                        ? "radio"
+                        : "checkbox"
             }
         },
     }
