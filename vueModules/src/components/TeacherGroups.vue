@@ -48,7 +48,7 @@
     import modal from "./BaseModalWindow";
 
     export default {
-        name: "QuestionsGroup",
+        name: "TeacherGroups",
         components: {
             spinner,
             BaseCollapse,
@@ -56,12 +56,12 @@
         },
         computed: {
             ...mapState({
-                disciplines: state => state.addModule.disciplines,
-                groups: state => state.questionsGroup.groups,
-                loading: state => state.addModule.fetchStatus === "init" ||
-                    state.addModule.fetchStatus === "loading",
-                loadingGroups: state => state.questionsGroup.fetchGroupsStatus === "init" ||
-                    state.questionsGroup.fetchGroupsStatus === "loading",
+                disciplines: state => state.teacher.disciplines,
+                groups: state => state.group.groups,
+                loading: state => state.teacher.fetchStatus === "init" ||
+                    state.teacher.fetchStatus === "loading",
+                loadingGroups: state => state.group.fetchGroupsStatus === "init" ||
+                    state.group.fetchGroupsStatus === "loading",
 
             }),
             modules() {
@@ -83,7 +83,7 @@
             }
         },
         methods: {
-            ...mapActions(["getGroupList"]),
+            ...mapActions(["getGroupsList"]),
             handleShowGroup(disciplineModuleId, groupId) {
                 this.$router.push(`/modules/teacher/group/${disciplineModuleId}/${groupId}`);
             },
@@ -91,7 +91,7 @@
                 if (!isOpened) {
                     return;
                 }
-                this.getGroupList(moduleId);
+                this.getGroupsList(moduleId);
             }
         },
     }

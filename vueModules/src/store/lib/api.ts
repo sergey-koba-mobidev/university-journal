@@ -58,6 +58,13 @@ class ApiService {
         );
     }
 
+    public postUpdateModule({ params, body }) {
+        return this.post(
+            `/v1/disciplines/${params.disciplineId}/modules/${params.moduleId}`,
+            body
+        );
+    }
+
     // question group
     public getGroupData(disciplineModuleId, id) {
         return this.get(`/v1/modules/${disciplineModuleId}/question_groups/${id}`);

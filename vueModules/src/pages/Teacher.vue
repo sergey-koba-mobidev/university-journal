@@ -3,7 +3,8 @@
         <div class="Teacher__you">
             <div>
                 Вы зашли под именем
-                <span  class="Teacher__you-name">Коба Сергей</span>
+                <span  class="Teacher__you-name">{{ name }}</span>
+                ( <span>{{ email }}</span> )
             </div>
             <div class="Teacher__logout" @click="logoutUser">Выйти</div>
         </div>
@@ -15,9 +16,9 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from "vuex";
+    import { mapActions } from "vuex";
     import modules from "../components/TeacherModules";
-    import groups from "../components/QuestionsGroup";
+    import groups from "../components/TeacherGroups";
 
     export default {
         name: 'Teacher',
@@ -25,13 +26,17 @@
             modules,
             groups
         },
-        computed: {
-            ...mapState({
-                name: state => state.auth.name || JSON.parse(localStorage.getItem('user')).name,
-            }),
+        data() {
+          return {
+              name: JSON.parse(localStorage.getItem('user')).name,
+              email: JSON.parse(localStorage.getItem('user')).email,
+          }
         },
         methods: {
-            ...mapActions(["getDisciplinesList", "logoutUser"]),
+            ...mapActions({
+                getDisciplinesList: "teacher/getDisciplinesList",
+                logoutUser: "logoutUser",
+            }),
         },
         mounted() {
             this.getDisciplinesList();

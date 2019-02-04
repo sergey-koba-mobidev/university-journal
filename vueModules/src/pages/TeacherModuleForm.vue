@@ -1,38 +1,37 @@
 <template>
     <div class="Layout">
         <div class="CreateModule__title">
-            Создать модуль для дисциплины
-            <span  class="CreateModule__title-discipline">Web technologies and web design</span>
+            Редактировать модуль для дисциплины
+            <span class="CreateModыule__title-discipline">Web technologies and web design</span>
         </div>
         <div class="CreateModule">
-            <form action="" class="CreateModule__form" @submit.prevent="submit({payload: {heading: 'createModuleForm'}})">
+            <form class="CreateModule__form" @submit.prevent="submit">
                 <div class="row my-0">
                     <div class="input-field col s6 offset-s3 CreateModule__input my-0">
                         <input id="title" type="text" v-model="title">
                         <label for="title">Название</label>
-                        <validation
-                                :formKey="formKey"
-                                field="title"
-                        />
+                        <validation :formKey="formKey" field="title"/>
                     </div>
                 </div>
                 <div class="row my-0">
                     <div class="input-field col s6 offset-s3 CreateModule__input my-0">
                         <input id="duration" type="text" v-model="duration">
                         <label for="duration">Продолжительность</label>
-                        <validation
-                                :formKey="formKey"
-                                field="duration"
-                        />
+                        <validation :formKey="formKey" field="duration"/>
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn waves-effect waves-light CreateModule__btn_back" type="button" name="action">
+                    <button
+                        class="btn waves-effect waves-light CreateModule__btn_back"
+                        type="button"
+                        name="action"
+                        @click="handleBack"
+                    >
                         <i class="large material-icons">chevron_left</i>
                         ВЕРНУТЬСЯ НАЗАД
                     </button>
                     <button class="btn waves-effect waves-light CreateModule__btn" type="submit" name="action">
-                        СОЗДАТЬ
+                        СОХРАНИТЬ
                     </button>
                 </div>
             </form>
@@ -43,24 +42,40 @@
 <script>
     import validation from "../components/BaseValidationError";
     import { mapFieldsToComputed } from "../store/lib/vuex-form/index";
+    import { mapActions } from "vuex";
 
     export default
     {
-        name: 'CreateModuleForm',
+        name: 'TeacherModuleForm',
         data() {
             return {
                 showModals: false,
-                formKey: "createModuleForm",
+                formKey: "moduleEditForm",
+                disciplineId: parseInt(this.$route.params.disciplineId),
+                moduleId: parseInt(this.$route.params.moduleId),
             }
         },
         components: {
             validation,
         },
         computed: {
-            ...mapFieldsToComputed("createModuleForm", [
+            ...mapFieldsToComputed("moduleEditForm", [
                 "title",
                 "duration",
             ]),
+        },
+        methods: {
+            ...mapActions(["initModuleForm"]),
+            ...mapActions("moduleEditForm", ["submit"]),
+            handleBack() {
+                this.$router.push(`/modules/teacher`);
+            },
+        },
+        beforeMount(){
+            this.initModuleForm({
+                disciplineId: this.disciplineId,
+                moduleId: this.moduleId
+            });
         }
     }
 </script>

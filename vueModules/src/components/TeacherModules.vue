@@ -15,12 +15,10 @@
                     </div>
                     <div slot="content">
                         <div v-for="module in discipline.modules" class="TeacherDisciplines__moduleWrap">
-                            <a class="TeacherDisciplines__module" @click="handleShowModule(discipline.id, module.id)">
+                            <a class="TeacherDisciplines__module" @click="handleShowForm(discipline.id, module.id)">
                                 {{ module.title }}
                             </a>
                             <div class="TeacherDisciplines__buttons">
-                                <i class="material-icons TeacherDisciplines__buttons-icon">remove_red_eye</i>
-                                <i class="material-icons TeacherDisciplines__buttons-icon"  @click="handleShowForm(discipline.id)">edit</i>
                                 <i class="material-icons TeacherDisciplines__buttons-icon">close</i>
                             </div>
                         </div>
@@ -53,14 +51,14 @@
         },
         computed: {
             ...mapState({
-                disciplines: state => state.addModule.disciplines,
-                loading: state => state.addModule.fetchStatus === "init" ||
-                         state.addModule.fetchStatus === "loading",
+                disciplines: state => state.teacher.disciplines,
+                loading: state => state.teacher.fetchStatus === "init" ||
+                         state.teacher.fetchStatus === "loading",
             }),
         },
         methods: {
-            handleShowForm(disciplineId) {
-                this.$router.push(`/modules/teacher/discipline/${disciplineId}/create-module`);
+            handleShowForm(disciplineId, moduleId) {
+                this.$router.push(`/modules/teacher/module/${disciplineId}/${moduleId}`);
             }
         },
     }

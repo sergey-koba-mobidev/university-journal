@@ -96,8 +96,7 @@
             background: rgba(74, 74, 74, 0.6);
             box-shadow: 0 0 8px 0 rgba(0, 0, 0, .7);
             border: 2px solid #4e4e4e;
-            padding-left: 1rem;
-            padding-right: 2rem;
+            padding: 5px 10px;
             display: flex;
             justify-content: space-between;
 

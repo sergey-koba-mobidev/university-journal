@@ -4,9 +4,11 @@ import {custom, Form, required} from "./lib/vuex-form/index";
 import router from "../main";
 
 export interface GroupState {
+    fetchGroupsStatus: FetchStatus;
     fetchGroupStatus: FetchStatus;
     fetchSaveStatus: FetchStatus;
     fetchQuestionsStatus: FetchStatus;
+    groups: String[];
     disciplineModuleId: number| null;
     groupId: number | null;
     questions: String[];
@@ -15,9 +17,11 @@ export interface GroupState {
 
 const module: Module<GroupState, {}> = {
     state: {
+        fetchGroupsStatus: "init",
         fetchGroupStatus: "init",
         fetchSaveStatus: "init",
         fetchQuestionsStatus: "init",
+        groups: [],
         disciplineModuleId: null,
         groupId: null,
         questions: [],
@@ -40,6 +44,9 @@ const module: Module<GroupState, {}> = {
         },
         setGroupFetchStatus(state, { name, status }) {
             state[`fetch${name}Status`] = status;
+        },
+        setGroups(state, groups) {
+            state.groups = groups;
         },
         setQuestions(state, questions) {
             state.questions = questions;
@@ -70,6 +77,28 @@ const module: Module<GroupState, {}> = {
 
             commit("setGroupFetchStatus", { name: "Group", statur: "ok"});
             dispatch("getQuestionList", groupId);
+        },
+        async getGroupsList({ commit, dispatch }, moduleId) {
+            commit("setGroupFetchStatus", { name: "Groups", status: "loading"});
+
+            const {status, response, errors} = await api.getQuestionGroups(moduleId);
+
+            if (status !== 0) {
+                console.error(errors);
+            }
+
+            const groups = {};
+            for (let group of response) {
+                groups[group.id] = {
+                    disciplineModuleId: group.discipline_module_id,
+                    points: group.points,
+                    position: group.position,
+                    title: group.title
+                }
+            }
+
+            commit("setGroups", groups);
+            commit("setGroupFetchStatus", { name: "Groups", status: "ok"});
         },
         async getQuestionList({ commit, dispatch }, groupId) {
             commit("setGroupFetchStatus", { name: "Questions", statur: "loading"});

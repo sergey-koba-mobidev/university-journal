@@ -1,5 +1,6 @@
 import { Module } from "vuex";
 import api from "./lib/api";
+import {Form, required, digits} from "./lib/vuex-form";
 
 type QuestionType = {
     id: number;
@@ -10,19 +11,25 @@ type QuestionType = {
 
 export interface ModuleState {
     fetchStatus: FetchStatus;
+    fetchSaveModuleStatus: FetchStatus;
     questions: QuestionType;
     discipline: string;
     module: string;
     showModal: Boolean;
+    disciplineId: number | null,
+    moduleId: number | null,
 }
 
 const module: Module<ModuleState, {}> = {
     state: {
         fetchStatus: "init",
+        fetchSaveModuleStatus: "init",
         questions: {} as QuestionType,
         discipline: "",
         module: "",
         showModal: false,
+        disciplineId: null,
+        moduleId: null,
     },
     mutations: {
         setFetchStatus(state, status: FetchStatus) {
@@ -42,6 +49,10 @@ const module: Module<ModuleState, {}> = {
         },
         closeModuleModal(state) {
             state.showModal = false
+        },
+        setIds(state, { disciplineId, moduleId }) {
+            state.disciplineId = disciplineId;
+            state.moduleId = moduleId;
         }
     },
     actions: {
@@ -94,8 +105,53 @@ const module: Module<ModuleState, {}> = {
                 },
                 body
             });
+        },
+        // teacher part
+        initModuleForm({ commit }, { disciplineId, moduleId }) {
+            // TODO add getting current module data
+            commit("setIds", { disciplineId, moduleId });
         }
     },
+    modules: {
+        moduleEditForm: new Form({
+            throttle: 300,
+            fields: {
+                title: {
+                    type: String,
+                    validators: [
+                        required(),
+                    ],
+                },
+                duration: {
+                    type: String,
+                    validators: [
+                        required(),
+                        digits(),
+                    ],
+                },
+            },
+            async onSubmit({ rootState, commit, dispatch, getters }) {
+                const params = {
+                    disciplineId: rootState.module.disciplineId,
+                    moduleId: rootState.module.moduleId
+                };
+
+                const body = {
+                    title : getters['field']("title"),
+                    duration : getters['field']("duration"),
+                };
+
+                console.log(params);
+
+                const { errors } = await api.postUpdateModule({ params, body });
+
+                if (errors) {
+                    console.error(errors);
+                    return
+                }
+            },
+        }),
+    }
 };
 
 export default module;

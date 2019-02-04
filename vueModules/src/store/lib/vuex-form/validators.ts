@@ -55,7 +55,7 @@ export const letters = (): Validator => (value: string) => {
 
 export const digits = (): Validator => (value: string) => {
     if (!/^[0-9]*$/.test(value)) {
-        return "validators.digits";
+        return "Поле должно содержать только цифры!";
     }
 }
 

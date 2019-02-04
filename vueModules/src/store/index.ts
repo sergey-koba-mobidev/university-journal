@@ -4,8 +4,7 @@ import Vuex from "vuex";
 import auth, { AuthState } from "./auth";
 import disciplines, { DisciplinesState } from "./disciplines";
 import module, { ModuleState } from "./module";
-import addModule, { AddModuleState } from "./addModule";
-import questionsGroup, { QuestionsGroupState } from "./questionsGroup";
+import teacher, { TeacherState } from "./teacher";
 import group, { GroupState } from "./group";
 
 Vue.use(Vuex);
@@ -14,8 +13,7 @@ export interface RootState {
     auth: AuthState;
     disciplines: DisciplinesState;
     module: ModuleState;
-    addModule: AddModuleState;
-    questionsGroup: QuestionsGroupState;
+    teacher: TeacherState;
     group: GroupState;
 }
 
@@ -24,8 +22,7 @@ export default new Vuex.Store<any>({
         auth,
         disciplines,
         module,
-        addModule,
-        questionsGroup,
+        teacher,
         group
     },
 });

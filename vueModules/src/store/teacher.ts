@@ -3,12 +3,13 @@ import api from "./lib/api";
 import { Form, required } from "./lib/vuex-form";
 import router from "../main";
 
-export interface AddModuleState {
+export interface TeacherState {
     fetchStatus: FetchStatus;
     disciplines: String[];
 }
 
-const module: Module<AddModuleState, {}> = {
+const module: Module<TeacherState, {}> = {
+    namespaced: true,
     state: {
         fetchStatus: "init",
         disciplines: []
@@ -55,44 +56,13 @@ const module: Module<AddModuleState, {}> = {
                 console.error(errors);
             }
 
-            return response
-                .map(module => ({
-                    title: module.title,
-                    id: module.id,
-                    duration: module.duration
-                }));
+            return response.map(module => ({
+                title: module.title,
+                id: module.id,
+                duration: module.duration
+            }));
         },
-        async createModule({ commit }, disciplineId) {
-            // const { status, response, result } = api.postCretaeModule({
-            //     params: {
-            //         disciplineId
-            //     },
-            //     body
-            // });
-        }
     },
-    modules: {
-        createModuleForm: new Form({
-            throttle: 300,
-            fields: {
-                title: {
-                    type: String,
-                    validators: [
-                        required(),
-                    ],
-                },
-                duration: {
-                    type: String,
-                    validators: [
-                        required(),
-                    ],
-                },
-            },
-            async onSubmit({ commit, getters }) {
-
-            },
-        }),
-    }
 };
 
 export default module;

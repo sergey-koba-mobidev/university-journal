@@ -23,7 +23,7 @@ const module: Module<DisciplinesState, {}> = {
         async getDisciplines({ commit, dispatch }) {
             commit("setFetchStatus", "loading");
 
-            const {status, response, errors} = await api.getRelationships();
+            const { status, response, errors } = await api.getRelationships();
 
             if (status !== 0) {
                 console.error(errors);

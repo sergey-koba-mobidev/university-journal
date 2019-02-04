@@ -3,7 +3,7 @@ import disciplines from "./pages/Disciplines.vue";
 import module from "./pages/Module.vue";
 import result from "./pages/Result.vue";
 import teacher from "./pages/Teacher.vue";
-import createModuleForm from "./pages/CreateModuleForm.vue";
+import teacherModuleForm from "./pages/TeacherModuleForm.vue";
 import group from "./pages/Group.vue";
 
 const routes = [
@@ -50,8 +50,8 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: `/modules/teacher/discipline/:disciplineId/create-module`,
-        component: createModuleForm,
+        path: `/modules/teacher/module/:disciplineId/:moduleId`,
+        component: teacherModuleForm,
         meta: { requiresAuth: true }
     },
     {
