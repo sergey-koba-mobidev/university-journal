@@ -1,24 +1,24 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
+ruby '2.6.0'
 
-gem 'materialize-sass'
+gem 'materialize-sass', '0.97.0'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'devise'
 gem 'devise_invitable'
 gem 'selectize-rails'
-gem 'rails', '4.2.0'
+gem 'rails', '~> 5.2.0'
 gem 'pg'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 gem 'colorize'
 gem 'wice_grid'
-gem 'paperclip', '~> 4.3'
+gem 'paperclip'
 gem 'font-awesome-rails'
 
 # Api
@@ -39,7 +39,7 @@ gem 'capistrano-rbenv'
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
   gem 'spring'
   gem 'factory_bot_rails'
   gem 'faker'
@@ -50,7 +50,6 @@ group :development do
   gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
-  gem 'quiet_assets'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
 end

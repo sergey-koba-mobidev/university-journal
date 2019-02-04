@@ -1,12 +1,12 @@
-FROM ruby:2.2.0
+FROM ruby:2.6.0
 
 # Pg
 RUN apt-get update -qq && apt-get install \
     -y build-essential libpq-dev lsb-release
 
-# Node Npm Bower
-RUN apt-get update -qq && apt-get install \
-    -y nodejs-legacy npm
+# Node
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+        && apt-get install -y nodejs
 
 ENV APP_ROOT /app
 RUN mkdir $APP_ROOT
