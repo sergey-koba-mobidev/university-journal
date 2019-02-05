@@ -9,6 +9,16 @@ class Api::V1::DisciplineModulesController < Api::ApiController
     end
   end
 
+  def show
+    result = DisciplineModule::Show.(params: params, current_user: current_user)
+    
+    if result.success?
+      render_ok_json(Api::V1::DisciplineModule::Representer.new(result[:model]))
+    else
+      render_request_error_json(result[:error_msg])
+    end
+  end
+
   def create
     result = DisciplineModule::Create.(params: params, current_user: current_user)
     
