@@ -45,6 +45,7 @@ A Ruby on Rails based university classes manager.
 - `docker-compose down`
 
 ## Tests
+- `docker-compose run web bundle exec rake db:migrate RAILS_ENV=test`
 - `docker-compose run web bundle exec rspec`
 
 ## Doc

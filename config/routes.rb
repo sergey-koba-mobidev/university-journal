@@ -61,6 +61,7 @@ Rails.application.routes.draw do
 
       get  'disciplines/:discipline_id/modules' => 'discipline_modules#index'
       post 'disciplines/:discipline_id/modules' => 'discipline_modules#create'
+      get 'disciplines/:discipline_id/modules/:id' => 'discipline_modules#show'
       post 'disciplines/:discipline_id/modules/:id' => 'discipline_modules#update'
       delete 'disciplines/:discipline_id/modules/:id' => 'discipline_modules#delete'
 

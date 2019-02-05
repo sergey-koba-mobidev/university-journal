@@ -28,6 +28,26 @@ resource "Discipline Modules" do
     end
   end
 
+  get "/api/v1/disciplines/:discipline_id/modules/:id" do
+
+    context "200" do
+      let(:discipline_id) { Discipline.last.id }
+      let(:id) { DisciplineModule.last.id }
+      let(:raw_post) {params.to_json}
+
+      example "Get module for discipline" do
+        do_request
+
+        expected_response = {
+          status: 0,
+          response: Api::V1::DisciplineModule::Representer.new(DisciplineModule.last)
+        }
+        expect(status).to eq(200)
+        expect(response_body).to eq(expected_response.to_json)
+      end
+    end
+  end
+
   post "/api/v1/disciplines/:discipline_id/modules" do
     with_options with_example: true do
       parameter :title, 'Html & Css', required: true
