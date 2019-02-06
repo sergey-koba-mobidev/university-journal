@@ -16,12 +16,12 @@ class RelationshipsController < ApplicationController
   def create
     @relationship = Relationship.new(relationship_params)
     if owner_or_admin(@relationship.discipline) && @relationship.save
-      redirect_to :back, notice: 'Group was added to semester!'
+      redirect_back fallback_location: root_path, notice: 'Group was added to semester!'
     else
       if (!owner_or_admin(@relationship.discipline))
-        redirect_to :back, alert: 'Access denied!'
+        redirect_back fallback_location: root_path, alert: 'Access denied!'
       else
-        redirect_to :back, alert: @relationship.errors.full_messages.join(". ")
+        redirect_back fallback_location: root_path, alert: @relationship.errors.full_messages.join(". ")
       end
     end
   end
@@ -29,9 +29,9 @@ class RelationshipsController < ApplicationController
   def destroy
     if owner_or_admin(@relationship.discipline)
       @relationship.destroy
-      redirect_to :back, notice: 'Group was deleted from semester!'
+      redirect_back fallback_location: root_path, notice: 'Group was deleted from semester!'
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_back fallback_location: root_path, alert: 'Access denied!'
     end
   end
 

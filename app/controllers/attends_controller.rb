@@ -27,7 +27,7 @@ class AttendsController < ApplicationController
       @attend.relationship.touch
       respond_with @attend
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_back fallback_location: root_path, alert: 'Access denied!'
     end
   end
 
@@ -37,7 +37,7 @@ class AttendsController < ApplicationController
       @attend.relationship.touch
       respond_with @attend
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_back fallback_location: root_path, alert: 'Access denied!'
     end
   end
 
@@ -55,9 +55,9 @@ class AttendsController < ApplicationController
     @attend.title = params[:attend][:title]
     if owner_or_admin(@attend.visit.relationship.discipline) && @attend.save
       @attend.relationship.touch
-      redirect_to :back, notice: 'Title updated!'
+      redirect_back fallback_location: root_path, notice: 'Title updated!'
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_back fallback_location: root_path, alert: 'Access denied!'
     end
   end
 

@@ -33,6 +33,8 @@ if defined?(Wice::Defaults)
   # Default CSV field separator
   Wice::Defaults::CSV_FIELD_SEPARATOR = ','
 
+  # Default CSV encoding (p.e. 'CP1252:UTF-8' to make Microsoft Excel(tm) happy)
+  Wice::Defaults::CSV_ENCODING = nil
 
   # The strategy when to show the filter.
   # * <tt>:when_filtered</tt> - when the table is the result of filtering
@@ -93,7 +95,7 @@ if defined?(Wice::Defaults)
   #                              Showing All Queries                          #
 
   # Enable or disable showing all records (non-paginated table)
-  Wice::Defaults::ALLOW_SHOWING_ALL_QUERIES = true
+  Wice::Defaults::ALLOW_SHOWING_ALL_RECORDS = true
 
   # If number of all queries is more than this value, the user will be given a warning message
   Wice::Defaults::START_SHOWING_WARNING_FROM = 100
@@ -174,4 +176,35 @@ if defined?(Wice::Defaults)
 
   # The name of the page method (should correspond to Kaminari.config.page_method_name)
   Wice::Defaults::PAGE_METHOD_NAME = :page
+
+  # The name of the theme to use for the pagination with Kaminari
+  Wice::Defaults::PAGINATION_THEME = :wice_grid
+
+  # By default ActiveRecord calls are always executed inside Model.unscoped{}.
+  # Setting <tt>USE_DEFAULT_SCOPE</tt> to true will use the default scope for all queries.
+  Wice::Defaults::USE_DEFAULT_SCOPE = false
+end
+
+if defined?(WillPaginate)
+  module WillPaginate
+    module ActiveRecord
+      module RelationMethods
+        def per(value = nil)
+          per_page(value); self
+        end
+        def total_count()
+          count
+        end
+        def first_page?()
+          self == first
+        end
+        def last_page?()
+          self == last
+        end
+      end
+    end
+    module CollectionMethods
+      alias_method :num_pages, :total_pages
+    end
+  end
 end

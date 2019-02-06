@@ -25,9 +25,9 @@ class HomeworksController < ApplicationController
       #Notify student
       UserMailer.new_correction_email(@homework).deliver_now
 
-      redirect_to :back, notice: 'Correction was updated.'
+      redirect_back fallback_location: root_path, notice: 'Correction was updated.'
     else
-      redirect_to :back, alert: 'Can\'t update correction.'
+      redirect_back fallback_location: root_path, alert: 'Can\'t update correction.'
     end
 
   end
@@ -36,12 +36,12 @@ class HomeworksController < ApplicationController
     @homework = Homework.find(params[:id])
     if @homework.destroy
       respond_to do |format|
-        format.html { redirect_to :back, notice: 'Homework was successfully destroyed.' }
+        format.html { redirect_back fallback_location: root_path, notice: 'Homework was successfully destroyed.' }
         format.json { head :no_content }
       end
     else
       respond_to do |format|
-        format.html { redirect_to :back, alert: @homework.errors.full_messages.join('. ')}
+        format.html { redirect_back fallback_location: root_path, alert: @homework.errors.full_messages.join('. ')}
         format.json { render @homework.errors }
       end
     end

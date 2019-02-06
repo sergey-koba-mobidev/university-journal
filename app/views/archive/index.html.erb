@@ -5,15 +5,15 @@
 </div>
 <%= grid(@relationships_grid, upper_pagination_panel: true, class: 'striped') do |g|
 
-  g.column name:  t(:semester), attribute: 'year',  model: 'Semester' do |rel|
+  g.column name:  t(:semester), attribute: 'year',  assoc: :semester do |rel|
     rel.semester.name
   end
 
-  g.column name:  t(:discipline), attribute: 'title',  model: 'Discipline' do |rel|
+  g.column name:  t(:discipline), attribute: 'title',  assoc: :discipline do |rel|
     rel.discipline.title
   end
 
-  g.column name:  t(:group), attribute: 'title',  model: 'Group' do |rel|
+  g.column name:  t(:group), attribute: 'title',  assoc: :group do |rel|
     rel.group.title_year
   end
 

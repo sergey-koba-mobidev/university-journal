@@ -20,7 +20,7 @@ class VisitsController < ApplicationController
       @visit.relationship.touch
       respond_with @visit
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_back fallback_location: root_path, alert: 'Access denied!'
     end
   end
 
@@ -32,7 +32,7 @@ class VisitsController < ApplicationController
       @visit.relationship.touch
       respond_with @visit
     else
-      redirect_to :back, alert: 'Access denied!'
+      redirect_back fallback_location: root_path, alert: 'Access denied!'
     end
   end
 

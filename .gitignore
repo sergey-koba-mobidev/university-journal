@@ -86,3 +86,4 @@ vueModules/pakage-lock.json
 vueModules/.idea
 
 .caddy
+.byebug_history

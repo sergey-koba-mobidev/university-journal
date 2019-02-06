@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless current_user.admin? || current_user.teacher?
       unless @user == current_user
-        redirect_to :back, :alert => "Access denied."
+        redirect_back fallback_location: root_path, :alert => "Access denied."
       end
     end
   end
