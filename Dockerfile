@@ -1,12 +1,9 @@
-FROM ruby:2.6.0
+FROM ruby:2.6.0-alpine
 
-# Pg
-RUN apt-get update -qq && apt-get install \
-    -y build-essential libpq-dev lsb-release
-
-# Node
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-        && apt-get install -y nodejs
+# Pg and node
+RUN apk --update --upgrade add less postgresql-dev git build-base xz-dev libc6-compat linux-headers \
+    nodejs-current \
+    && rm -rf /var/cache/apk/*
 
 ENV APP_ROOT /app
 RUN mkdir $APP_ROOT

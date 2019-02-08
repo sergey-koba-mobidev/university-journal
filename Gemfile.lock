@@ -332,6 +332,8 @@ GEM
       trailblazer-loader (>= 0.1.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2018.9)
+      tzinfo (>= 1.0.0)
     uber (0.1.0)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
@@ -394,6 +396,7 @@ DEPENDENCIES
   spring-commands-rspec
   trailblazer-cells
   trailblazer-rails
+  tzinfo-data
   uglifier
   web-console
   wice_grid

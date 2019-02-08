@@ -20,6 +20,7 @@ gem 'colorize'
 gem 'wice_grid'
 gem 'paperclip'
 gem 'font-awesome-rails'
+gem 'tzinfo-data'
 
 # Api
 gem 'jwt'
