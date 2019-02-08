@@ -61,6 +61,7 @@ ru:
   labs: "Лабы"
   lectures: "Лекции"
   modules: "Модули"
+  module: "Модуль"
   total: "Итого"
   mark: "Оценка"
   marks: "Оценки"
@@ -73,8 +74,29 @@ ru:
   to_view_journal: ", чтобы просмотреть Ваш Журнал"
   forgot_password: "Забыли пароль?"
   start_typing: "Начните писать..."
+  online_modules: "Онлайн модули"
+  enabled: "Активен"
+  results: "Результаты"
   will_paginate:
       next_label: "Далее"
       previous_label: "Назад"
   api:
     sign_in_failure: Неверный email или пароль
+  student_module:
+    status: "Статус"
+    statuses:
+      started: "В процессе"
+      finished: "Закончен"
+      deleted: "Удален"
+      empty: "Не сдавал"
+    checked:
+      done: "Проверено"
+      not: "Не проверено"
+    check: "Проверить"
+    answers: "Ответы"
+    cancel: "Удалить"
+    cancel_success: "Модуль студента успешно удален"
+    cancel_error: "Невозможно удалить модуль студента"
+    check_finished: "Модуль успешно проверен"
+    copy_result: "Скопировать результат в журнал"
+    result_copied: "Результат модуля был скопирован в журнал"

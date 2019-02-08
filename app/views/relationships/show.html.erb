@@ -8,6 +8,11 @@
           <%= t(:group) %> <%= @relationship.group.title %>, <%= @relationship.semester.name %>
         </p>
       </div>
+      <% if !current_user.student? %>
+        <div class="card-action">
+          <a href="<%= relationship_discipline_modules_path(@relationship) %>"><%= t(:online_modules) %></a>
+        </div>
+      <% end %>
     </div>
 
     <div class="row">

@@ -1,0 +1,11 @@
+<% if @error.nil? %>
+  <% @student_module.results.each do |r| %>
+    <% if r["result"] != nil %>
+      $("#answer_result_<%= r["id"] %>").fadeOut().fadeIn().fadeOut().fadeIn();
+      $("#question_row_<%= r["id"] %>").addClass('grey lighten-3');
+      $("#result_<%= r["id"] %>").val(<%= r["result"] %>);
+    <% end %>
+  <% end %>
+<% else %>
+  alert("<%= @error %>");
+<% end %>

@@ -1,0 +1,70 @@
+<div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title black-text"><%= @relationship.discipline.title %></span>
+
+        <p>
+          <%= t(:teacher) %> <b><%= @relationship.discipline.user.name %></b> <br/>
+          <%= t(:group) %> <b><%= @relationship.group.title %>, <%= @relationship.semester.name %></b>
+        </p>
+      </div>
+      <div class="card-action">
+          <a href="<%= relationship_path(@relationship) %>"><%= t(:marks) %></a>
+      </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12">
+    <ul class="collection with-header">
+      <li class="collection-header"><h4><%= t(:online_modules) %> (<%= t(:discipline) %>) </h4></li>
+      <% @discipline_modules.each do |dm|%>
+          <li class="collection-item">
+            <div>
+              <a href="/modules" target="_blank"><%= dm.title %></a>
+            </div>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12">
+    <ul class="collection with-header">
+      <li class="collection-header"><h4><%= t(:online_modules) %> (<%= t(:group) %>) </h4></li>
+      <% @module_visits.each do |mv|%>
+          <li class="collection-item">
+            <div>
+            <%= form_for(mv, remote: true, method: :patch) do |f| %>
+              <div class="row">
+                <div class="col m3 s12"><%= mv.title %></div>
+                <div class="col m3 s12"><%= f.select(:object_id, for_select(@discipline_modules), include_blank: true)  %></div>
+                <div class="col m3 s12">
+                  <%= f.check_box :enabled, id: "visit_enabled_#{mv.id}"%>
+                  <label for="visit_enabled_<%= mv.id %>">
+                    <%= t(:enabled) %>
+                  </label>
+                </div>
+                <div class="col m3 s12"><%= f.submit t(:save), class: 'btn btn-success' %></div>
+              </div>
+            <% end %>
+            </div>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12">
+    <ul class="collection with-header">
+      <li class="collection-header"><h4><%= t(:results) %> </h4></li>
+      <% @module_visits.each do |mv|%>
+          <li class="collection-item">
+            <div class="row">
+                <div class="col m6 s12"><a href="<%= result_visit_path(mv) %>" target="_blank"><%= mv.title %></a></div>
+            </div>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
