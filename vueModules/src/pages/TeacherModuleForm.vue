@@ -2,7 +2,7 @@
     <div class="Layout">
         <div class="CreateModule__title">
             Редактировать модуль для дисциплины
-            <span class="CreateModыule__title-discipline">Web technologies and web design</span>
+            <span class="CreateModыule__title-discipline">{{ discipline }}</span>
         </div>
         <div class="CreateModule">
             <div v-if="loading">
@@ -54,10 +54,9 @@
         name: 'TeacherModuleForm',
         data() {
             return {
-                showModals: false,
                 formKey: "module/moduleEditForm",
                 disciplineId: parseInt(this.$route.params.disciplineId),
-                moduleId: parseInt(this.$route.params.moduleId),
+                moduleId: parseInt(this.$route.params.moduleId) || "new",
             }
         },
         components: {
@@ -66,8 +65,9 @@
         },
         computed: {
             ...mapState({
-                loading: state => state.module.fetchGetInfoStatus === "loading" || state.module.fetchGetInfoStatus === "init",
-                saving: state => state.module.fetchSaveInfoStatus === "loading"
+                loading: state => state.module.fetchGetInfoStatus === "loading",
+                saving: state => state.module.fetchSaveInfoStatus === "loading",
+                discipline: state => state.module.discipline
             }),
             ...mapFieldsToComputed("module/moduleEditForm", [
                 "title",
@@ -81,7 +81,7 @@
                 this.$router.push(`/modules/teacher`);
             },
         },
-        beforeMount(){
+        beforeMount() {
             this.initModuleForm({
                 disciplineId: this.disciplineId,
                 moduleId: this.moduleId
@@ -152,7 +152,9 @@
     }
 </style>
 <style>
-    .BaseValidationError {
-        margin-top: -10px;
+    .CreateModule {
+        .BaseValidationError {
+            margin-top: -10px;
+        }
     }
 </style>

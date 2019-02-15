@@ -1,6 +1,7 @@
 import { Module } from "vuex";
 import api from "./lib/api";
-import {Form, required, digits} from "./lib/vuex-form";
+import { Form, required, digits } from "./lib/vuex-form";
+import router from "../main";
 
 type QuestionType = {
     id: number;
@@ -59,6 +60,7 @@ const module: Module<ModuleState, {}> = {
         }
     },
     actions: {
+        // student part
         async getModule({commit},  { disciplineId, moduleId }) {
             commit("setFetchStatus", {name: "GetModule", status: "loading"});
 
@@ -109,10 +111,26 @@ const module: Module<ModuleState, {}> = {
                 body
             });
         },
+
         // teacher part
         async initModuleForm({ commit }, { disciplineId, moduleId }) {
             commit("setFetchStatus", {name: "GetInfo", status: "loading"});
             commit("setIds", { disciplineId, moduleId });
+
+            const disciplines = await api.getDisciplines();
+
+            if (disciplines.status !== 0) {
+                console.error(disciplines.errors);
+            } else {
+                const name = disciplines.response.find(discipline => discipline.id === disciplineId).title;
+                commit("setDisciplineName", name);
+            }
+
+            if (moduleId === "new") {
+                commit("moduleEditForm/reset", {clearFields: true});
+                commit("setFetchStatus", {name: "GetInfo", status: "ok"});
+                return;
+            }
 
             const { response, status, errors } = await api.getModuleInfo(disciplineId, moduleId);
 
@@ -125,6 +143,16 @@ const module: Module<ModuleState, {}> = {
                 duration: response.duration,
             }});
             commit("setFetchStatus", {name: "GetInfo", status: "ok"});
+        },
+        async removeModule({ dispatch }, { disciplineId, moduleId }) {
+            const { status, errors } = await api.deleteModule({ params: {disciplineId, moduleId} });
+
+            if (status !== 0) {
+                console.error(errors);
+                return;
+            }
+
+            await dispatch("teacher/getDisciplinesList", {}, { root: true });
         }
     },
     modules: {
@@ -158,14 +186,20 @@ const module: Module<ModuleState, {}> = {
                     duration : getters['field']("duration"),
                 };
 
-                const { errors } = await api.postUpdateModule({ params, body });
+                const { status, errors } = (params.moduleId === "new") // do we create module or update
+                    ? await api.postCreatedModule({ params, body })
+                    : await api.postUpdatedModule({ params, body });
 
-                if (errors) {
+                if (status !== 0) {
                     console.error(errors);
-                    return
+                    return;
                 }
 
-                commit("module/setFetchStatus", { name: "SaveInfo", status: "ok" }, { root: true });
+                if (params.moduleId === "new") {
+                    router.push(`/modules/teacher`);
+                } else {
+                    commit("module/setFetchStatus", { name: "SaveInfo", status: "ok" }, { root: true });
+                }
             },
         }),
     }

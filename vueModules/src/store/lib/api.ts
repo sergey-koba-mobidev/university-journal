@@ -6,7 +6,7 @@ import { stringify } from "querystring";
 type HttpOptions = Http.HttpOptions;
 type HttpResponse = Http.HttpResponse;
 
-let host = '/api';
+let host = '/api/v1/';
 
 type Response<T = {}> = Promise<CommonResponse<T>>;
 
@@ -18,25 +18,25 @@ interface GeneralMutateRequest<TBody = void, TParams = {}> {
 class ApiService {
 
     public postSignIn({ body }: GeneralMutateRequest<SignInRequest>):Response<SignInResponse> {
-        return this.post(`/v1/sign_in`, body);
+        return this.post(`sign_in`, body);
     }
 
     // STUDENTS
     public getRelationships() {
-        return this.get(`/v1/relationships/current`);
-    }
+        return this.get(`relationships/current`);
+    } // disciplines for student
 
     public getModules(id: number) {
-        return this.get(`/v1/relationships/${id}/modules`);
-    }
+        return this.get(`relationships/${id}/modules`);
+    } // modules for discipline
 
     public getModule(relationshipId: number, moduleId: number) {
-        return this.get(`/v1/relationships/${relationshipId}/modules/${moduleId}`);
-    }
+        return this.get(`relationships/${relationshipId}/modules/${moduleId}`);
+    } // module questions
 
     public postAnswer({ params, body }) {
         return this.post(
-            `/v1/relationships/${params.relationshipId}/modules/${params.moduleId}/questions/${params.questionId}/answer`,
+            `relationships/${params.relationshipId}/modules/${params.moduleId}/questions/${params.questionId}/answer`,
             body
         );
     }
@@ -44,71 +44,78 @@ class ApiService {
 
     // TEACHERS AND ADMINS
     public getDisciplines() {
-        return this.get(`/v1/disciplines`);
+        return this.get(`disciplines`);
     }
 
+    // modules
     public getModuleInfo(disciplineId: number, moduleId: number) {
-        return this.get(`/v1/disciplines/${disciplineId}/modules/${moduleId}`);
+        return this.get(`disciplines/${disciplineId}/modules/${moduleId}`);
     }
 
     public getCreatedModules(id: number) {
-        return this.get(`/v1/disciplines/${id}/modules`);
-    }
+        return this.get(`disciplines/${id}/modules`);
+    } // get all modules for teacher
 
-    public postCreateModule({ params, body }) {
+    public postCreatedModule({ params, body }) {
         return this.post(
-            `/v1/disciplines/${params.disciplineId}/modules`,
+            `disciplines/${params.disciplineId}/modules`,
             body
         );
     }
 
-    public postUpdateModule({ params, body }) {
+    public postUpdatedModule({ params, body }) {
         return this.post(
-            `/v1/disciplines/${params.disciplineId}/modules/${params.moduleId}`,
+            `disciplines/${params.disciplineId}/modules/${params.moduleId}`,
             body
+        );
+    }
+
+    public deleteModule({ params }) {
+        return this.delete(
+            `disciplines/${params.disciplineId}/modules/${params.moduleId}`
         );
     }
 
     // question group
-    public getGroupData(disciplineModuleId, id) {
-        return this.get(`/v1/modules/${disciplineModuleId}/question_groups/${id}`);
-    }
-
     public getQuestionGroups(id) {
-        return this.get(`/v1/modules/${id}/question_groups`);
-    }
+        return this.get(`modules/${id}/question_groups`);
+    } // get all groups for module
 
-    public getGroupQuestions(groupId) {
-        return this.get(`/v1/question_groups/${groupId}/questions`);
+    public getGroupData(disciplineModuleId, id) {
+        return this.get(`modules/${disciplineModuleId}/question_groups/${id}`);
     }
 
     public postUpdateGroup({ params, body }) {
         return this.post(
-            `/v1/modules/${params.disciplineModuleId}/question_groups/${params.id}`,
+            `modules/${params.disciplineModuleId}/question_groups/${params.id}`,
+            body
+        );
+    }
+
+    // questions
+    public getGroupQuestions(groupId) {
+        return this.get(`question_groups/${groupId}/questions`);
+    }
+
+    public postCreateQuestion({ params, body }) {
+        return this.post(
+            `question_groups/${params.groupId}/questions`,
             body
         );
     }
 
     public postUpdateQuestion({ params, body }) {
         return this.post(
-            `/v1/question_groups/${params.groupId}/questions/${params.id}`,
-            body
-        );
-    }
-
-    public postCreateQuestion({ params, body }) {
-        return this.post(
-            `/v1/question_groups/${params.groupId}/questions`,
+            `question_groups/${params.groupId}/questions/${params.id}`,
             body
         );
     }
 
     public deleteQuestion({ params }) {
         return this.delete(
-            `/v1/question_groups/${params.groupId}/questions/${params.id}`
+            `question_groups/${params.groupId}/questions/${params.id}`
         );
     }
-
 
 
     private get(url: string, request?: HttpOptions) {
@@ -147,9 +154,3 @@ class ApiService {
 }
 
 export default new ApiService();
-
-declare global {
-    interface Window {
-        TOCKEN: string;
-    }
-}

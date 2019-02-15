@@ -1,43 +1,51 @@
 <template>
-    <div>
-        <div class="TeacherDisciplines">
-            <div class="TeacherDisciplines__title">Модули для дисциплины</div>
-            <div class="TeacherDisciplines__wrap" >
-                <spinner class="TeacherDisciplines__spinner" v-if="loading"/>
-                <BaseCollapse
-                        v-for="(discipline, index) in disciplines"
-                        :index="index + 1"
-                        :key="index"
-                        v-else
-                >
-                    <div slot="header">
-                        <a class="waves-effect waves-light btn TeacherDisciplines__discipline"> {{ discipline.name }} </a>
-                    </div>
-                    <div slot="content">
-                        <div v-for="module in discipline.modules" class="TeacherDisciplines__moduleWrap">
-                            <a class="TeacherDisciplines__module" @click="handleShowForm(discipline.id, module.id)">
-                                {{ module.title }}
-                            </a>
-                            <div class="TeacherDisciplines__buttons">
-                                <i class="material-icons TeacherDisciplines__buttons-icon">close</i>
-                            </div>
+<div>
+    <div class="TeacherDisciplines">
+        <div class="TeacherDisciplines__title">Модули для дисциплины</div>
+        <div class="TeacherDisciplines__wrap" >
+            <spinner class="TeacherDisciplines__spinner" v-if="loading"/>
+            <BaseCollapse
+                v-for="(discipline, index) in disciplines"
+                :index="index + 1"
+                :key="index"
+                v-else
+            >
+                <div slot="header">
+                    <a class="waves-effect waves-light btn TeacherDisciplines__discipline"> {{ discipline.name }} </a>
+                </div>
+                <div slot="content">
+                    <div v-for="module in discipline.modules" class="TeacherDisciplines__moduleWrap">
+                        <a class="TeacherDisciplines__module" @click="handleShowForm(discipline.id, module.id)">
+                            {{ module.title }}
+                        </a>
+                        <div
+                            class="TeacherDisciplines__buttons"
+                            @click="removeModule({disciplineId: discipline.id, moduleId: module.id })"
+                        >
+                            <i class="material-icons TeacherDisciplines__buttons-icon">close</i>
                         </div>
-                        <a class="waves-effect waves-light btn TeacherDisciplines__module-create" @click="handleShowForm(discipline.id)">СОЗДАТЬ НОВЫЙ МОДУЛЬ </a>
                     </div>
-                </BaseCollapse>
-            </div>
+                    <a
+                        class="waves-effect waves-light btn TeacherDisciplines__module-create"
+                        @click="handleShowForm(discipline.id)"
+                    >
+                        СОЗДАТЬ НОВЫЙ МОДУЛЬ
+                    </a>
+                </div>
+            </BaseCollapse>
         </div>
-        <modal @close="" v-if="false">
-            <div slot="header">Удаление</div>
-            <div slot="body">
-                <div>Вы уверены, что хотите удалить модуль?</div>
-            </div>
-        </modal>
     </div>
+    <modal @close="" v-if="false">
+        <div slot="header">Удаление</div>
+        <div slot="body">
+            <div>Вы уверены, что хотите удалить модуль?</div>
+        </div>
+    </modal>
+</div>
 </template>
 
 <script>
-    import { mapState } from "vuex";
+    import { mapState, mapActions } from "vuex";
     import spinner from "../../public/spinner.svg";
     import BaseCollapse from "./BaseCollapse";
     import modal from "./BaseModalWindow";
@@ -57,6 +65,7 @@
             }),
         },
         methods: {
+            ...mapActions("module", ["removeModule"]),
             handleShowForm(disciplineId, moduleId) {
                 this.$router.push(`/modules/teacher/module/${disciplineId}/${moduleId}`);
             }
