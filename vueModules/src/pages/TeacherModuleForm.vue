@@ -5,18 +5,21 @@
             <span class="CreateModыule__title-discipline">Web technologies and web design</span>
         </div>
         <div class="CreateModule">
-            <form class="CreateModule__form" @submit.prevent="submit">
+            <div v-if="loading">
+                <spinner/>
+            </div>
+            <form v-else class="CreateModule__form" @submit.prevent="submit">
                 <div class="row my-0">
                     <div class="input-field col s6 offset-s3 CreateModule__input my-0">
                         <input id="title" type="text" v-model="title">
-                        <label for="title">Название</label>
+                        <label for="title" :class="{'active': title}">Название</label>
                         <validation :formKey="formKey" field="title"/>
                     </div>
                 </div>
                 <div class="row my-0">
                     <div class="input-field col s6 offset-s3 CreateModule__input my-0">
                         <input id="duration" type="text" v-model="duration">
-                        <label for="duration">Продолжительность</label>
+                        <label for="duration" :class="{'active': duration}">Продолжительность</label>
                         <validation :formKey="formKey" field="duration"/>
                     </div>
                 </div>
@@ -31,7 +34,8 @@
                         ВЕРНУТЬСЯ НАЗАД
                     </button>
                     <button class="btn waves-effect waves-light CreateModule__btn" type="submit" name="action">
-                        СОХРАНИТЬ
+                        <spinner v-if="saving" class="CreateModule__btn-spinner"/>
+                        <span v-else>СОХРАНИТЬ</span>
                     </button>
                 </div>
             </form>
@@ -42,7 +46,8 @@
 <script>
     import validation from "../components/BaseValidationError";
     import { mapFieldsToComputed } from "../store/lib/vuex-form/index";
-    import { mapActions } from "vuex";
+    import { mapState, mapActions } from "vuex";
+    import spinner from "../../public/spinner.svg";
 
     export default
     {
@@ -50,23 +55,28 @@
         data() {
             return {
                 showModals: false,
-                formKey: "moduleEditForm",
+                formKey: "module/moduleEditForm",
                 disciplineId: parseInt(this.$route.params.disciplineId),
                 moduleId: parseInt(this.$route.params.moduleId),
             }
         },
         components: {
             validation,
+            spinner,
         },
         computed: {
-            ...mapFieldsToComputed("moduleEditForm", [
+            ...mapState({
+                loading: state => state.module.fetchGetInfoStatus === "loading" || state.module.fetchGetInfoStatus === "init",
+                saving: state => state.module.fetchSaveInfoStatus === "loading"
+            }),
+            ...mapFieldsToComputed("module/moduleEditForm", [
                 "title",
                 "duration",
             ]),
         },
         methods: {
-            ...mapActions(["initModuleForm"]),
-            ...mapActions("moduleEditForm", ["submit"]),
+            ...mapActions("module", ["initModuleForm"]),
+            ...mapActions("module/moduleEditForm", ["submit"]),
             handleBack() {
                 this.$router.push(`/modules/teacher`);
             },
@@ -76,7 +86,7 @@
                 disciplineId: this.disciplineId,
                 moduleId: this.moduleId
             });
-        }
+        },
     }
 </script>
 
@@ -117,12 +127,21 @@
 
         &__btn {
             margin-top: 2rem;
+            min-width: 116px;
 
             &_back {
                 display: inline-flex;
                 background: #cad0cf;
                 margin-top: 2rem;
                 margin-right: 1rem;
+            }
+
+            &-spinner {
+                height: 100%;
+
+                path {
+                    fill: #fff;
+                }
             }
         }
     }

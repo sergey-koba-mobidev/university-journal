@@ -10,8 +10,9 @@ type QuestionType = {
 }
 
 export interface ModuleState {
-    fetchStatus: FetchStatus;
-    fetchSaveModuleStatus: FetchStatus;
+    fetchGetModuleStatus: FetchStatus;
+    fetchGetInfoStatus: FetchStatus;
+    fetchSaveInfoStatus: FetchStatus;
     questions: QuestionType;
     discipline: string;
     module: string;
@@ -21,9 +22,11 @@ export interface ModuleState {
 }
 
 const module: Module<ModuleState, {}> = {
+    namespaced: true,
     state: {
-        fetchStatus: "init",
-        fetchSaveModuleStatus: "init",
+        fetchGetModuleStatus: "init",
+        fetchGetInfoStatus: "init",
+        fetchSaveInfoStatus: "init",
         questions: {} as QuestionType,
         discipline: "",
         module: "",
@@ -32,8 +35,8 @@ const module: Module<ModuleState, {}> = {
         moduleId: null,
     },
     mutations: {
-        setFetchStatus(state, status: FetchStatus) {
-            state.fetchStatus = status;
+        setFetchStatus(state, { name, status }) {
+            state[`fetch${name}Status`] = status;
         },
         setQuestions(state, questions) {
             state.questions = questions;
@@ -57,7 +60,7 @@ const module: Module<ModuleState, {}> = {
     },
     actions: {
         async getModule({commit},  { disciplineId, moduleId }) {
-            commit("setFetchStatus", "loading");
+            commit("setFetchStatus", {name: "GetModule", status: "loading"});
 
             const disciplines = JSON.parse(localStorage.getItem("disciplines"));
 
@@ -91,7 +94,7 @@ const module: Module<ModuleState, {}> = {
             }));
 
             commit("setQuestions", questions);
-            commit("setFetchStatus", "ok");
+            commit("setFetchStatus", {name: "GetModule", status: "ok"});
         },
         async postAnswers({},{ disciplineId, moduleId, questionId, answer } ) {
             const body = {
@@ -107,9 +110,21 @@ const module: Module<ModuleState, {}> = {
             });
         },
         // teacher part
-        initModuleForm({ commit }, { disciplineId, moduleId }) {
-            // TODO add getting current module data
+        async initModuleForm({ commit }, { disciplineId, moduleId }) {
+            commit("setFetchStatus", {name: "GetInfo", status: "loading"});
             commit("setIds", { disciplineId, moduleId });
+
+            const { response, status, errors } = await api.getModuleInfo(disciplineId, moduleId);
+
+            if (status !== 0) {
+                console.error(errors);
+            }
+
+            commit("moduleEditForm/setData", {fields: {
+                title: response.title,
+                duration: response.duration,
+            }});
+            commit("setFetchStatus", {name: "GetInfo", status: "ok"});
         }
     },
     modules: {
@@ -131,6 +146,8 @@ const module: Module<ModuleState, {}> = {
                 },
             },
             async onSubmit({ rootState, commit, dispatch, getters }) {
+                commit("module/setFetchStatus", { name: "SaveInfo", status: "loading" }, { root: true });
+
                 const params = {
                     disciplineId: rootState.module.disciplineId,
                     moduleId: rootState.module.moduleId
@@ -141,14 +158,14 @@ const module: Module<ModuleState, {}> = {
                     duration : getters['field']("duration"),
                 };
 
-                console.log(params);
-
                 const { errors } = await api.postUpdateModule({ params, body });
 
                 if (errors) {
                     console.error(errors);
                     return
                 }
+
+                commit("module/setFetchStatus", { name: "SaveInfo", status: "ok" }, { root: true });
             },
         }),
     }

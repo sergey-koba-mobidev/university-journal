@@ -92,8 +92,8 @@
         computed: {
             ...mapState({
                 showModal: state => state.module.showModal,
-                loading: state => state.module.fetchStatus === "init" ||
-                         state.module.fetchStatus === "loading",
+                loading: state => state.module.fetchGetModuleStatus === "init" ||
+                         state.module.fetchGetModuleStatus === "loading",
                 questions: state => state.module.questions,
                 discipline: state => state.module.discipline,
                 module: state => state.module.module,

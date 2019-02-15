@@ -47,6 +47,10 @@ class ApiService {
         return this.get(`/v1/disciplines`);
     }
 
+    public getModuleInfo(disciplineId: number, moduleId: number) {
+        return this.get(`/v1/disciplines/${disciplineId}/modules/${moduleId}`);
+    }
+
     public getCreatedModules(id: number) {
         return this.get(`/v1/disciplines/${id}/modules`);
     }
