@@ -34,7 +34,7 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: `/modules/disciplines/:disciplineId/modules/:id`,
+        path: `/modules/:relationshipId/discipline/:disciplineId/modules/:id`,
         component: module,
         meta: { requiresAuth: true }
     },

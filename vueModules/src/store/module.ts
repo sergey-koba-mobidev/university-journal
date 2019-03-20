@@ -20,6 +20,7 @@ export interface ModuleState {
     showModal: Boolean;
     disciplineId: number | null,
     moduleId: number | null,
+    time: string,
 }
 
 const module: Module<ModuleState, {}> = {
@@ -34,6 +35,7 @@ const module: Module<ModuleState, {}> = {
         showModal: false,
         disciplineId: null,
         moduleId: null,
+        time: "",
     },
     mutations: {
         setFetchStatus(state, { name, status }) {
@@ -47,6 +49,9 @@ const module: Module<ModuleState, {}> = {
         },
         setModuleName(state, name) {
             state.module = name;
+        },
+        setModuleTime(state, time) {
+            state.time = time;
         },
         openModuleModal(state) {
             state.showModal = true
@@ -64,6 +69,7 @@ const module: Module<ModuleState, {}> = {
         async getModule({commit},  { disciplineId, moduleId }) {
             commit("setFetchStatus", {name: "GetModule", status: "loading"});
 
+            // just for title
             const disciplines = JSON.parse(localStorage.getItem("disciplines"));
 
             for (let discipline of disciplines) {
@@ -84,6 +90,12 @@ const module: Module<ModuleState, {}> = {
                 console.error(errors);
             }
 
+            const openedUntil = new Date(response.opened_until).getTime();
+            const now = new Date().getTime();
+            const time = Math.round((openedUntil - now)/1000);
+
+            commit("setModuleTime", time);
+
             const questions = response.questions.map(item => ({
                 id: item.id,
                 kind: item.kind === "text"
@@ -98,12 +110,14 @@ const module: Module<ModuleState, {}> = {
             commit("setQuestions", questions);
             commit("setFetchStatus", {name: "GetModule", status: "ok"});
         },
-        async postAnswers({},{ disciplineId, moduleId, questionId, answer } ) {
+        async postAnswers({},{ relationshipId, disciplineId, moduleId, questionId, answer } ) {
             const body = {
                 "answer": answer
             };
-            const { status, response, errors} = await api.postAnswer({
+
+            await api.postAnswer({
                 params: {
+                    relationshipId,
                     disciplineId,
                     moduleId,
                     questionId

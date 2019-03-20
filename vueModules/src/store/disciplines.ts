@@ -1,9 +1,16 @@
 import { Module } from "vuex";
 import api from "./lib/api";
 
+type DisciplineType = {
+    name: string;
+    id: number;
+    modules: any;
+    relationshipId: number;
+};
+
 export interface DisciplinesState {
     fetchStatus: FetchStatus;
-    disciplines: String[];
+    disciplines: DisciplineType[];
 }
 
 const module: Module<DisciplinesState, {}> = {
@@ -37,7 +44,8 @@ const module: Module<DisciplinesState, {}> = {
                 disciplines.push({
                     name: item.discipline.title,
                     id: item.id,
-                    modules
+                    modules,
+                    relationshipId: item.id,
                 });
             }
 
