@@ -18,6 +18,7 @@ export interface ModuleState {
     discipline: string;
     module: string;
     showModal: Boolean;
+    showFinishModal: Boolean;
     disciplineId: number | null,
     moduleId: number | null,
     time: string,
@@ -33,6 +34,7 @@ const module: Module<ModuleState, {}> = {
         discipline: "",
         module: "",
         showModal: false,
+        showFinishModal: false,
         disciplineId: null,
         moduleId: null,
         time: "",
@@ -54,10 +56,10 @@ const module: Module<ModuleState, {}> = {
             state.time = time;
         },
         openModuleModal(state) {
-            state.showModal = true
+            state.showModal = true;
         },
         closeModuleModal(state) {
-            state.showModal = false
+            state.showModal = false;
         },
         setIds(state, { disciplineId, moduleId }) {
             state.disciplineId = disciplineId;
@@ -66,7 +68,7 @@ const module: Module<ModuleState, {}> = {
     },
     actions: {
         // student part
-        async getModule({commit},  { disciplineId, moduleId }) {
+        async getModule({ commit },  { disciplineId, moduleId }) {
             commit("setFetchStatus", {name: "GetModule", status: "loading"});
 
             // just for title
@@ -124,6 +126,14 @@ const module: Module<ModuleState, {}> = {
                 },
                 body
             });
+
+            // TODO set results
+        },
+        async finishModule({ state, commit }, { relationshipId, moduleId }) {
+            // TODO show modal if there are not answered questions in results (128)
+
+            console.log("finished");
+            //const { status, response } = await api.postFinishModule({params: { relationshipId, moduleId }});
         },
 
         // teacher part

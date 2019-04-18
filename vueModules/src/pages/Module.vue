@@ -33,7 +33,7 @@
                             {{ question.text }}:
                             <p v-for="(variant, index) in question.variants">
                                 <label>
-                                    <input :name="question.id" :type="question.kind" :value="index"/>
+                                    <input :name="question.id" :type="question.kind" :value="index" :disabled="disableAnswer"/>
                                     <span>{{ variant }}</span>
                                 </label>
                             </p>
@@ -59,12 +59,25 @@
                     </div>
                 </form>
             </template>
-        </div>
-        <modal @close="closeModuleModal" v-if="showModal">
+        </div>с
+        <modal
+            v-if="showModal"
+            @close="closeModuleModal"
+            @handleOk="handleFinishModule"
+        >
             <div slot="header">Завершение</div>
             <div slot="body">
                 <div>Вы уверены, что хотите завершить модуль?</div>
-                <div>У Вас осталось <span class="Result__my">3</span> неотвеченных вопроса</div>
+                <div>У Вас остались неотвеченные вопросы</div>
+            </div>
+        </modal>
+        <modal
+            v-if="showFinishModal"
+            @close="closeModuleModal(true)"
+        >
+            <div slot="header">Завершение</div>
+            <div slot="body">
+                <div>Завершить модуль?</div>
             </div>
         </modal>
     </div>
@@ -91,12 +104,14 @@
         computed: {
             ...mapState({
                 showModal: state => state.module.showModal,
+                showFinishModal: state => state.module.showFinishModal,
                 loading: state => state.module.fetchGetModuleStatus === "init" ||
                          state.module.fetchGetModuleStatus === "loading",
                 questions: state => state.module.questions,
                 discipline: state => state.module.discipline,
                 module: state => state.module.module,
                 msTime: state => state.module.time,
+                finishedModule: state => state.module.finishModule,
             }),
             time: {
                 get() {
@@ -107,17 +122,24 @@
                 }
             },
             formattedTime() {
+                if (this.time <= 0) {
+                    return "00 : 00";
+                }
+
                 const min = parseInt(this.time/60);
                 const sec = this.time % 60;
                 const mm = min <= 9 ? `0${min}` : min;
                 const ss = sec <= 9 ? `0${sec}` : sec;
 
                 return `${mm} : ${ss}`;
+            },
+            disableAnswer() {
+                return this.msTime <= 0 || this.finishedModule;
             }
         },
         methods: {
-            ...mapMutations("module", ["closeModuleModal", "openModuleModal", "setModuleTime"]),
-            ...mapActions("module", ["getModule", "postAnswers"]),
+            ...mapMutations("module", ["closeModuleModal", "setModuleTime", "setFinishModule", "openModuleModal"]),
+            ...mapActions("module", ["getModule", "postAnswers", "finishModule"]),
             handleBack() {
                 this.$router.push(`/modules/disciplines/`);
             },
@@ -134,9 +156,10 @@
             },
             startTimer() {
                 const that = this;
-
-                setTimeout(function timer() {
-                    if (that.time === 0) {
+                const timerId = setTimeout(function timer() {
+                    if (that.time <= 0) {
+                        that.time = 0;
+                        clearTimeout(timerId);
                         return;
                     }
 
@@ -144,6 +167,9 @@
 
                     setTimeout(timer, 1000);
                 }, 1000);
+            },
+            handleFinishModule() {
+                this.finishModule({relationshipId: this.relationshipId, disciplineId: this.disciplineId});
             }
         },
         mounted() {

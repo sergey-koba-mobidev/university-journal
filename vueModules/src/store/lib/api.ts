@@ -41,6 +41,13 @@ class ApiService {
         );
     }
 
+    public postFinishModule({ params }) {
+        return this.post(
+            `relationships/${params.relationshipId}/modules/${params.moduleId}/finish`,
+            {}
+        );
+    }
+
 
     // TEACHERS AND ADMINS
     public getDisciplines() {

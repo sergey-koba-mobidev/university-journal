@@ -5,8 +5,8 @@
                 <i class="material-icons Modal__close" @click="$emit('close')">clear</i>
                 <div class="Modal__title"><slot name="header"></slot></div>
                 <div class="Modal__body"><slot name="body"></slot></div>
-                <button class="btn waves-effect waves-light Result__btn" type="button" name="action" @click="$emit('close')">Нет, отмена</button>
-                <button class="btn waves-effect waves-light Result__btn" type="button" name="action" @click="$emit('close')">Да, завершить</button>
+                <button class="btn waves-effect waves-light Result__btn" type="button" name="action" @click="handleCancel">Нет, отмена</button>
+                <button class="btn waves-effect waves-light Result__btn" type="button" name="action" @click="handleOk">Да, завершить</button>
             </div>
         </div>
     </transition>
@@ -15,6 +15,16 @@
 <script>
     export default {
         name: "Modal",
+        props: {
+            onOk: {
+                type: Function,
+                default: () => null,
+            },
+            onCancel: {
+                type: Function,
+                default: () => null,
+            },
+        },
         methods: {
             handleCloseOnEscape(e) {
                 if (e.keyCode === 27) {
@@ -38,6 +48,18 @@
                         false
                     );
                 }
+            },
+            handleCancel() {
+                if (this.onCancel) {
+                    this.$emit('handleCancel');
+                }
+                this.$emit('close');
+            },
+            handleOk() {
+                if (this.onOk) {
+                    this.$emit("handleOk");
+                }
+                this.$emit('close');
             }
         },
         mounted() {
@@ -52,7 +74,6 @@
         }
     }
 </script>
-
 
 <style scoped lang="scss">
     .Modal {
