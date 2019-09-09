@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ include "chart.fullname" . }}-web-config"
+  labels:
+    app.kubernetes.io/name: "{{ include "chart.fullname" . }}-api-config"
+    helm.sh/chart: {{ include "chart.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  RAILS_ENV: "production"
+  RAILS_SERVE_STATIC_FILES: "true"
+  S3_REGION: "nyc3"
+  S3_BUCKET: "common-space"
+  S3_ENDPOINT: "https://nyc3.digitaloceanspaces.com"
+  POSTGRES_HOST: "46.101.253.11"

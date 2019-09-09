@@ -95,12 +95,12 @@ Rails.application.configure do
   config.paperclip_defaults = {
     :storage => :s3,
     :preserve_files => true,
-    :s3_host_name => 'REMOVE_THIS_LINE_IF_UNNECESSARY',
+    :s3_host_name => ENV['S3_ENDPOINT'],
     :s3_credentials => {
-      :access_key_id => AWS_ACCESS_KEY_ID,
-      :secret_access_key => AWS_SECRET_ACCESS_KEY,
-      :s3_region => "YOUR_S3_REGION_HERE"
+      :access_key_id => ENV['S3_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['S3_SECRET_ACCESS_KEY'],
+      :s3_region => ENV['S3_REGION']
     },
-    :bucket => 'S3_BUCKET_NAME'
+    :bucket => ENV['S3_BUCKET']
   }
 end

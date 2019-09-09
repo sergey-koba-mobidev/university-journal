@@ -70,6 +70,23 @@ data:
   POSTGRES_PASSWORD: "BASE64_PASS"
   POSTGRES_DB: "BASE64_DB"
 ```
+- create `chart/templates/web_secret.yaml`, apply base64 to secrets values
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "{{ include "chart.name" . }}-web-secret"
+  labels:
+    app.kubernetes.io/name: "{{ include "chart.name" . }}-web-secret"
+    helm.sh/chart: {{ include "chart.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+type: Opaque
+data:
+  SMTP_PASSWORD: "..."
+  S3_ACCESS_KEY_ID: "..."
+  S3_SECRET_ACCESS_KEY: "..."
+```
 - run `./bin/deploy.sh`
 
 # Roadmap

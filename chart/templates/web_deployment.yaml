@@ -24,14 +24,9 @@ spec:
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
-          env:
-            - name: RAILS_ENV
-              value: "production"
-            - name: POSTGRES_HOST
-              value: "46.101.253.11"
-            - name: RAILS_SERVE_STATIC_FILES
-              value: "true"
           envFrom:
+            - configMapRef:
+                name: "{{ include "chart.name" . }}-web-config"
             - secretRef:
                 name: "{{ include "chart.name" . }}-postgres-secret"
             - secretRef:
