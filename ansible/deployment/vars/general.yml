@@ -1,6 +1,0 @@
-app_path: /home/univeruser/app
-app_user: univeruser
-
-# Ruby
-rbenv_root: "/opt/rbenv"
-rbenv_ruby_version: "2.2.0"

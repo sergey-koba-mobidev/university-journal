@@ -87,3 +87,5 @@ vueModules/.idea
 
 .caddy
 .byebug_history
+
+chart/templates/postgres_secret.yaml

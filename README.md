@@ -53,13 +53,28 @@ A Ruby on Rails based university classes manager.
 - open file `./doc/api/idnex.html`
 
 # Deployment
-- run ansible as `cd ansible/deployment` & `ansible-playbook -i inventories/production appservers.yml`
-- run capistrano as `cap production deploy`
+- create `chart/templates/postgres_secret.yaml` with the following content, replace `BASE64_...` values
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "{{ include "chart.name" . }}-postgres-secret"
+  labels:
+    app.kubernetes.io/name: "{{ include "chart.name" . }}-postgres-secret"
+    helm.sh/chart: {{ include "chart.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+type: Opaque
+data:
+  POSTGRES_USER: "BASE64_USER"
+  POSTGRES_PASSWORD: "BASE64_PASS"
+  POSTGRES_DB: "BASE64_DB"
+```
+- run `./bin/deploy.sh`
 
 # Roadmap
 - Backup data
 - Disciplines can change teachers in other semester
 - expire for cache
 - button to set no attends with 1 click
-- kubernetes
-- Rails 5
+- finish vue modules

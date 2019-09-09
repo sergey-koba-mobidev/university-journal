@@ -1,0 +1,22 @@
+FROM ruby:2.6.0-alpine
+
+# Pg and node
+RUN apk --update --upgrade add less postgresql-dev git build-base xz-dev libc6-compat linux-headers \
+    nodejs-current \
+    && rm -rf /var/cache/apk/*
+
+ENV APP_ROOT /app
+RUN mkdir $APP_ROOT
+WORKDIR $APP_ROOT
+
+# Bundle
+COPY . /app
+RUN mkdir tmp
+RUN gem update bundler && bundle install --jobs 4 --without development test
+
+# Assets
+RUN  bundle exec rails assets:precompile
+
+EXPOSE 3000
+
+WORKDIR $APP_ROOT

@@ -1,0 +1,52 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: "{{ include "chart.fullname" . }}-web-deployment"
+  labels:
+    app.kubernetes.io/name: "{{ include "chart.name" . }}-web"
+    helm.sh/chart: {{ include "chart.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.web.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "{{ include "chart.name" . }}-web"
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "{{ include "chart.name" . }}-web"
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: "{{ .Chart.Name }}-web"
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          imagePullPolicy: {{ .Values.web.image.pullPolicy }}
+          command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+          env:
+            - name: RAILS_ENV
+              value: "production"
+            - name: POSTGRES_HOST
+              value: "46.101.253.11"
+            - name: RAILS_SERVE_STATIC_FILES
+              value: "true"
+          envFrom:
+            - secretRef:
+                name: "{{ include "chart.name" . }}-postgres-secret"
+            - secretRef:
+                name: "{{ include "chart.name" . }}-web-secret"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      imagePullSecrets:
+        - name: canister-regcred

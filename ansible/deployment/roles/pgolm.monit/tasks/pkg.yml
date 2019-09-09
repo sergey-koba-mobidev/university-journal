@@ -1,5 +1,0 @@
----
-- name: pkg - Install package
-  apt:
-    name: monit
-    state: present

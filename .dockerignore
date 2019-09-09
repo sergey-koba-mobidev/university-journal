@@ -1,0 +1,8 @@
+.git
+.env
+log/development.log
+log/test.log
+vueModules
+chart
+docker_configs
+tmp

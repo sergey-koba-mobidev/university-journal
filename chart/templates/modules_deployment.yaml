@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: "{{ include "chart.fullname" . }}-modules-deployment"
+  labels:
+    app.kubernetes.io/name: "{{ include "chart.name" . }}-modules"
+    helm.sh/chart: {{ include "chart.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.modules.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "{{ include "chart.name" . }}-modules"
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "{{ include "chart.name" . }}-modules"
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: "{{ .Chart.Name }}-modules"
+          image: "{{ .Values.modules.image.repository }}:{{ .Values.modules.image.tag }}"
+          imagePullPolicy: {{ .Values.modules.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      imagePullSecrets:
+        - name: canister-regcred

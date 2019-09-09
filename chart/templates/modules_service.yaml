@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "chart.fullname" . }}-modules-service"
+  labels:
+    app.kubernetes.io/name: "{{ include "chart.name" . }}-modules-service"
+    helm.sh/chart: {{ include "chart.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.modules.service.type }}
+  ports:
+    - port: {{ .Values.modules.service.port }}
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: "{{ include "chart.name" . }}-modules"
+    app.kubernetes.io/instance: {{ .Release.Name }}
