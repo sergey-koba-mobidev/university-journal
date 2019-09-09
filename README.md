@@ -13,7 +13,7 @@ A Ruby on Rails based university classes manager.
 ## Additional features
 - uses cache for stressful queries
 - notifies about homework via email
-- ansible + capistrano deployment
+- k8s
 
 ## Getting Started
 
@@ -25,11 +25,11 @@ A Ruby on Rails based university classes manager.
 - `cp .env.example .env`
 - `docker-compose build` - build docker images
 - `docker-compose up -d db` - spin up db container
-- `docker-compose run web bundle install --with test development` - intasll gems for ruby
-- `docker-compose run web rake db:create` - create database
-- `docker-compose run web rake db:migrate` - migrate database
-- `docker-compose run web rake db:seed` - seed database with test data
-- `docker-compose run modules_front npm install` - install npm for modules
+- `docker-compose run --rm web bundle install --with test development` - intasll gems for ruby
+- `docker-compose run --rm web rake db:create` - create database
+- `docker-compose run --rm web rake db:migrate` - migrate database
+- `docker-compose run --rm web rake db:seed` - seed database with test data
+- `docker-compose run --rm modules_front npm install` - install npm for modules
 - `docker-compose up -d`
 - go to [http://localhost](http://localhost) use `admin@journal.com/12345678` as login and password for Admin
 - go to [http://localhost](http://localhost) use `student@journal.com/12345678` as login and password for Student
@@ -45,8 +45,8 @@ A Ruby on Rails based university classes manager.
 - `docker-compose down`
 
 ## Tests
-- `docker-compose run web bundle exec rake db:migrate RAILS_ENV=test`
-- `docker-compose run web bundle exec rspec`
+- `docker-compose run --rm web bundle exec rake db:migrate RAILS_ENV=test`
+- `docker-compose run --rm web bundle exec rspec`
 
 ## Doc
 - build doc `docker-compose run web bundle exec rake docs:generate`

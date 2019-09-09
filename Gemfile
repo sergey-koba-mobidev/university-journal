@@ -18,9 +18,12 @@ gem 'jquery-ui-rails'
 gem 'jbuilder'
 gem 'colorize'
 gem 'wice_grid'
-gem 'paperclip'
 gem 'font-awesome-rails'
 gem 'tzinfo-data'
+
+# File uploads
+gem 'paperclip'
+gem 'aws-sdk-s3'
 
 # Api
 gem 'jwt'
@@ -34,9 +37,6 @@ gem 'reform-rails'
 gem 'trailblazer-cells'
 gem 'cells-rails'
 gem "cells-erb"
-
-gem 'capistrano-rails'
-gem 'capistrano-rbenv'
 
 group :development, :test do
   gem 'byebug'
