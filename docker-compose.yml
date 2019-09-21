@@ -34,6 +34,19 @@ services:
     depends_on:
       - db
   
+  bot:
+    build: .
+    container_name: ujournal_bot
+    command:  ["bundle", "exec", "ruby", "bot/bot.rb"]
+    volumes:
+      - .:/app
+      - bundle-cache:/usr/local/bundle:cached
+    env_file: .env
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
+  
   modules_front:
     build:
       context: ./vueModules

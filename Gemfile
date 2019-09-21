@@ -38,6 +38,11 @@ gem 'trailblazer-cells'
 gem 'cells-rails'
 gem "cells-erb"
 
+# Pilot
+gem 'rest-client'
+gem 'nokogiri'
+gem 'telegram-bot-ruby'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console'

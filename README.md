@@ -23,6 +23,7 @@ A Ruby on Rails based university classes manager.
 
 ### Install
 - `cp .env.example .env`
+- modify variables in `.env` file. For example `TELEGRAM_BOT_API_TOKEN`
 - `docker-compose build` - build docker images
 - `docker-compose up -d db` - spin up db container
 - `docker-compose run --rm web bundle install --with test development` - intasll gems for ruby
