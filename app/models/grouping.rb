@@ -7,6 +7,6 @@ class Grouping < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: :group_id, message: ' already in group'
 
   def remove_attends
-    Attend.destroy_all(user_id: user_id, group_id: group_id)
+    Attend.where(user_id: user_id, group_id: group_id).destroy_all
   end
 end
