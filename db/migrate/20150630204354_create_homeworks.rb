@@ -1,4 +1,4 @@
-class CreateHomeworks < ActiveRecord::Migration
+class CreateHomeworks < ActiveRecord::Migration[5.2]
   def change
     create_table :homeworks do |t|
       t.references :attend, index: true

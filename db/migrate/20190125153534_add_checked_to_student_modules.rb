@@ -1,4 +1,4 @@
-class AddCheckedToStudentModules < ActiveRecord::Migration
+class AddCheckedToStudentModules < ActiveRecord::Migration[5.2]
   def change
     add_column :student_modules, :checked, :boolean
   end

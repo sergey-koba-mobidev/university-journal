@@ -1,4 +1,4 @@
-class CreateStudentModules < ActiveRecord::Migration
+class CreateStudentModules < ActiveRecord::Migration[5.2]
   def change
     create_table :student_modules do |t|
       t.references :visit, index: true

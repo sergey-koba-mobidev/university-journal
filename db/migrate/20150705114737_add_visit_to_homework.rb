@@ -1,4 +1,4 @@
-class AddVisitToHomework < ActiveRecord::Migration
+class AddVisitToHomework < ActiveRecord::Migration[5.2]
   def change
     add_reference :homeworks, :visit, index: true
     add_reference :homeworks, :user, index: true

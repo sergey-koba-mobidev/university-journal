@@ -1,4 +1,4 @@
-class AddKindGroupDisciplineSemesterToAttends < ActiveRecord::Migration
+class AddKindGroupDisciplineSemesterToAttends < ActiveRecord::Migration[5.2]
   def change
     add_column :attends, :kind, :integer
     add_column :attends, :group_id, :integer
