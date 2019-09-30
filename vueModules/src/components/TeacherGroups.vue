@@ -27,7 +27,7 @@
                                 <i class="material-icons Block__buttons-icon">close</i>
                             </div>
                         </div>
-                        <a class="waves-effect waves-light btn Block__module-create" @click="">СОЗДАТЬ НОВУЮ ГРУППУ ВОПРОСОВ </a>
+                        <a class="waves-effect waves-light btn Block__module-create" @click="handleShowForm(module.disciplineId, module.id)">СОЗДАТЬ НОВУЮ ГРУППУ ВОПРОСОВ </a>
                     </div>
                 </BaseCollapse>
             </div>
@@ -69,12 +69,14 @@
 
                 for (let discipline of this.disciplines) {
                     const disciplineName = discipline.name;
+                    const disciplineId = discipline.id;
 
                     for (let module of discipline.modules) {
                         modules.push({
                             title: module.title,
                             id: module.id,
-                            discipline: disciplineName
+                            discipline: disciplineName,
+                            disciplineId: disciplineId
                         });
                     }
                 }
@@ -92,6 +94,9 @@
                     return;
                 }
                 this.getGroupsList(moduleId);
+            },
+            handleShowForm(disciplineId, moduleId) {
+                this.$router.push(`/modules/teacher/module/${disciplineId}/${moduleId}/creategroup`);
             }
         },
     }

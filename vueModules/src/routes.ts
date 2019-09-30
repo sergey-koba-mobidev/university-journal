@@ -4,6 +4,7 @@ import module from "./pages/Module.vue";
 import result from "./pages/Result.vue";
 import teacher from "./pages/Teacher.vue";
 import teacherModuleForm from "./pages/TeacherModuleForm.vue";
+import createGroupForm from "./pages/CreateGroupForm.vue";
 import group from "./pages/Group.vue";
 
 const routes = [
@@ -58,7 +59,12 @@ const routes = [
         path: `/modules/teacher/group/:disciplineModuleId/:groupId`,
         component: group,
         meta: { requiresAuth: true }
-    }
+    },
+    {
+      path: `/modules/teacher/module/:disciplineId/:moduleId/creategroup`,
+      component: createGroupForm,
+      meta: { requiresAuth: true }
+  },
 ];
 
 export default routes;

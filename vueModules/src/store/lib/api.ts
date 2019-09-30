@@ -92,6 +92,13 @@ class ApiService {
         return this.get(`modules/${disciplineModuleId}/question_groups/${id}`);
     }
 
+    public postCreateGroup({ params, body }) {
+      return this.post(
+          `modules/${params.disciplineModuleId}/question_groups`,
+          body
+      );
+    }
+
     public postUpdateGroup({ params, body }) {
         return this.post(
             `modules/${params.disciplineModuleId}/question_groups/${params.id}`,

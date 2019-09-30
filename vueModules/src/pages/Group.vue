@@ -37,7 +37,7 @@
             <div v-if="questionLoading" class="text-center">
                 <spinner class="Block__spinner"/>
             </div>
-            <GroupQuestionsForm v-else :question="question" v-for="question of questionForms" :key="question.index"/>
+            <GroupQuestionsForm v-else :question="question" v-for="question of questionForms" :key="question.randomKey"/>
             <!-- BUTTONS -->
             <div class="Group__buttons">
                 <button
@@ -113,7 +113,7 @@
             ...mapActions("groupForm", ["submit"]),
             handleBack() {
                 this.$router.push(`/modules/teacher`);
-            },
+            }
         },
         mounted() {
             this.initGroup({

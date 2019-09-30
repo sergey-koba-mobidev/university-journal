@@ -65,6 +65,7 @@ const module: Module<DisciplinesState, {}> = {
                 .filter(module => module.enabled)
                 .map(module => ({
                     title: module.title,
+                    disciplineId: module.discipline_id,
                     id: module.id
                 }));
         },

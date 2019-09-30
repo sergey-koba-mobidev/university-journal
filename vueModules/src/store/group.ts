@@ -31,9 +31,10 @@ const module: Module<GroupState, {}> = {
         addQuestionForm(state, existedQuestion) {
             const lastItem = state.questionForms[Object.keys(state.questionForms).length-1];
             const index = lastItem === undefined ? 0 : lastItem.index + 1;
-
+            const randomKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             state.questionForms[index] = {
                 index,
+                randomKey,
                 ...existedQuestion
             };
 
@@ -41,6 +42,9 @@ const module: Module<GroupState, {}> = {
         },
         removeQuestionForm(state, index) {
             delete state.questionForms[index];
+        },
+        removeAllQuestionForms(state) {
+          state.questionForms = {}
         },
         setGroupFetchStatus(state, { name, status }) {
             state[`fetch${name}Status`] = status;
@@ -108,7 +112,7 @@ const module: Module<GroupState, {}> = {
             if (status !== 0) {
                 console.error(errors);
             }
-
+            commit("removeAllQuestionForms");
             const questions = response.map(q => {
                 const answer = q.kind === "text"
                                 ? ""
@@ -133,9 +137,8 @@ const module: Module<GroupState, {}> = {
 
                 return result;
             });
-
             commit("setQuestions", questions);
-            commit("setGroupFetchStatus", { name: "Questions", statur: "ok"});
+            commit("setGroupFetchStatus", { name: "Questions", status: "ok"});
         },
         async submitQuestionForms({ state, commit, dispatch, getters }) {
             for (let i in state.questionForms) {
@@ -245,12 +248,60 @@ const module: Module<GroupState, {}> = {
                 dispatch("submitQuestionForms", {}, { root: true });
             },
         }),
+        createGroupForm: new Form({
+          throttle: 300,
+          fields: {
+              title: {
+                  type: String,
+                  validators: [
+                      required(),
+                  ],
+              },
+              position: {
+                  type: String,
+                  validators: [
+                      required(),
+                  ],
+              },
+              points: {
+                  type: String,
+                  validators: [
+                      required(),
+                  ],
+              },
+          },
+          async onSubmit({ rootState, commit, dispatch, getters }) {
+              commit("setGroupFetchStatus", { name: "Save", status: "loading" }, { root: true });
+
+              const params = {
+                  disciplineModuleId: rootState.group.disciplineModuleId,
+                  id: rootState.group.groupId
+              };
+
+              const body = {
+                  title : getters['field']("title"),
+                  position : getters['field']("position"),
+                  points : getters['field']("points"),
+              };
+
+              const { errors } = await api.postCreateGroup({ params, body });
+              commit("setGroupFetchStatus", { name: "Save", status: "ok" }, { root: true });
+
+              if (errors) {
+                  console.error(errors);
+                  return
+              }
+          },
+        }),
     }
 };
 
 import store from './../store';
 
 function createNewForm(formName: string) {
+    if (Object.keys(store.getters).includes(`${formName}/loading`)) {
+      return;
+    }
     store.registerModule(formName, new Form({
         throttle: 300,
         fields: {

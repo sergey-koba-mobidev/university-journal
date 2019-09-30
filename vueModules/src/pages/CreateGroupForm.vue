@@ -1,31 +1,38 @@
 <template>
     <div class="Layout">
-        <div class="CreateModule__title">
-            Редактировать модуль для дисциплины
-            <span class="CreateModule__title-discipline">{{ discipline }}</span>
+        <div class="CreateGroup__title">
+            Создать группу вопросов для модуля
+            <span class="CreateGroup__title-discipline">{{ discipline }}</span>
         </div>
-        <div class="CreateModule">
+        <div class="CreateGroup">
             <div v-if="loading">
                 <spinner/>
             </div>
-            <form v-else class="CreateModule__form" @submit.prevent="submit">
+            <form v-else class="CreateGroup__form" @submit.prevent="submit">
                 <div class="row my-0">
-                    <div class="input-field col s6 offset-s3 CreateModule__input my-0">
+                    <div class="input-field col s6 offset-s3 CreateGroup__input my-0">
                         <input id="title" type="text" v-model="title">
                         <label for="title" :class="{'active': title}">Название</label>
                         <validation :formKey="formKey" field="title"/>
                     </div>
                 </div>
                 <div class="row my-0">
-                    <div class="input-field col s6 offset-s3 CreateModule__input my-0">
-                        <input id="duration" type="text" v-model="duration">
-                        <label for="duration" :class="{'active': duration}">Продолжительность</label>
-                        <validation :formKey="formKey" field="duration"/>
+                    <div class="input-field col s6 offset-s3 CreateGroup__input my-0">
+                        <input id="position" type="text" v-model="position">
+                        <label for="position" :class="{'active': position}">Позиция</label>
+                        <validation :formKey="formKey" field="position"/>
+                    </div>
+                </div>
+                <div class="row my-0">
+                    <div class="input-field col s6 offset-s3 CreateGroup__input my-0">
+                        <input id="points" type="text" v-model="points">
+                        <label for="points" :class="{'active': points}">Количество баллов</label>
+                        <validation :formKey="formKey" field="points"/>
                     </div>
                 </div>
                 <div class="row">
                     <button
-                        class="btn waves-effect waves-light CreateModule__btn_back"
+                        class="btn waves-effect waves-light CreateGroup__btn_back"
                         type="button"
                         name="action"
                         @click="handleBack"
@@ -33,8 +40,8 @@
                         <i class="large material-icons">chevron_left</i>
                         ВЕРНУТЬСЯ НАЗАД
                     </button>
-                    <button class="btn waves-effect waves-light CreateModule__btn" type="submit" name="action">
-                        <spinner v-if="saving" class="CreateModule__btn-spinner"/>
+                    <button class="btn waves-effect waves-light CreateGroup__btn" type="submit" name="action">
+                        <spinner v-if="saving" class="CreateGroup__btn-spinner"/>
                         <span v-else>СОХРАНИТЬ</span>
                     </button>
                 </div>
@@ -51,12 +58,12 @@
 
     export default
     {
-        name: 'TeacherModuleForm',
+        name: 'CreateGroupForm',
         data() {
             return {
-                formKey: "module/moduleEditForm",
+                formKey: "createGroupForm",
                 disciplineId: parseInt(this.$route.params.disciplineId),
-                moduleId: parseInt(this.$route.params.moduleId) || "new",
+                moduleId: parseInt(this.$route.params.moduleId),
             }
         },
         components: {
@@ -69,14 +76,15 @@
                 saving: state => state.module.fetchSaveInfoStatus === "loading",
                 discipline: state => state.module.discipline
             }),
-            ...mapFieldsToComputed("module/moduleEditForm", [
+            ...mapFieldsToComputed("createGroupForm", [
                 "title",
-                "duration",
+                "position",
+                "points"
             ]),
         },
         methods: {
             ...mapActions("module", ["initModuleForm"]),
-            ...mapActions("module/moduleEditForm", ["submit"]),
+            ...mapActions("createGroupForm", ["submit"]),
             handleBack() {
                 this.$router.push(`/modules/teacher`);
             },
@@ -101,7 +109,7 @@
         background-size: cover;
     }
 
-    .CreateModule{
+    .CreateGroup{
         width: 50%;
         padding-top: 2rem;
         background: rgba(255, 255, 255, 0.7);
@@ -152,7 +160,7 @@
     }
 </style>
 <style>
-    .CreateModule {
+    .CreateGroup {
         .BaseValidationError {
             margin-top: -10px;
         }
