@@ -13,7 +13,7 @@ export const custom = (func: Validator) => (value, fields, rootState, rootGetter
 
 export const required = (): Validator => (value) => {
     if (value === "" || value === 0 || value === undefined || value === null || value === false)  {
-        return "validators.required";
+        return "Заполните поле!";
     }
 }
 
@@ -55,7 +55,7 @@ export const letters = (): Validator => (value: string) => {
 
 export const digits = (): Validator => (value: string) => {
     if (!/^[0-9]*$/.test(value)) {
-        return "validators.digits";
+        return "Поле должно содержать только цифры!";
     }
 }
 

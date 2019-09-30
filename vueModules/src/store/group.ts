@@ -1,71 +1,107 @@
 import { Module } from "vuex";
 import api from "./lib/api";
-import { Form, required } from "./lib/vuex-form/index";
+import {custom, Form, required} from "./lib/vuex-form/index";
 import router from "../main";
 
-type questionFormsType = {
-    index: number;
-    existedQuestion?: object;
-}
-
 export interface GroupState {
+    fetchGroupsStatus: FetchStatus;
     fetchGroupStatus: FetchStatus;
+    fetchSaveStatus: FetchStatus;
+    fetchQuestionsStatus: FetchStatus;
+    groups: String[];
+    disciplineModuleId: number| null;
+    groupId: number | null;
     questions: String[];
-    questionForms: questionFormsType[];
+    questionForms: Object;
 }
 
 const module: Module<GroupState, {}> = {
     state: {
+        fetchGroupsStatus: "init",
         fetchGroupStatus: "init",
+        fetchSaveStatus: "init",
+        fetchQuestionsStatus: "init",
+        groups: [],
+        disciplineModuleId: null,
+        groupId: null,
         questions: [],
-        questionForms: [],
+        questionForms: {},
     },
     mutations: {
-        addQuestionForm(state, existedQuestion) { //TODO: rewrite without 0
-            if (!state.questionForms.length) {
-                state.questionForms.push({
-                    index: 0,
-                    ...existedQuestion
-                });
+        addQuestionForm(state, existedQuestion) {
+            const lastItem = state.questionForms[Object.keys(state.questionForms).length-1];
+            const index = lastItem === undefined ? 0 : lastItem.index + 1;
 
-                const formName = `questionForm-0`;
-                createNewForm(formName);
-            } else {
-                const lastItem = state.questionForms[state.questionForms.length-1];
+            state.questionForms[index] = {
+                index,
+                ...existedQuestion
+            };
 
-                state.questionForms.push({
-                    index: lastItem.index + 1,
-                    ...existedQuestion
-                });
-
-                const formName = `questionForm-${lastItem.index + 1}`;
-
-                createNewForm(formName);
-            }
+            createNewForm(`questionForm-${index}`);
         },
-        setGroupFetchStatus(state, status: FetchStatus) {
-            state.fetchGroupStatus = status;
+        removeQuestionForm(state, index) {
+            delete state.questionForms[index];
+        },
+        setGroupFetchStatus(state, { name, status }) {
+            state[`fetch${name}Status`] = status;
+        },
+        setGroups(state, groups) {
+            state.groups = groups;
         },
         setQuestions(state, questions) {
             state.questions = questions;
+        },
+        setIds(state, { disciplineModuleId, groupId }) {
+            state.disciplineModuleId = disciplineModuleId;
+            state.groupId = groupId;
         }
     },
     actions: {
-        initGroup({ rootState, commit, dispatch }) {
-            const groupId = JSON.parse(localStorage.getItem("selectedGroup")).groupId;
+        async initGroup({ rootState, commit, dispatch }, { disciplineModuleId, groupId }) {
+            commit("setGroupFetchStatus", { name: "Group", statur: "loading"});
 
-            const group = rootState["questionsGroup"].groups[groupId];
+            const { response, errors } = await api.getGroupData(disciplineModuleId, groupId);
+
+            if (errors) {
+                console.error(errors);
+                return;
+            }
+
+            commit("setIds", { disciplineModuleId, groupId });
 
             commit("groupForm/setData", {fields: {
-                title: group.title,
-                position: group.position,
-                points: group.points
+                title: response.title,
+                position: response.position,
+                points: response.points
             }});
 
+            commit("setGroupFetchStatus", { name: "Group", statur: "ok"});
             dispatch("getQuestionList", groupId);
         },
+        async getGroupsList({ commit, dispatch }, moduleId) {
+            commit("setGroupFetchStatus", { name: "Groups", status: "loading"});
+
+            const {status, response, errors} = await api.getQuestionGroups(moduleId);
+
+            if (status !== 0) {
+                console.error(errors);
+            }
+
+            const groups = {};
+            for (let group of response) {
+                groups[group.id] = {
+                    disciplineModuleId: group.discipline_module_id,
+                    points: group.points,
+                    position: group.position,
+                    title: group.title
+                }
+            }
+
+            commit("setGroups", groups);
+            commit("setGroupFetchStatus", { name: "Groups", status: "ok"});
+        },
         async getQuestionList({ commit, dispatch }, groupId) {
-            commit("setGroupFetchStatus", "loading");
+            commit("setGroupFetchStatus", { name: "Questions", statur: "loading"});
 
             const {status, response, errors} = await api.getGroupQuestions(groupId);
 
@@ -99,18 +135,21 @@ const module: Module<GroupState, {}> = {
             });
 
             commit("setQuestions", questions);
-            commit("setGroupFetchStatus", "ok");
+            commit("setGroupFetchStatus", { name: "Questions", statur: "ok"});
         },
-        async submitQuestionForms({ state, dispatch, getters }) {
+        async submitQuestionForms({ state, commit, dispatch, getters }) {
             for (let i in state.questionForms) {
                 dispatch(`questionForm-${i}/submit`);
             }
 
             for (let i in state.questionForms) {
-                // TODO rewrite localStorage with state
+                if (!getters[`questionForm-${i}/dirty`]) {
+                    continue;
+                }
+
                 const params = {
-                    questionGroupId: JSON.parse(localStorage.getItem("selectedGroup")).groupId,
-                    id: getters[`questionForm-${i}/field`]("id"),
+                    groupId: state.groupId,
+                    id: getters[`questionForm-${i}/field`]("id"), // just created question doesn't have id
                 };
 
                 const body = {
@@ -130,19 +169,28 @@ const module: Module<GroupState, {}> = {
 
                 if (errors) {
                     console.error(errors);
-                    return;
                 }
             }
 
-            router.push(`/modules/teacher`);
+            commit("setGroupFetchStatus", { name: "Save", status: "ok"});
+            // router.push(`/modules/teacher`);
         },
-        async deleteQuestion({ getters }, id) {
-            const params = {
-                questionGroupId: JSON.parse(localStorage.getItem("selectedGroup")).groupId,
-                id: id,
-            };
+        async deleteQuestion({ state, commit, getters }, { formName, questionId }) {
+            commit("removeQuestionForm", formName.split("-")[1] );
+            removeForm(formName);
 
-            const { errors }= await api.deleteQuestion({ params });
+            if (questionId === undefined) {
+                return;
+            }
+
+            const { errors } = await api.deleteQuestion({ params: {
+                groupId: state.groupId,
+                id: questionId,
+            }});
+
+            if (errors) {
+                console.error(errors);
+            }
         }
     },
     modules: {
@@ -168,8 +216,18 @@ const module: Module<GroupState, {}> = {
                     ],
                 },
             },
-            async onSubmit({ rootState, commit, dispatch, getters }, { disciplineModuleId, id }  ) {
-                const params = { disciplineModuleId, id };
+            async onSubmit({ rootState, commit, dispatch, getters }) {
+                commit("setGroupFetchStatus", { name: "Save", status: "loading" }, { root: true });
+
+                if (!getters['dirty']) {
+                    dispatch("submitQuestionForms", {}, { root: true });
+                    return;
+                }
+
+                const params = {
+                    disciplineModuleId: rootState.group.disciplineModuleId,
+                    id: rootState.group.groupId
+                };
 
                 const body = {
                     title : getters['field']("title"),
@@ -184,7 +242,7 @@ const module: Module<GroupState, {}> = {
                     return
                 }
 
-                dispatch("submitQuestionForms", {}, {root: true});
+                dispatch("submitQuestionForms", {}, { root: true });
             },
         }),
     }
@@ -194,6 +252,7 @@ import store from './../store';
 
 function createNewForm(formName: string) {
     store.registerModule(formName, new Form({
+        throttle: 300,
         fields: {
             id: {
                 type: Number,
@@ -203,6 +262,7 @@ function createNewForm(formName: string) {
                 validators: [
                     required(),
                 ],
+
             },
             kind: {
                 type: String,
@@ -213,7 +273,17 @@ function createNewForm(formName: string) {
             variants: {
                 type: String,
                 validators: [
-                    required()
+                    custom((variants) => {
+                        if (!variants) {
+                            // TODO check if kind is not "text"
+                            return;
+                        }
+                        for (let variant of variants) {
+                            if (!variant) {
+                                return "Все варианты должны быть введены!";
+                            }
+                        }
+                    }),
                 ],
             },
             answer: {
@@ -228,8 +298,8 @@ function createNewForm(formName: string) {
     }));
 }
 
-export function removeForm(this: any, formName: string) {
-    this.$store.unregisterModule(formName);
+function removeForm(this: any, formName: string) {
+    store.unregisterModule(formName);
 }
 
 export default module;

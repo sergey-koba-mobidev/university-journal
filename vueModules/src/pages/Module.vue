@@ -11,9 +11,7 @@
             <template v-else>
                 <div class="Module__timer">
                     Осталось времени:
-                    <span class="Module__timer-number">
-                        50:31
-                    </span>
+                    <span class="Module__timer-number" :class="{'is-red': time <= 60}">{{ formattedTime }}</span>
                 </div>
                 <form
                     class="Module__form"
@@ -35,7 +33,7 @@
                             {{ question.text }}:
                             <p v-for="(variant, index) in question.variants">
                                 <label>
-                                    <input :name="question.id" :type="question.kind" :value="index"/>
+                                    <input :name="question.id" :type="question.kind" :value="index" :disabled="disableAnswer"/>
                                     <span>{{ variant }}</span>
                                 </label>
                             </p>
@@ -61,12 +59,25 @@
                     </div>
                 </form>
             </template>
-        </div>
-        <modal @close="closeModuleModal" v-if="showModal">
+        </div>с
+        <modal
+            v-if="showModal"
+            @close="closeModuleModal"
+            @handleOk="handleFinishModule"
+        >
             <div slot="header">Завершение</div>
             <div slot="body">
                 <div>Вы уверены, что хотите завершить модуль?</div>
-                <div>У Вас осталось <span class="Result__my">3</span> неотвеченных вопроса</div>
+                <div>У Вас остались неотвеченные вопросы</div>
+            </div>
+        </modal>
+        <modal
+            v-if="showFinishModal"
+            @close="closeModuleModal(true)"
+        >
+            <div slot="header">Завершение</div>
+            <div slot="body">
+                <div>Завершить модуль?</div>
             </div>
         </modal>
     </div>
@@ -82,6 +93,7 @@
         data() {
             return {
                 id: this.$route.params.id,
+                relationshipId: this.$route.params.relationshipId,
                 disciplineId: this.$route.params.disciplineId,
             }
         },
@@ -92,16 +104,42 @@
         computed: {
             ...mapState({
                 showModal: state => state.module.showModal,
-                loading: state => state.module.fetchStatus === "init" ||
-                         state.module.fetchStatus === "loading",
+                showFinishModal: state => state.module.showFinishModal,
+                loading: state => state.module.fetchGetModuleStatus === "init" ||
+                         state.module.fetchGetModuleStatus === "loading",
                 questions: state => state.module.questions,
                 discipline: state => state.module.discipline,
                 module: state => state.module.module,
+                msTime: state => state.module.time,
+                finishedModule: state => state.module.finishModule,
             }),
+            time: {
+                get() {
+                    return this.msTime;
+                },
+                set(value) {
+                    this.setModuleTime(value);
+                }
+            },
+            formattedTime() {
+                if (this.time <= 0) {
+                    return "00 : 00";
+                }
+
+                const min = parseInt(this.time/60);
+                const sec = this.time % 60;
+                const mm = min <= 9 ? `0${min}` : min;
+                const ss = sec <= 9 ? `0${sec}` : sec;
+
+                return `${mm} : ${ss}`;
+            },
+            disableAnswer() {
+                return this.msTime <= 0 || this.finishedModule;
+            }
         },
         methods: {
-            ...mapMutations(["closeModuleModal", "openModuleModal"]),
-            ...mapActions(["getModule", "postAnswers"]),
+            ...mapMutations("module", ["closeModuleModal", "setModuleTime", "setFinishModule", "openModuleModal"]),
+            ...mapActions("module", ["getModule", "postAnswers", "finishModule"]),
             handleBack() {
                 this.$router.push(`/modules/disciplines/`);
             },
@@ -109,16 +147,36 @@
                 const answer = event.path[0].value;
 
                 this.postAnswers({
+                    relationshipId: +this.relationshipId,
                     disciplineId: +this.disciplineId,
                     moduleId: +this.id,
                     questionId,
                     answer
                 });
             },
+            startTimer() {
+                const that = this;
+                const timerId = setTimeout(function timer() {
+                    if (that.time <= 0) {
+                        that.time = 0;
+                        clearTimeout(timerId);
+                        return;
+                    }
+
+                    that.time--;
+
+                    setTimeout(timer, 1000);
+                }, 1000);
+            },
+            handleFinishModule() {
+                this.finishModule({relationshipId: this.relationshipId, disciplineId: this.disciplineId});
+            }
         },
         mounted() {
             this.getModule({disciplineId: this.disciplineId, moduleId: this.id});
-        }
+
+            this.startTimer();
+        },
     }
 </script>
 
@@ -160,6 +218,10 @@
 
             &-number {
                 font-weight: 500;
+
+                &.is-red {
+                    color: #E2002B;
+                }
             }
         }
 

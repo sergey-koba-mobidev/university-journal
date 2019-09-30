@@ -1,38 +1,41 @@
 <template>
     <div class="Layout">
         <div class="CreateModule__title">
-            Создать модуль для дисциплины
-            <span  class="CreateModule__title-discipline">Web technologies and web design</span>
+            Редактировать модуль для дисциплины
+            <span class="CreateModыule__title-discipline">{{ discipline }}</span>
         </div>
         <div class="CreateModule">
-            <form action="" class="CreateModule__form" @submit.prevent="submit({payload: {heading: 'createModuleForm'}})">
+            <div v-if="loading">
+                <spinner/>
+            </div>
+            <form v-else class="CreateModule__form" @submit.prevent="submit">
                 <div class="row my-0">
                     <div class="input-field col s6 offset-s3 CreateModule__input my-0">
                         <input id="title" type="text" v-model="title">
-                        <label for="title">Название</label>
-                        <validation
-                                :formKey="formKey"
-                                field="title"
-                        />
+                        <label for="title" :class="{'active': title}">Название</label>
+                        <validation :formKey="formKey" field="title"/>
                     </div>
                 </div>
                 <div class="row my-0">
                     <div class="input-field col s6 offset-s3 CreateModule__input my-0">
                         <input id="duration" type="text" v-model="duration">
-                        <label for="duration">Продолжительность</label>
-                        <validation
-                                :formKey="formKey"
-                                field="duration"
-                        />
+                        <label for="duration" :class="{'active': duration}">Продолжительность</label>
+                        <validation :formKey="formKey" field="duration"/>
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn waves-effect waves-light CreateModule__btn_back" type="button" name="action">
+                    <button
+                        class="btn waves-effect waves-light CreateModule__btn_back"
+                        type="button"
+                        name="action"
+                        @click="handleBack"
+                    >
                         <i class="large material-icons">chevron_left</i>
                         ВЕРНУТЬСЯ НАЗАД
                     </button>
                     <button class="btn waves-effect waves-light CreateModule__btn" type="submit" name="action">
-                        СОЗДАТЬ
+                        <spinner v-if="saving" class="CreateModule__btn-spinner"/>
+                        <span v-else>СОХРАНИТЬ</span>
                     </button>
                 </div>
             </form>
@@ -43,25 +46,47 @@
 <script>
     import validation from "../components/BaseValidationError";
     import { mapFieldsToComputed } from "../store/lib/vuex-form/index";
+    import { mapState, mapActions } from "vuex";
+    import spinner from "../../public/spinner.svg";
 
     export default
     {
-        name: 'CreateModuleForm',
+        name: 'TeacherModuleForm',
         data() {
             return {
-                showModals: false,
-                formKey: "createModuleForm",
+                formKey: "module/moduleEditForm",
+                disciplineId: parseInt(this.$route.params.disciplineId),
+                moduleId: parseInt(this.$route.params.moduleId) || "new",
             }
         },
         components: {
             validation,
+            spinner,
         },
         computed: {
-            ...mapFieldsToComputed("createModuleForm", [
+            ...mapState({
+                loading: state => state.module.fetchGetInfoStatus === "loading",
+                saving: state => state.module.fetchSaveInfoStatus === "loading",
+                discipline: state => state.module.discipline
+            }),
+            ...mapFieldsToComputed("module/moduleEditForm", [
                 "title",
                 "duration",
             ]),
-        }
+        },
+        methods: {
+            ...mapActions("module", ["initModuleForm"]),
+            ...mapActions("module/moduleEditForm", ["submit"]),
+            handleBack() {
+                this.$router.push(`/modules/teacher`);
+            },
+        },
+        beforeMount() {
+            this.initModuleForm({
+                disciplineId: this.disciplineId,
+                moduleId: this.moduleId
+            });
+        },
     }
 </script>
 
@@ -102,12 +127,21 @@
 
         &__btn {
             margin-top: 2rem;
+            min-width: 116px;
 
             &_back {
                 display: inline-flex;
                 background: #cad0cf;
                 margin-top: 2rem;
                 margin-right: 1rem;
+            }
+
+            &-spinner {
+                height: 100%;
+
+                path {
+                    fill: #fff;
+                }
             }
         }
     }
@@ -118,7 +152,9 @@
     }
 </style>
 <style>
-    .BaseValidationError {
-        margin-top: -10px;
+    .CreateModule {
+        .BaseValidationError {
+            margin-top: -10px;
+        }
     }
 </style>

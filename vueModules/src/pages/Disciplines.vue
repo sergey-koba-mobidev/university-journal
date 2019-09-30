@@ -12,19 +12,19 @@
             <div class="Disciplines__wrap" >
                 <spinner class="Disciplines__spinner" v-if="loading"/>
                 <BaseCollapse
-                        v-for="(discipline, index) in disciplines"
-                        :index="index + 1"
-                        :key="index"
-                        v-else
+                    v-for="(discipline, index) in disciplines"
+                    :index="index + 1"
+                    :key="index"
+                    v-else
                 >
                     <div slot="header">
                         <a class="waves-effect waves-light btn Disciplines__discipline"> {{ discipline.name }} </a>
                     </div>
                     <div slot="content">
                         <a
-                                v-for="module in discipline.modules"
-                                class="Disciplines__module"
-                                @click="handleShowModule(discipline.id, module.id)"
+                            v-for="module in discipline.modules"
+                            class="Disciplines__module"
+                            @click="handleShowModule(discipline.relationshipId, discipline.id, module.id)"
                         >
                             {{ module.title }}
                         </a>
@@ -56,8 +56,8 @@
         },
         methods: {
             ...mapActions(["getDisciplines", "logoutUser"]),
-            handleShowModule(disciplineId, id) {
-                this.$router.push(`/modules/disciplines/${disciplineId}/modules/${id}`);
+            handleShowModule(relationshipId, disciplineId, id) {
+                this.$router.push(`/modules/${relationshipId}/discipline/${disciplineId}/modules/${id}`);
             },
 
         },
@@ -96,8 +96,7 @@
             background: rgba(74, 74, 74, 0.6);
             box-shadow: 0 0 8px 0 rgba(0, 0, 0, .7);
             border: 2px solid #4e4e4e;
-            padding-left: 1rem;
-            padding-right: 2rem;
+            padding: 5px 10px;
             display: flex;
             justify-content: space-between;
 

@@ -8,7 +8,7 @@
                 <validation :formKey="formName" field="text"/>
             </div>
             <!-- delete -->
-            <i class="material-icons Group__question-delete" @click="deleteQuestion(question.id)">close</i>
+            <i class="material-icons Group__question-delete" @click="deleteQuestion({ formName: formName, questionId: question.id })">close</i>
         </div>
         <!-- KIND -->
         <div class="Group__question-row">
@@ -40,10 +40,13 @@
                     :indexQuestion="question.index"
                     :indexVariant="indexVariant"
                     :variant="variant"
+                    :key="indexVariant"
                     @selectVariant="handleSelectVariant"
                     @editVariant="handleEditVariant"
+                    @removeVariant="handleRemoveVariant"
                 />
-                <button class="btn waves-effect waves-light Group__question-add" @click="addVariant">добавить вариант</button>
+                <validation :formKey="formName" field="variants"/>
+                <button class="btn waves-effect waves-light Group__question-add" @click="handleAddVariant">добавить вариант</button>
             </div>
         </div>
     </form>
@@ -51,11 +54,11 @@
 
 <script>
     import { mapState, mapMutations, mapActions } from "vuex";
-    import variants from "../components/GroupQuestionVariants";
+    import variants from "./Variant";
     import validation from "../components/BaseValidationError";
 
     export default {
-        name: "GroupQuestionsForm",
+        name: "QuestionForm",
         props: {
             question: {
                 type: Object,
@@ -140,7 +143,7 @@
                 },
             }),
             ...mapActions(["deleteQuestion"]),
-            addVariant(e) {
+            handleAddVariant(e) {
                 e.preventDefault();
 
                 if (this.variants === undefined) { // if question is new
@@ -149,22 +152,38 @@
 
                 this.variants.push("");
             },
-            handleSelectVariant(value) {
-                this.setData({ fields: {
-                        answer: value
+            handleRemoveVariant(indexVariant) {
+                this.variants.splice(indexVariant, 1);
+
+                if (!this.answer) {
+                    return;
+                }
+
+                if (this.kind === "one"){
+                    if (this.answer === indexVariant) {
+                        this.answer = null;
+                    } else if (this.answer > indexVariant ) {
+                        this.answer--;
                     }
-                })
+                }
+
+                if (this.kind === "many"){
+                    const indexAnswer = this.answer.indexOf(indexVariant);
+
+                    if (indexAnswer !== -1) {
+                        this.answer.splice(indexAnswer, 1);
+                    }
+                    this.answer = this.answer.map(a => a > indexVariant ? a - 1 : a);
+                }
+            },
+            handleSelectVariant(value) {
+                this.answer = value;
             },
             handleEditVariant(index, value) {
-                const newVariants = this.variants.map((variant, i) => {
+                this.variants = this.variants.map((variant, i) => {
                     return (index === i) ? value : variant
                 });
-
-                this.setData({ fields: {
-                        variants: newVariants
-                    }
-                })
-            }
+            },
         },
         mounted() {
             this.setData({ fields: {
@@ -221,13 +240,6 @@
                 font-weight: 600;
                 font-size: 14px;
                 text-transform: lowercase;
-
-                &.question {
-                    max-width: 240px;
-                    align-self: center;
-                    margin-top: -1rem;
-                    margin-bottom: 3rem;
-                }
             }
 
             &-delete {
