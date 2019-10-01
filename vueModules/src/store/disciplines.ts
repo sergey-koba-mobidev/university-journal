@@ -13,7 +13,7 @@ export interface DisciplinesState {
     disciplines: DisciplineType[];
 }
 
-const module: Module<DisciplinesState, {}> = {
+const module2: Module<DisciplinesState, {}> = {
     state: {
         fetchStatus: "init",
         disciplines: []
@@ -72,4 +72,4 @@ const module: Module<DisciplinesState, {}> = {
     },
 };
 
-export default module;
+export default module2;

@@ -15,7 +15,7 @@ export interface GroupState {
     questionForms: Object;
 }
 
-const module: Module<GroupState, {}> = {
+const module3: Module<GroupState, {}> = {
     state: {
         fetchGroupsStatus: "init",
         fetchGroupStatus: "init",
@@ -353,4 +353,4 @@ function removeForm(this: any, formName: string) {
     store.unregisterModule(formName);
 }
 
-export default module;
+export default module3;

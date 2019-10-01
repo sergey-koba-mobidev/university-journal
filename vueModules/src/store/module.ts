@@ -24,7 +24,7 @@ export interface ModuleState {
     time: string,
 }
 
-const module: Module<ModuleState, {}> = {
+const module4: Module<ModuleState, {}> = {
     namespaced: true,
     state: {
         fetchGetModuleStatus: "init",
@@ -229,4 +229,4 @@ const module: Module<ModuleState, {}> = {
     }
 };
 
-export default module;
+export default module4;

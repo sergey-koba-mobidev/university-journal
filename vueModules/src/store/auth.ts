@@ -9,7 +9,7 @@ export interface AuthState {
     name: string;
 }
 
-const module: Module<AuthState, {}> = {
+const module1: Module<AuthState, {}> = {
     state: {
         fetchStatus: "init",
         email: "",
@@ -100,4 +100,4 @@ const module: Module<AuthState, {}> = {
     }
 };
 
-export default module;
+export default module1;

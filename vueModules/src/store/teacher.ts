@@ -8,7 +8,7 @@ export interface TeacherState {
     disciplines: String[];
 }
 
-const module: Module<TeacherState, {}> = {
+const module5: Module<TeacherState, {}> = {
     namespaced: true,
     state: {
         fetchStatus: "init",
@@ -65,4 +65,4 @@ const module: Module<TeacherState, {}> = {
     },
 };
 
-export default module;
+export default module5;
