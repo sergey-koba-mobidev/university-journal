@@ -30,6 +30,12 @@
                             <validation formKey="groupForm" field="points"/>
                         </div>
                     </div>
+                    <div class="Group__info-row">
+                        <div class="Group__info-label">Количество вопросов</div>
+                        <div class="flex-grow-1">
+                            {{ Object.keys(questionForms).length }}
+                        </div>
+                    </div>
                 </div>
             </form>
             <!-- QUESTIONS -->
