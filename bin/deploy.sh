@@ -11,3 +11,5 @@ docker push cloud.canister.io:5000/skoba/ujournal-modules:build-$UNIXTIME
 
 cd ..
 helm upgrade -i --set web.image.tag=build-$UNIXTIME --set modules.image.tag=build-$UNIXTIME --wait --namespace default ujournal ./chart
+ADMIN_POD=$(kubectl get pods -l app.kubernetes.io/name=ujournal-web --output=jsonpath={.items..metadata.name})
+kubectl exec $ADMIN_POD bundle exec rails db:migrate
