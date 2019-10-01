@@ -274,8 +274,7 @@ const module3: Module<GroupState, {}> = {
               commit("setGroupFetchStatus", { name: "Save", status: "loading" }, { root: true });
 
               const params = {
-                  disciplineModuleId: rootState.group.disciplineModuleId,
-                  id: rootState.group.groupId
+                  disciplineModuleId: rootState.module.moduleId
               };
 
               const body = {
