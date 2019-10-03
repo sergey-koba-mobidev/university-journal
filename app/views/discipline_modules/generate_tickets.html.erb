@@ -1,0 +1,28 @@
+<div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title black-text"><%= @discipline_module.discipline.title %></span>
+
+        <p>
+          <%= t(:teacher) %> <b><%= @discipline_module.discipline.user.name %></b> <br/>
+          <%= t(:discipline_module) %> <b><%= @discipline_module.title %></b> <br/>
+        </p>
+      </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12">
+<%= form_tag(do_generate_tickets_discipline_module_path(@discipline_module), class: 'form-inline', method: :post) do %>
+    <div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title black-text"><%= t(:semester) %></span>
+        <p>
+          <%= number_field_tag(:tickets_count) %>
+        </p>
+      </div>
+      <div class="card-action">
+        <%= submit_tag(t("student_module.generate_tickets"), class: 'btn') %>
+      </div>
+    </div>
+<% end %>
+  </div>
+</div>

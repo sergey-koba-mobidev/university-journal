@@ -1,0 +1,8 @@
+<div>
+<%= index + 1 %>. <%= question[:description] %>
+  <ul>
+    <% question[:variants].each do |variant| %>
+      <li> <%= variant %> </li>
+    <% end %>
+  </ul>
+</div>

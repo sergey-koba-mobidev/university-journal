@@ -1,0 +1,17 @@
+<% @tickets.each_with_index do |ticket, index| %>
+  <div class="ticket">
+    <header>
+      Національний аерокосмічний університет ім. М.Є. Жуковського "ХАІ"<br />
+      Дисципліна: "<%= @discipline_module.discipline.title %>"<br />
+      Студент _______________________________________ Група __________ Дата ____________<br />
+      Завдання до модульної контрольної роботи "<%= @discipline_module.title %>"<br />
+      Білет номер <%= index + 1 %>
+    </header>
+    <% ticket[:questions].each_with_index do |question, index| %>
+      <%= render "discipline_modules/questions/#{question[:kind]}", question: question, index: index %>
+    <% end %>
+    <footer>
+      Екзаменатор ______ <%= @discipline_module.discipline.user.name %>
+    </footer>
+  </div>
+<% end %>

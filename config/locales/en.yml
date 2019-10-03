@@ -121,3 +121,4 @@ en:
     check_finished: "Module was successfully checked"
     copy_result: "Copy result to the journal"
     result_copied: "Module result was copied to the journal"
+    generate_tickets: "Generate tickets"

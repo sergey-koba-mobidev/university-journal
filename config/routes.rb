@@ -21,6 +21,12 @@ Rails.application.routes.draw do
     end
     resources :discipline_modules, only: [:index]
   end
+  resources :discipline_modules do
+    member do
+      get 'generate_tickets'
+      post 'do_generate_tickets'
+    end
+  end
   resources :attends, only: [:create, :update] do
     member do
       post 'update_mark'
