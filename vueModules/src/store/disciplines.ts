@@ -39,7 +39,7 @@ const module2: Module<DisciplinesState, {}> = {
             const disciplines = [];
 
             for (let item of response) {
-                const modules = await dispatch("getModules", item.discipline.id);
+                const modules = await dispatch("getModules", item.id);
 
                 disciplines.push({
                     name: item.discipline.title,
@@ -54,8 +54,8 @@ const module2: Module<DisciplinesState, {}> = {
             commit("setDisciplines", disciplines);
             commit("setFetchStatus", "ok");
         },
-        async getModules({}, disciplineId) {
-            const { status, response, errors} = await api.getModules(disciplineId);
+        async getModules({}, relationshipId) {
+            const { status, response, errors} = await api.getModules(relationshipId);
 
             if (status !== 0) {
                 console.error(errors);

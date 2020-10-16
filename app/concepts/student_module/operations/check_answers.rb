@@ -10,7 +10,7 @@ class StudentModule < ActiveRecord::Base
         right_answer = options[:model].right_answers.find {|a| a["id"] == item["id"]}
         question = Question.find(item["id"])
         next item if question.kind == "text"
-        item["result"] = question.question_group.points if answer["answer"] == right_answer["answer"]
+        item["result"] = question.question_group.points if answer["answer"]&.gsub(' ', '') == right_answer["answer"]&.gsub(' ', '')
         item
       end
       options[:model].save

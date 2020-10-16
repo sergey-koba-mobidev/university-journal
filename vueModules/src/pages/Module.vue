@@ -26,14 +26,14 @@
                         <div class="Module__question-index"> {{ index+1 }}. </div>
 
                         <div class="input-field Module__question-text" v-if="question.kind === 'text'">
-                            <input id="question" type="text" @blur="handleAnswer(question.id, $event)">
-                            <label for="question">{{ question.text }}</label>
+                            <p>{{ question.text }}</p>
+                            <input v-bind:id="'question-' + question.id" type="text" @blur="handleAnswer(question.id, $event)" v-model="answers[index].answer" :disabled="disableAnswer">
                         </div>
                         <div v-else class="Module__question-text" @input="handleAnswer(question.id, $event)">
                             {{ question.text }}:
                             <p v-for="(variant, index) in question.variants">
                                 <label>
-                                    <input :name="question.id" :type="question.kind" :value="index" :disabled="disableAnswer"/>
+                                    <input :name="question.id" :type="question.kind" :value="index" :checked="isAnswerChecked(question.id, index)" :disabled="disableAnswer"/>
                                     <span>{{ variant }}</span>
                                 </label>
                             </p>
@@ -94,7 +94,7 @@
             return {
                 id: this.$route.params.id,
                 relationshipId: this.$route.params.relationshipId,
-                disciplineId: this.$route.params.disciplineId,
+                disciplineId: this.$route.params.disciplineId
             }
         },
         components: {
@@ -108,6 +108,7 @@
                 loading: state => state.module.fetchGetModuleStatus === "init" ||
                          state.module.fetchGetModuleStatus === "loading",
                 questions: state => state.module.questions,
+                answers: state => state.module.answers,
                 discipline: state => state.module.discipline,
                 module: state => state.module.module,
                 msTime: state => state.module.time,
@@ -144,7 +145,21 @@
                 this.$router.push(`/modules/disciplines/`);
             },
             handleAnswer(questionId, event) {
-                const answer = event.path[0].value;
+                let answer = event.path[0].value;
+
+                if (event.path[0].type == "checkbox") {
+                  const ans = this.answers.find(a => a.id == questionId);
+                  let answers = []
+                  if (this.isJson(ans.answer)) {
+                    answers = JSON.parse(ans.answer);
+                  }
+                  if (event.path[0].checked) {
+                    answers.push(Number(answer));
+                  } else {
+                    answers = answers.filter(a => a != answer)
+                  }
+                  answer = JSON.stringify(answers.sort(function(a, b){return a - b}));
+                }
 
                 this.postAnswers({
                     relationshipId: +this.relationshipId,
@@ -153,6 +168,30 @@
                     questionId,
                     answer
                 });
+            },
+            isJson(str) {
+              if (str == null || str == "" || str.length == 1) {
+                return false;
+              }
+              try {
+                JSON.parse(str);
+              } catch (e) {
+                return false;
+              }
+              return true;
+            },
+            isAnswerChecked(questionId, index) {
+              let checked = "";
+              const ans = this.answers.find(a => a.id == questionId);
+              if (ans.answer == index) {
+                checked = "checked";
+              } else if (this.isJson(ans.answer)) {
+                const ansArr = JSON.parse(ans.answer);
+                if (ansArr.includes(index)) {
+                  checked = "checked";
+                }
+              }
+              return checked;
             },
             startTimer() {
                 const that = this;
@@ -170,6 +209,7 @@
             },
             handleFinishModule() {
                 this.finishModule({relationshipId: this.relationshipId, disciplineId: this.disciplineId});
+                this.$router.push(`/modules`);
             }
         },
         mounted() {

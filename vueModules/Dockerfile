@@ -9,7 +9,6 @@ WORKDIR $WEB_ROOT
 
 COPY . /web
 
-RUN npm install
 RUN npm install --global  cross-env
 
 EXPOSE 8080

@@ -29,9 +29,9 @@ class DbSeedService
     Question.find_or_create_by!(description: "Write an example of html form", question_group_id: question_group1.id, kind: Question.kinds['text'], answer: "", variants: "[]")
     Question.find_or_create_by!(description: "Write an example of html table", question_group_id: question_group1.id, kind: Question.kinds['text'], answer: "", variants: "[]")
 
-    Question.find_or_create_by!(description: "Choose CSS property to set text color", question_group_id: question_group2.id, kind: Question.kinds['one'], answer: "1", variants: "[\"style\", \"color\", \"text-color\"]")
-    Question.find_or_create_by!(description: "Choose CSS property to set width of block", question_group_id: question_group2.id, kind: Question.kinds['one'], answer: "2", variants: "[\"size\", \"height\", \"width\"]")
+    Question.find_or_create_by!(description: "Choose CSS property to set text color", question_group_id: question_group2.id, kind: Question.kinds['one'], answer: "1", variants: ["style", "color", "text-color"])
+    Question.find_or_create_by!(description: "Choose CSS property to set width of block", question_group_id: question_group2.id, kind: Question.kinds['one'], answer: "2", variants: ["size", "height", "width"])
 
-    Question.find_or_create_by!(description: "Choose properties introduced in CSS 3", question_group_id: question_group3.id, kind: Question.kinds['many'], answer: "[1,2]", variants: "[\"text-shadow\", \"animation\", \"text-size\"]")
+    Question.find_or_create_by!(description: "Choose properties introduced in CSS 3", question_group_id: question_group3.id, kind: Question.kinds['many'], answer: "[1,2]", variants: ["text-shadow", "animation", "text-size"])
   end
 end

@@ -5,9 +5,11 @@
 
   <div class="row">
     <div class="col m3 s12">
+    <% if variants.present? && variants != '[]' %>
       <% variants.each do |var| %>
         <%= var %><br />
       <% end %>
+    <% end %>
     </div>
     <div class="col m3 s12 green-text">
       <%= right_answer %>

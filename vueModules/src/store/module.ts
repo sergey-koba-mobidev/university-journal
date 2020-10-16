@@ -10,11 +10,17 @@ type QuestionType = {
     kind: string;
 }
 
+type AnswerType = {
+  id: number;
+  answer: string;
+}
+
 export interface ModuleState {
     fetchGetModuleStatus: FetchStatus;
     fetchGetInfoStatus: FetchStatus;
     fetchSaveInfoStatus: FetchStatus;
     questions: QuestionType;
+    answers: AnswerType;
     discipline: string;
     module: string;
     showModal: Boolean;
@@ -31,6 +37,7 @@ const module4: Module<ModuleState, {}> = {
         fetchGetInfoStatus: "init",
         fetchSaveInfoStatus: "init",
         questions: {} as QuestionType,
+        answers: {} as AnswerType,
         discipline: "",
         module: "",
         showModal: false,
@@ -46,6 +53,9 @@ const module4: Module<ModuleState, {}> = {
         setQuestions(state, questions) {
             state.questions = questions;
         },
+        setAnswers(state, answers) {
+          state.answers = answers;
+      },
         setDisciplineName(state, name) {
             state.discipline = name;
         },
@@ -110,14 +120,15 @@ const module4: Module<ModuleState, {}> = {
             }));
 
             commit("setQuestions", questions);
+            commit("setAnswers", response.answers);
             commit("setFetchStatus", {name: "GetModule", status: "ok"});
         },
-        async postAnswers({},{ relationshipId, disciplineId, moduleId, questionId, answer } ) {
+        async postAnswers({ commit }, { relationshipId, disciplineId, moduleId, questionId, answer } ) {
             const body = {
                 "answer": answer
             };
 
-            await api.postAnswer({
+            const { status, response, errors} = await api.postAnswer({
                 params: {
                     relationshipId,
                     disciplineId,
@@ -127,13 +138,20 @@ const module4: Module<ModuleState, {}> = {
                 body
             });
 
-            // TODO set results
+            if (status !== 0) {
+              console.error(errors);
+            }
+
+            commit("setAnswers", response.answers);
         },
         async finishModule({ state, commit }, { relationshipId, moduleId }) {
-            // TODO show modal if there are not answered questions in results (128)
+            // TODO show modal if there are not answered questions in answers (128)
 
-            console.log("finished");
-            //const { status, response } = await api.postFinishModule({params: { relationshipId, moduleId }});
+            const { status, response, errors } = await api.postFinishModule({params: { relationshipId, moduleId }});
+
+            if (status !== 0) {
+              console.error(errors);
+            }
         },
 
         // teacher part

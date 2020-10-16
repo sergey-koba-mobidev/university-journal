@@ -23,13 +23,16 @@ class Question < ActiveRecord::Base
         ans = student_module.right_answers.select {|answer| answer["id"] == id }
         if ans.first.present?
           ans = ans.first["answer"]
-          ans = JSON.parse(ans) if ans.size > 1
-          ans = [ans.to_i] unless ans.kind_of?(Array)
+          ans = JSON.parse(ans) if ans.present? && ans.size > 1
+          ans = [ans.to_i] if ans.present? && !ans.kind_of?(Array)
+          ans = [] if ans.nil?
         else
           ans = []
         end
-        variants.each_index do |index|
-          answers += "#{variants[index]} <br/>" if ans.include?(index)
+        if variants.present? && variants != '[]'
+          variants.each_index do |index|
+            answers += "#{variants[index]} <br/>" if ans.include?(index)
+          end
         end
         answers
       end
@@ -40,7 +43,7 @@ class Question < ActiveRecord::Base
 
       def answer_text
         ans = student_module.answers.select {|answer| answer["id"] == id }.first
-        CGI.escapeHTML(ans["answer"])
+        CGI.escapeHTML(ans["answer"] || "")
       end
 
       def answer_one
@@ -56,13 +59,16 @@ class Question < ActiveRecord::Base
         ans = student_module.answers.select {|answer| answer["id"] == id }
         if ans.present?
           ans = ans.first["answer"]
-          ans = JSON.parse(ans) if ans.size > 1
-          ans = [ans.to_i] unless ans.kind_of?(Array)
+          ans = JSON.parse(ans) if ans.present? && ans.size > 1
+          ans = [ans.to_i] if ans.present? && !ans.kind_of?(Array)
+          ans = [] if ans.nil?
         else
           ans = []
         end
-        variants.each_index do |index|
-          answers += "#{variants[index]} <br/>" if ans.include?(index)
+        if variants.present? && variants != '[]'
+          variants.each_index do |index|
+            answers += "#{variants[index]} <br/>" if ans.include?(index)
+          end
         end
         answers
       end
