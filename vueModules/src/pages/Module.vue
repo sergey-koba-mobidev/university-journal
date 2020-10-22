@@ -27,7 +27,7 @@
 
                         <div class="input-field Module__question-text" v-if="question.kind === 'text'">
                             <p>{{ question.text }}</p>
-                            <input v-bind:id="'question-' + question.id" type="text" @blur="handleAnswer(question.id, $event)" v-model="answers[index].answer" :disabled="disableAnswer">
+                            <textarea v-bind:id="'question-' + question.id" type="text" @blur="handleAnswer(question.id, $event)" v-model="answers[index].answer" :disabled="disableAnswer" class="materialize-textarea"></textarea>
                         </div>
                         <div v-else class="Module__question-text" @input="handleAnswer(question.id, $event)">
                             {{ question.text }}:
