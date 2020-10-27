@@ -1,21 +1,21 @@
 <li class="collection-item <%= result.present? ? "grey lighten-3" : "" %>" id="question_row_<%= id %>">
   <div class="row">
-    <b> <%= index %>. <%= description %> </b>
+    <b> <%= index %>. <%= escape_html(description) %> </b>
   </div>
 
   <div class="row">
     <div class="col m3 s12">
     <% if variants.present? && variants != '[]' %>
       <% variants.each do |var| %>
-        <%= var %><br />
+        <%=raw escape_html(var) %><br />
       <% end %>
     <% end %>
     </div>
     <div class="col m3 s12 green-text">
-      <%= right_answer %>
+      <%=raw right_answer %>
     </div>
     <div class="col m3 s12">
-      <%= answer %>
+      <%=raw answer %>
     </div>
     <div class="col m3 s12">
       <% if student_module.present? %>

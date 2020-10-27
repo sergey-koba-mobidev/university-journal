@@ -1,6 +1,9 @@
 class Question < ActiveRecord::Base
   class Cell
     class Check < Trailblazer::Cell
+      include ActionView::Helpers::OutputSafetyHelper
+      include ERB::Util
+
       property :id
       property :description
       property :kind
@@ -31,7 +34,7 @@ class Question < ActiveRecord::Base
         end
         if variants.present? && variants != '[]'
           variants.each_index do |index|
-            answers += "#{variants[index]} <br/>" if ans.include?(index)
+            answers += "#{escape_html(variants[index])} <br/>" if ans.include?(index)
           end
         end
         answers
@@ -43,7 +46,7 @@ class Question < ActiveRecord::Base
 
       def answer_text
         ans = student_module.answers.select {|answer| answer["id"] == id }.first
-        CGI.escapeHTML(ans["answer"] || "")
+        escape_html(ans["answer"] || "")
       end
 
       def answer_one
@@ -67,10 +70,14 @@ class Question < ActiveRecord::Base
         end
         if variants.present? && variants != '[]'
           variants.each_index do |index|
-            answers += "#{variants[index]} <br/>" if ans.include?(index)
+            answers += "#{escape_html(variants[index])} <br/>" if ans.include?(index)
           end
         end
         answers
+      end
+
+      def escape_html(str)
+        CGI.escapeHTML(CGI.unescapeHTML(str)).gsub("&#39;", "'")
       end
 
       def result
